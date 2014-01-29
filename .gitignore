@@ -6,7 +6,12 @@ wp-config-local.php
 
 # No need to add the upgrade folder to the repo #
 
-
+assets/*
+!assets/.gitignore
+protected/runtime/*
+!protected/runtime/.gitignore
+protected/data/*.db
+themes/classic/views/
 media/
 
 # W3TC Files
@@ -26,5 +31,4 @@ license.txt
 .DS_Store
 .htaccess
 *.log
-notes
 .TODO
