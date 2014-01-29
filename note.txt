@@ -1,0 +1,26 @@
+Layout breaks
+
+High Rez larger than 1200px width
+Large Desktop from 980px to 1199px
+Medium 766px to 979px;
+Small 472px to 765px
+
+
+if(YumUser::model()->find('username = bob')->can('removeUsers')) { ...
+
+A Permission can have a Subordinate. With this feature, you can 
+further restrict, what a action can affect. 
+
+A Permission can also have a Subaction. For example, to check if the current
+user can remove users:
+
+if(Yii::app()->user->can('User', 'remove')) { ...
+
+<?php echo $form->textField($model,'name',
+Event name -> $AgeGrou . " " . $BoatSeat . "/" . $Boat
+
+
+CHtml::listData(Decreto::model()->findAll(),'id','ndecreto'));
+	listdata(source, 'dataValue', 'dataLabel')
+
+$form->dropDownList($model,'sex',array('1'=>'men','2'=>'women'), array('options' => array('2'=>array('selected'=>true))));

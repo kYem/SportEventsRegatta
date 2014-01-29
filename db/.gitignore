@@ -1,0 +1,4 @@
+#Ignore version sql.gz files
+*km.sql.gz
+*km.sql.gz
+
