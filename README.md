@@ -1,1 +1,3 @@
-# This is my README
+## Kingston University. Final Year Project
+
+# Sports Event Management System
