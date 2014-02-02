@@ -11,9 +11,7 @@ return array(
 
 	// application components
 	'components'=>array(
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
+		
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
