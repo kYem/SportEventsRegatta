@@ -111,7 +111,7 @@ return array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
 		),
-		// Log111
+		// Log11
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
