@@ -89,8 +89,8 @@ return array(
 		'yiiwheels' => array(
             'class' => 'yiiwheels.YiiWheels',   
         ),
-		// uncomment the following to enable URLs in path-format
 		
+		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName' => false, 
@@ -104,18 +104,14 @@ return array(
      			'<view:[a-zA-Z0-9-]+>/'=>'site/page',
 			),
 		),
-		
-		/*'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),*/
-		// uncomment the following to use a MySQL database
-		
+				// uncomment the following to use a MySQL database
 		'db' => require(dirname(__FILE__) . '/db.php'),
 		
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
 		),
+		// Log
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
