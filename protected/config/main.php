@@ -89,8 +89,8 @@ return array(
 		'yiiwheels' => array(
             'class' => 'yiiwheels.YiiWheels',   
         ),
-		// uncomment the following to enable URLs in path-format
 		
+		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'showScriptName' => false, 
@@ -105,11 +105,7 @@ return array(
 			),
 		),
 		
-		/*'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),*/
 		// uncomment the following to use a MySQL database
-		
 		'db' => require(dirname(__FILE__) . '/db.php'),
 		
 		'errorHandler'=>array(
