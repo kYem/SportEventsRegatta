@@ -111,7 +111,7 @@ return array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
 		),
-		// Log11
+		// Log
 		'log'=>array(
 			'class'=>'CLogRouter',
 			'routes'=>array(
@@ -119,14 +119,18 @@ return array(
 					'class'=>'CFileLogRoute',
 					'levels'=>'error, warning',
 				),
+
 				// uncomment the following to show log messages on web pages
-				/*
+				
 				array(
 					'class'=>'CWebLogRoute',
 				),
-				*/
+				
 			),
 		),
+		// Not Tracked local config
+		 'log'=>require(dirname(__FILE__) . '/log.php'),
+		
 	),
 
 	// application-level parameters that can be accessed

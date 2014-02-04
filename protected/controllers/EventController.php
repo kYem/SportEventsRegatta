@@ -149,9 +149,14 @@ class EventController extends Controller
 	{
 		$model=new Event('search');
 		$model->unsetAttributes();  // clear any default values
+		$boat = new Boat('search');
+		$boat->unsetAttributes();
+		$model->searchBoat = $boat;
 		if(isset($_GET['Event']))
 			$model->attributes=$_GET['Event'];
-			
+		if (isset($_GET['Boat'])) {
+        	$boat->attributes = $_GET['Boat'];
+    }
 			/*Event::model()->attributes = $_GET['Boat'];*/
 		$this->render('admin',array(
 			'model'=>$model,		

@@ -47,7 +47,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'event-grid',
 	'type' => TbHtml::GRID_TYPE_HOVER,
-	'dataProvider'=>$model->search(),
+	'dataProvider'=>$model->searchEvents(),
+	// 'ajaxUpdate' => false,
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
@@ -60,13 +61,25 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                            }
                            return implode(', ', $boatName);
                          } ,
-			'type'=>'text'),		
+	        'filter'=>CHtml::activeTextField($model,'boatEvent_search'),
+			'type'=>'text'),
+		array(
+		        'name' => 'boats.name',
+		        'header'=> 'Boat',
+		        'filter' => CHtml::activeTextField($model->searchBoat, 'name'),
+		    ),	
+		array('name'=>'organisation.organisation',    
+	    'filter'=>CHtml::activeTextField($model,'organisation_search'),
+	    ),
+		array('name'=>'age_group.name',
+	    'header'=> 'Age Group',
+	    'filter'=>CHtml::activeTextField($model,'age_group_search'),
+	    ),
 		// 'star_date',
 		// 'end_date',
 		'min_participant',
 		'max_participant',
-		'age_id',
-		'organisation_id',
+		// 'age_id',
 		'seats',
 		array(
             'class'=>'bootstrap.widgets.TbButtonColumn',

@@ -1,2 +1,3 @@
 # Don't add the Local settings file to the repository #
 db.php
+log.php

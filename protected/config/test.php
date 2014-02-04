@@ -8,10 +8,20 @@ return CMap::mergeArray(
 				'class'=>'system.test.CDbFixtureManager',
 			),
 			 // uncomment the following to provide test database connection
-			'db'=>array(
-				'connectionString'=>'DSN for test database',
-			),
+			'db' => require(dirname(__FILE__) . '/db.php'),
 			
+			 'log'=>array(
+                        'class'=>'CLogRouter',
+                        'routes'=>array(
+                                        'class'=>'CFileLogRoute',
+                                        'levels'=>'trace',
+                                        'categories'=>'system.db.*',
+                                        'logFile'=>'sql.log',
+                                ),
+                        ),
+
+			////
+
 		),
 	)
 );
