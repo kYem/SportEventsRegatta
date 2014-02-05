@@ -13,6 +13,7 @@
  * @property integer $age_id
  * @property integer $organisation_id
  * @property integer $seats
+ * @property integer $status_id
  *
  * The followings are the available model relations:
  * @property Boat[] $Boats
@@ -24,7 +25,10 @@ class Event extends CActiveRecord
 	public $age_group_search;
 	public $organisation_search;
 	public $boatEvent_search;
+	public $status_search;
 	public $searchBoat;
+
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -41,7 +45,7 @@ class Event extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('min_participant, max_participant, age_id, organisation_id, seats', 'numerical', 'integerOnly'=>true),
+			array('min_participant, max_participant, age_id, status_id, organisation_id, seats',  'numerical', 'integerOnly'=>true),
 			array('name', 'required'),
 			array('name', 'length', 'max'=>45),
 			array('name', 'unique', 'message'=>'This event by this name already exists.'),
@@ -49,7 +53,7 @@ class Event extends CActiveRecord
 			array('star_date, end_date', 'date', 'format'=>'yyyy-MM-dd', 'message' => '{attribute}: is not a date!'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, boat, boat_search, boatEvent_search, organisation_search, age_group_search, star_date, end_date, min_participant, max_participant, age_id, organisation_id, seats', 'safe', 'on'=>'search'),
+			array('id, name, boat, boat_search, boatEvent_search, organisation_search, age_group_search, star_date, end_date, min_participant, max_participant, age_id, organisation_id, status_id, status_search, seats', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,7 +68,8 @@ class Event extends CActiveRecord
 			'boats' => array(self::MANY_MANY, 'Boat', 'ku_rg_event_boat(event_id, boat_id)'),
 			'users' => array(self::MANY_MANY, 'User', 'rg_user_event(event_id, user_id)'),
 			'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
-			'age_group' => array(self::BELONGS_TO, 'age', 'age_id'),
+			'age_group' => array(self::BELONGS_TO, 'Age', 'age_id'),
+			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
 		);
 	}
 	public function behaviors(){
@@ -89,6 +94,7 @@ class Event extends CActiveRecord
 			'age_id' => 'Age Group',
 			'organisation_id' => 'Organisation',
 			'seats' => 'Seats',
+			'status_id' => 'Status',
 		);
 	}
 
@@ -110,16 +116,16 @@ class Event extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('star_date',$this->star_date,true);
-		$criteria->compare('end_date',$this->end_date,true);
-		$criteria->compare('min_participant',$this->min_participant);
-		$criteria->compare('max_participant',$this->max_participant);
-		$criteria->compare('age_id',$this->age_id);
-		$criteria->compare('organisation_id',$this->organisation_id);
-		$criteria->compare('seats',$this->seats);
-
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('t.name',$this->name,true);
+		$criteria->compare('t.star_date',$this->star_date,true);
+		$criteria->compare('t.end_date',$this->end_date,true);
+		$criteria->compare('t.min_participant',$this->min_participant);
+		$criteria->compare('t.max_participant',$this->max_participant);
+		$criteria->compare('t.age_id',$this->age_id);
+		$criteria->compare('t.organisation_id',$this->organisation_id);
+		$criteria->compare('t.seats',$this->seats);
+		$criteria->compare('t.status_id',$this->status_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -129,22 +135,22 @@ class Event extends CActiveRecord
 	public function searchEvents()
 	{
 	    $criteria=new CDbCriteria;
-	    $criteria->with = array( 'boats', 'organisation','age_group', );
+	    $criteria->with = array( 'boats', 'organisation','age_group', 'status' );
 	    $criteria->together= true;
 	    // $criteria->alias = 'i';
 	    // $criteria->join= 'JOIN ku_rg_event_boat d ON (i.id=d.id)';
-	    $criteria->compare('id',$this->id);
+	    $criteria->compare('t.id',$this->id);
 		$criteria->compare('t.name',$this->name,true);
 		$criteria->compare('boats.name', $this->boat_search, true );
-		$criteria->compare('boat.name', $this->searchBoat->name, true);
-		$criteria->compare('star_date',$this->star_date,true);
-		$criteria->compare('end_date',$this->end_date,true);
-		$criteria->compare('min_participant',$this->min_participant);
-		$criteria->compare('max_participant',$this->max_participant);
+		// $criteria->compare('boat.name', $this->boatEvent_search, true);
+		$criteria->compare('t.star_date',$this->star_date,true);
+		$criteria->compare('t.end_date',$this->end_date,true);
+		$criteria->compare('t.min_participant',$this->min_participant);
+		$criteria->compare('t.max_participant',$this->max_participant);
 		$criteria->compare('age_group.name',$this->age_group_search, true);
 		$criteria->compare('organisation.organisation',$this->organisation_search, true);
-
-		$criteria->compare('seats',$this->seats);
+		$criteria->compare('t.seats',$this->seats);
+		$criteria->compare('status.name',$this->status_search, true);
 	    
 
 	    return new CActiveDataProvider( 'Event', array(
@@ -163,9 +169,9 @@ class Event extends CActiveRecord
 		                'asc'=>'boats.name',
 		                'desc'=>'boats.name DESC',
 		            ),
-		            'boat_search'=>array(
-		                'asc'=>'boats.name',
-		                'desc'=>'boats.name DESC',
+		            'status.name'=>array(
+		                'asc'=>'status.name',
+		                'desc'=>'status.name DESC',
 		            ),
 		            '*',
 		        ),

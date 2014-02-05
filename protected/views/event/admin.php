@@ -53,7 +53,13 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'columns'=>array(
 		'id',
 		'name',
-		array('header'=>'Boat',  
+		array('name'=>'age_group.name',
+	    'header'=> 'Age Group',
+	    'filter'=>CHtml::activeTextField($model,'age_group_search'),
+	    ),
+		array(
+			'name'=>'boats.name',
+			'header'=>'Boat',  
 			'value'=> function ($model) {
                            $boatName = array();
                            foreach ($model->boats as $boat) {
@@ -61,25 +67,20 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                            }
                            return implode(', ', $boatName);
                          } ,
-	        'filter'=>CHtml::activeTextField($model,'boatEvent_search'),
+	        'filter'=>CHtml::activeTextField($model,'boat_search'),
 			'type'=>'text'),
-		array(
-		        'name' => 'boats.name',
-		        'header'=> 'Boat',
-		        'filter' => CHtml::activeTextField($model->searchBoat, 'name'),
-		    ),	
 		array('name'=>'organisation.organisation',    
 	    'filter'=>CHtml::activeTextField($model,'organisation_search'),
 	    ),
-		array('name'=>'age_group.name',
-	    'header'=> 'Age Group',
-	    'filter'=>CHtml::activeTextField($model,'age_group_search'),
-	    ),
+		
 		// 'star_date',
 		// 'end_date',
+		array('name'=>'status.name',
+		'header'=> 'Status',    
+	    'filter'=>CHtml::activeTextField($model,'status_search'),
+	    ),
 		'min_participant',
 		'max_participant',
-		// 'age_id',
 		'seats',
 		array(
             'class'=>'bootstrap.widgets.TbButtonColumn',

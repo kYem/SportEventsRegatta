@@ -22,11 +22,7 @@
             'class'=>'bootstrap.widgets.TbNav',
             'items'=>array(
                 array('label'=>'Home', 'url'=>array('//site/index')),
-                array('label'=>'Events', 'url'=>'//event/admin', 'items'=>array(
-                    array('label'=>'Overview', 'icon'=>'home', 'visible'=>Yii::app()->user->isAdmin(), 'url'=>array('//event/admin')),
-                    array('label'=>'Create', 'icon'=>'pencil', 'visible'=>Yii::app()->user->isAdmin(), 'url'=>array('//event/create')),
-                    array('label'=>'All Events', 'icon'=>'list', 'url'=>array('//event/index')),
-                )),
+                array('label'=>'Events', 'url'=>array('//event/index')),
                 array('label'=>'Spectators', 'url'=>array('/site/page', 'view'=>'map-of-course')),
                 array('label'=>'Results & Photos', 'url'=>array('/site/page', 'view'=>'regatta-results-photos')),
                 array('label'=>'Contact', 'url'=>array('//site/contact')),

@@ -4,15 +4,9 @@
  Menu:
  ☐ Group view inconsistent menu
 Event:
- ✔ Change to Yiistrap for additional widgets and update forms. @form @done (14-01-20 02:11)
-    ✔ Add data picker for the date type input @form @done (14-01-20 02:11)
-    ☐ Change date format from YYYY-MM-DD to DD-MM-YYYY @form
-  ☐ Create age group and add it to the event form @form
-  ☐ Admin and view events, should show the boat and age group as well
   
 
 Leaders:
-  ☐ Allow team leaders to add users to their team @form
   ☐ Can only add un assigned members. @form
   ☐ Team Leader can be a member too. @form
 
@@ -52,6 +46,12 @@ Leaders:
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Allow team leaders to add users to their team @form @done (14-02-05 01:28) @project(Leaders)
+ ✔ Change to Yiistrap for additional widgets and update forms. @form @done (14-01-20 02:11) @project(Event)
+ ✔ Add data picker for the date type input @form @done (14-01-20 02:11) @project(Event)
+ ✔ Change date format from YYYY-MM-DD to DD-MM-YYYY @form @done (14-02-05 01:27) @project(Event)
+ ✔ Create age group and add it to the event form @form @done (14-02-05 01:27) @project(Event)
+ ✔ Admin and view events, should show the boat and age group as well @done (14-02-05 01:28) @project(Event)
  ✔ Validate unique entry, show error @validate @done (14-01-15 22:58) @project(Deadlines)
  ✔ UML Database Diagrams @done (14-01-11 23:39) @project(Deadlines)
  ✔ Create the  event @done (14-01-11 23:39) @project(Deadlines)

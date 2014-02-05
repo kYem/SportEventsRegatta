@@ -28,13 +28,9 @@
 		<?php echo $form->labelEx(Boat::model(), 'Boat'); ?>
         <?php echo $form->error(Boat::model(), 'name'); ?>
         <?php echo $form->dropDownList(
-        		Boat::model(),
-        		'name', 
-        		CHtml::listData(
-        			Boat::model()->findAll(), 
-        				'id', 
-        				'name'
-        		)
+        		Boat::model(),'name', 
+        		CHtml::listData(Boat::model()->findAll(), 'id', 'name'),
+        		array('empty' => 'Select Age Group...')
         ); ?>
        
 	</div>
@@ -101,10 +97,8 @@
         		$model,
         		'age_id', 
         		CHtml::listData(
-        			Age::model()->findAll(), 
-        				'id', 
-        				'name'
-        		)
+    			Age::model()->findAll(), 'id', 'name'),
+        		array('empty' => 'Select Age Group...')
         ); ?>
 		<?php echo $form->error($model,'age_id'); ?>
 	</div>
@@ -118,7 +112,8 @@
         			Organisation::model()->findAll(), 
         				'id', 
         				'organisation'
-        		)
+        		),
+        		array('empty' => 'Select Organisation...')
         ); ?>
 		<?php echo $form->error($model,'organisation_id'); ?>
 	</div>
@@ -127,6 +122,16 @@
 		<?php echo $form->labelEx($model,'seats'); ?>
 		<?php echo $form->textField($model,'seats'); ?>
 		<?php echo $form->error($model,'seats'); ?>
+	</div>
+	<div class="row">
+		<?php echo $form->labelEx($model,'status_id'); ?>
+		<?php echo $form->dropDownList(
+        		$model,
+        		'status_id', 
+        		CHtml::listData(Status::model()->findAll(), 'id', 'name')
+
+        ); ?>
+		<?php echo $form->error($model,'status_id'); ?>
 	</div>
 </div>
 	
