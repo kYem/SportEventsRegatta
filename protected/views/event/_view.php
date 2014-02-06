@@ -15,17 +15,12 @@
 
 	<b><?php echo CHtml::encode('Boat'); ?>:</b>
 	<?php 
-
 		if (!empty($data->id)) {
-		  // echo CHtml::encode($data->with('boats')->['name']);
-			// $CurrentId = $data->id;
-			foreach ($data->boats as $boat)
-        	echo CHtml::encode ($boat->name);    	
+			echo CHtml::encode ($data->boats[0]['name']);   
+			/*foreach ($data->boats as $boat)
+        	echo CHtml::encode ($boat->name);  */  	
 		}
-    
-		else
-		  echo 'n.n.';
-	
+		else  echo 'n.n.';
 	 ?>
 	<br />
 
