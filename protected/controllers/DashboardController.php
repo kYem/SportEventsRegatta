@@ -7,7 +7,7 @@ class DashboardControler extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
-
+		public $variable;
 	/**
 	 * @return array action filters
 	 */
