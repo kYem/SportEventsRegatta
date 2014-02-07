@@ -1,28 +1,40 @@
  Deadlines:
  ☐ Report             27/03/2014    ~60%
+ ☐ Presentation       27/03/2014    ~15%
+ ☐ Examination        27/03/2014    ~15%
  
  Menu:
  ☐ Group view inconsistent menu
-Event:
-  
 
-Leaders:
+ Dashboard:
+   ☐ Design Dashboard
+     ☐ Scetch layout for each role
+   ☐ Add overview of current events at bottom of $content
+   ☐ 
+
+ Event:
+  ☐ Style - List All Events page @view
+  ☐ Add groups for initial registration
+  ☐ race groups for actual schedule
+  ☐ People in the boat -> Number picker rather than typing ? @form @optional
+     ☐ Schedule the event @schedule
+
+Group:
+  ☐ Change layout of group @view
+  ☐ if user is owner -> show admin interface
+    ☐ Allow group leader to show interest in status = initial registration  events
+    ☐ Add users to open events
+ Leaders:
   ☐ Can only add un assigned members. @form
   ☐ Team Leader can be a member too. @form
 
 
-   January:
+ Report Deadlines:
    ☐ UI Mock up
-   ☐ Dec 17th: Draft version of you Literature Review. @Report
-   ☐ Add users to the event
-   ☐ Schedule the event
-   ☐ Create the main PHP class
    ☐ Table of Contents @Report
-   ☐ System Requirements @Report
+   ✔ System Requirements @Report @done (14-01-31 03:35)
+   ☐ Chapter 4: design   17/02/2014
 
-
- ☐ Presentation       27/03/2014    ~15%
- ☐ Examination        27/03/2014    ~15%
 
  Info:
   Module Leader Dr Ruediger Oehlmann, Room: SB2012, r.oehlmann@kingstons.ac.uk

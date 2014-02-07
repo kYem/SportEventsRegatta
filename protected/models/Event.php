@@ -14,6 +14,7 @@
  * @property integer $organisation_id
  * @property integer $seats
  * @property integer $status_id
+ * @property integer $filename
  *
  * The followings are the available model relations:
  * @property Boat[] $Boats
@@ -46,14 +47,15 @@ class Event extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('min_participant, max_participant, age_id, status_id, organisation_id, seats',  'numerical', 'integerOnly'=>true),
-			array('name', 'required'),
-			array('name', 'length', 'max'=>45),
+			array('name, organisation_id, status_id, age_id', 'required'),
+			array('name, filename', 'length', 'max'=>45),
 			array('name', 'unique', 'message'=>'This event by this name already exists.'),
 			// array('star_date, end_date', 'safe'),
 			array('star_date, end_date', 'date', 'format'=>'yyyy-MM-dd', 'message' => '{attribute}: is not a date!'),
+			array('filename', 'unsafe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, boat, boat_search, boatEvent_search, organisation_search, age_group_search, star_date, end_date, min_participant, max_participant, age_id, organisation_id, status_id, status_search, seats', 'safe', 'on'=>'search'),
+			array('id, name, boat, boat_search, boatEvent_search, organisation_search, age_group_search, star_date, end_date, min_participant, max_participant, age_id, organisation_id, status_id, status_search, seats, filename', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,8 +75,34 @@ class Event extends CActiveRecord
 		);
 	}
 	public function behaviors(){
-        return array('ESaveRelatedBehavior' => array(
-         	'class' => 'application.components.ESaveRelatedBehavior')
+        return array(
+        	'ESaveRelatedBehavior' => array(	
+         		'class' => 'application.components.ESaveRelatedBehavior'),
+        	'image' => array(
+	            'class' => 'ext.AttachmentBehavior.AttachmentBehavior',
+	            # Should be a DB field to store path/filename
+	            'attribute' => 'filename',
+	            # Default image to return if no image path is found in the DB
+	            //'fallback_image' => 'images/sample_image.gif',
+	            'path' => "uploads/:model/:id.:ext",
+	         /*   'processors' => array(
+	                array(
+	                    # Currently GD Image Processor and Imagick Supported
+	                    'class' => 'ImagickProcessor',
+	                    'method' => 'resize',
+	                    'params' => array(
+	                        'width' => 310,
+	                        'height' => 150,
+	                        'keepratio' => true
+	                    )
+	                )
+	            ),*/
+	            'styles' => array(
+	                # name => size 
+	                # use ! if you would like 'keepratio' => false
+	                'thumb' => '!100x60',
+	            )           
+        ),
 	     );
 	}
 
@@ -95,6 +123,7 @@ class Event extends CActiveRecord
 			'organisation_id' => 'Organisation',
 			'seats' => 'Seats',
 			'status_id' => 'Status',
+			'filename' => 'Image'
 		);
 	}
 
@@ -126,6 +155,7 @@ class Event extends CActiveRecord
 		$criteria->compare('t.organisation_id',$this->organisation_id);
 		$criteria->compare('t.seats',$this->seats);
 		$criteria->compare('t.status_id',$this->status_id);
+		$criteria->compare('t.filename',$this->filename);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -156,6 +186,7 @@ class Event extends CActiveRecord
 	    return new CActiveDataProvider( 'Event', array(
 		    'criteria'=>$criteria,
 		    'sort'=>array(
+		    	'defaultOrder'=>'t.id ASC',
 		        'attributes'=>array(
 		            'organisation.organisation'=>array(
 		                'asc'=>'organisation.organisation',

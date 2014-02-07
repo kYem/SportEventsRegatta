@@ -8,6 +8,9 @@
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'event-form',
+	 'htmlOptions' => array(
+        'enctype' => 'multipart/form-data'
+    ),
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -25,10 +28,9 @@
 		<?php echo $form->error($model,'name'); ?>
 	</div>
 	<div class="row">
-		<?php echo $form->labelEx(Boat::model(), 'Boat'); ?>
+		<?php echo $form->labelEx(Boat::model(), 'Boat Type'); ?>
         <?php echo $form->error(Boat::model(), 'name'); ?>
-        <?php echo $form->dropDownList(
-        		Boat::model(),'name', 
+        <?php echo $form->dropDownList(	Boat::model(),'name', 
         		CHtml::listData(Boat::model()->findAll(), 'id', 'name'),
         		array('empty' => 'Select Age Group...')
         ); ?>
@@ -133,6 +135,16 @@
         ); ?>
 		<?php echo $form->error($model,'status_id'); ?>
 	</div>
+	  <div class="row">
+	  <?php 
+		if ($model->filename) 
+		echo '<img src="'.Yii::app()->baseUrl.'/'. $model->getAttachment('thumb').'" />';
+
+		?>
+        <?php echo $form->labelEx($model,'filename'); ?>
+        <?php echo $form->fileField($model,'filename'); ?>
+        <?php echo $form->error($model,'filename'); ?>
+    </div>
 </div>
 	
 
