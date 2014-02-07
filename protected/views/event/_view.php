@@ -16,9 +16,9 @@
 	<b><?php echo CHtml::encode('Boat'); ?>:</b>
 	<?php 
 		if (!empty($data->id)) {
-			echo CHtml::encode ($data->boats[0]['name']);   
-			/*foreach ($data->boats as $boat)
-        	echo CHtml::encode ($boat->name);  */  	
+			// echo CHtml::encode ($data->boats[0]['name']);   
+			foreach ($data->boats as $boat)
+        	echo CHtml::encode ($boat->name);    	
 		}
 		else  echo 'n.n.';
 	 ?>
@@ -51,6 +51,16 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('seats')); ?>:</b>
 	<?php echo CHtml::encode($data->seats); ?>
 	<br />
+	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
+	<?php echo CHtml::encode($data->seats); ?>
+	<br />
+	<span class="img">
+	<?php 
 
+	if ($data->filename) 
+	echo '<img src="'.Yii::app()->baseUrl.'/'. $data->attachment.'" />';
+
+	?>
+	</span>
 
 </div>

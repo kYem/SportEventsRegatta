@@ -24,3 +24,7 @@ CHtml::listData(Decreto::model()->findAll(),'id','ndecreto'));
 	listdata(source, 'dataValue', 'dataLabel')
 
 $form->dropDownList($model,'sex',array('1'=>'men','2'=>'women'), array('options' => array('2'=>array('selected'=>true))));
+
+// Attachment size
+echo '<img src="'.$model->getAttachment('thumb').'" />'; //thumbnail
+echo '<img src="'.$model->attachment.'" />'; //base image
