@@ -41,7 +41,7 @@ class EventController extends Controller
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
-				'deniedCallback' =>  function() { Yii::app()->controller->redirect(array ('/site/index')); }
+				// 'deniedCallback' =>  function() { Yii::app()->controller->redirect(array ('/site/index')); }
 			),
 		);
 	}
@@ -159,6 +159,27 @@ class EventController extends Controller
     }
 			/*Event::model()->attributes = $_GET['Boat'];*/
 		$this->render('admin',array(
+			'model'=>$model,		
+		));
+	}
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionDashboard()
+	{
+		$model=new Event('search');
+		$model->unsetAttributes();  // clear any default values
+		$boat = new Boat('search');
+		$boat->unsetAttributes();
+		$model->searchBoat = $boat;
+		if(isset($_GET['Event']))
+			$model->attributes=$_GET['Event'];
+		if (isset($_GET['Boat'])) {
+        	$boat->attributes = $_GET['Boat'];
+    }
+			/*Event::model()->attributes = $_GET['Boat'];*/
+		$this->render('dashboard',array(
 			'model'=>$model,		
 		));
 	}

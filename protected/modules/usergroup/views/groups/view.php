@@ -1,7 +1,7 @@
 <?php Yum::register('css/yum.css');
 
 $this->breadcrumbs=array(
-		Yum::t('Team')=>array('index'),
+		Yum::t('Groups')=>array('index'),
 		$model->title,
 		);
  ?>
@@ -28,7 +28,7 @@ echo CHtml::link(Yum::t('Assign User'), '', array(
 	<br />
 
 	<div style="display:none;" id="usergroup_members">
-		<h3> <?php echo Yum::t('Add members to the team'); ?> </h3>
+		<h4> <?php echo Yum::t('Add members to the team'); ?> </h4>
 
 		<?php $this->renderPartial('_member', array(
 				'model' => $model,
@@ -49,7 +49,7 @@ $this->widget('zii.widgets.CListView', array(
 
  <div style="clear: both;"> </div> 
 <?php
-printf('<h3> %s </h3>', Yum::t('Messages'));
+printf('<h4> %s </h4>', Yum::t('Messages'));
 
 $this->widget('zii.widgets.CListView', array(
     'dataProvider'=>$model->getMessageDataProvider(),
@@ -64,7 +64,7 @@ $this->widget('zii.widgets.CListView', array(
 			'onClick' => "$('#usergroup_message').toggle(500)")); ?>
 
 <div style="display:none;" id="usergroup_message">
-<h3> <?php echo Yum::t('Write a message'); ?> </h3>
+<h4> <?php echo Yum::t('Write a message'); ?> </h4>
 <?php $this->renderPartial('_message_form', array('group_id' => $model->id)); ?>
 </div>
 

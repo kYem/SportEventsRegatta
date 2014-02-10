@@ -46,6 +46,7 @@
             'type' => TbHtml::NAV_TYPE_LIST,
             'items'=>array(                
                 array('label'=>'Administration'),
+                array('label'=>'Dashboard', 'icon'=>'cog', 'url'=>array('//event/dashboard')),
                 array('label'=>'Users', 'icon'=>'user',
                     'items' => array(
                         array('label'=> 'Statistics', 'url'=>array('//user/statistics/index')),
@@ -135,19 +136,26 @@
                 array('label' => 'Sent messages', 'icon'=>'arrow-right', 'visible' => Yum::hasModule('message'), 'url' => array('/message/message/sent')),
                  // TbHtml::menuDivider(),      
                     
-                array('label' => 'Group'),
+                
                 array(
                     'label' => 'My friends',
                     'url' => array('/friendship/friendship/index'),
                     'visible' => Yum::hasModule('friendship') && Yii::app()->user->isAdmin()),
                 // array('label' => 'Browse users', 'url' => array('/user/user/browse')),
-               
-                array('label' => 'My group', 'url' => array(
-                        '/usergroup/groups/index'), 'icon'=>'bullhorn',
+                array('label' => 'Group'),
+                array('label' => 'My group', 
+                    'visible' =>  Yum::hasModule('usergroup') && !Yii::app()->user->isAdmin(),
+                    'url' => array('/usergroup/groups/index'), 
+                    'icon'=>'bullhorn'),
+                 array('label' => 'Admin groups', 
+                    'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->isAdmin(),
+                    'url' => array('//usergroup/groups/admin'), 
+                    'icon'=>'bullhorn'),
+
+
+                array('label' => 'Create new Group', 'icon'=>'plus', 'url' => array(
+                        '/usergroup/groups/create'),
                     'visible' => Yum::hasModule('usergroup')),
-                    array('label' => 'Create new Group', 'icon'=>'plus', 'url' => array(
-                            '/usergroup/groups/create'),
-                        'visible' => Yum::hasModule('usergroup')),
                    /* array('label' => 'Browse Groups', 'url' => array(
                             '/usergroup/groups/browse'),
                         'visible' => Yum::hasModule('usergroup')),*/

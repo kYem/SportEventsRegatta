@@ -13,7 +13,11 @@ $this->title = Yum::t('Usergroups'); ?>
 
 <?php 
 	if(Yii::app()->user->can('userGroup', 'create')) {
-	echo CHtml::link(Yum::t('Create new Usergroup'), array(
-			'//usergroup/groups/create')); 
+	
+	echo CHtml::button(Yum::t('Create new Group'), array(
+					'submit' => array('//usergroup/groups/create'), 'class'=>'btn')); 
 	}
-			?>
+
+
+			
+?>

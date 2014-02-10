@@ -13,7 +13,7 @@ class ProfileModule extends CWebModule {
 			);
 
 	// set this to true to allow all users to access user profiles
-	public $profilesViewableByGuests = false;
+	public $profilesViewableByGuests = true;
 
 	public $enableProfileVisitLogging = true;
 	public $enablePrivacySetting = true;

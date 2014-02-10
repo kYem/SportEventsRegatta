@@ -108,7 +108,7 @@ class UserModule extends CWebModule {
 			'firstVisit'=>array('//user/privacy/update'),
 			'delete'=>array('//user/user/delete'),
 			// Page to go after admin logs in
-			'returnAdmin'=>array('//user/user/index'),
+			'returnAdmin'=>array('//event/dashboard'),
 			// Page to go to after logout
 			'returnLogout'=>array('//user/user/login'));
 

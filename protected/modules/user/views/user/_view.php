@@ -16,7 +16,8 @@ if(Yum::hasModule('profile') && Yum::module('profile')->enablePrivacySetting) {
 
 ?>
 
-<?php printf('<h3>%s %s</h3>', $data->username, $online); ?>
+<?php printf('<h5>%s %s</h5>', 
+	($data->profile['firstname'] && $data->profile['lastname']  ? $data->profile['firstname'].' '.$data->profile['lastname']  : ($data->username)), $online); ?>
 
 <?php echo CHtml::link($data->getAvatar(true),
 		array(

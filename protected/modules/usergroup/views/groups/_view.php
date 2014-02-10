@@ -1,9 +1,11 @@
 <div class="view">
 
-<h3> <?php echo CHtml::encode($data->title); ?> </h3> 
+<h3> <?php echo CHtml::link(Yum::t($data->title), array(
+					'//usergroup/groups/view', 'id' => $data->id)); ?> </h3> 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('owner_id')); ?>:</b>
 <?php if(isset($data->owner))
-	echo CHtml::encode($data->owner->username); ?>
+	echo CHtml::link(Yum::t($data->owner->profile->firstname), array(
+					'//user/user/view/', 'id' => $data->owner->id)); ?>
 	<br />
 
 
@@ -21,15 +23,24 @@
 	<br />
 	<br />
 
-	<?php echo CHtml::link(Yum::t('View Details'), array(
-					'//usergroup/groups/view', 'id' => $data->id)); ?>
+	
 	<?php 
+
+	
+	// print_r(YumUsergroup::model()->findAll());
+	foreach (YumUsergroup::model()->findAll() as $key => $group) {
+		if(is_array($group->participants) &&
+			in_array(Yii::app()->user->id, $group->participants))
+			echo "User is in ".$group->title." <br />";
+	}
 	if(is_array($data->participants) &&
 			in_array(Yii::app()->user->id, $data->participants))
-	echo CHtml::link(Yum::t('Leave group'), array(
-				'//usergroup/groups/leave', 'id' => $data->id)); 
+		echo CHtml::button(Yum::t('Leave group'), array(
+					'submit' => array('//usergroup/groups/leave' , 'id' => $data->id), 'class'=>'btn')); 
+
 	else
-	echo CHtml::link(Yum::t('Join group'), array(
-				'//usergroup/groups/join', 'id' => $data->id)); ?>
+		echo CHtml::button(Yum::t('Join group'), array(
+					'submit' => array('//usergroup/groups/join' , 'id' => $data->id), 'class'=>'btn')); 
+	 ?>
 
 	</div>

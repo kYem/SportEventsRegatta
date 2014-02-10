@@ -62,14 +62,14 @@ class DashboardControler extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Dashboard;
+		$model=new Event;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Dashboard']))
+		if(isset($_POST['Event']))
 		{
-			$model->attributes=$_POST['Dashboard'];
+			$model->attributes=$_POST['Event'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -122,7 +122,7 @@ class DashboardControler extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Dashboard');
+		$dataProvider=new CActiveDataProvider('Event');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -133,10 +133,10 @@ class DashboardControler extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Dashboard('search');
+		$model=new Event('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Dashboard']))
-			$model->attributes=$_GET['Dashboard'];
+		if(isset($_GET['Event']))
+			$model->attributes=$_GET['Event'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -152,7 +152,7 @@ class DashboardControler extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Dashboard::model()->findByPk($id);
+		$model=Event::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -164,7 +164,7 @@ class DashboardControler extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='Dashboard-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='Event-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
