@@ -13,6 +13,11 @@
 
 
  
+
+		echo CHtml::Button(Yum::t('Cancel'), array(
+					'submit' => array('//usergroup/groups/view', 'id' => $model->id))); 
+		echo CHtml::submitButton(Yum::t('Save')); 
+	$this->endWidget(); 
  $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'event-grid',
 	'type' => TbHtml::GRID_TYPE_HOVER,
@@ -22,7 +27,7 @@
 	'columns'=>array(
 		'id',
 		'name',
-		array('name'=>'age_group.name',
+		/*array('name'=>'age_group.name',
 	    'header'=> 'Age Group',
 	    'filter'=>CHtml::activeTextField($event,'age_group_search'),
 	    ),
@@ -47,17 +52,12 @@
 		array('name'=>'status.name',
 		'header'=> 'Status',    
 	    'filter'=>CHtml::activeTextField($event,'status_search'),
-	    ),
+	    ),*/
 		/*'min_participant',
 		'max_participant',
 		'seats',*/
 		array('class'=>'CCheckBoxColumn','selectableRows'=>2),
 	),
 )); 
-		echo CHtml::Button(Yum::t('Cancel'), array(
-					'submit' => array('//usergroup/groups/view', 'id' => $model->id))); 
-		echo CHtml::submitButton(Yum::t('Save')); 
-	$this->endWidget(); 
-
 ?>
 </div> <!-- form -->

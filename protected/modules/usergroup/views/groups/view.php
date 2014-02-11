@@ -19,11 +19,12 @@ $this->breadcrumbs=array(
 						'//profile/profile/view', 'id' => $model->owner_id)));
 
 	printf('<h4> %s </h4>', Yum::t('Participants'));
-
+	
+	if (Yii::app()->user->can("event", "assign")) {
 	echo CHtml::link(Yum::t('Assign User'), '', array(
 				'onClick' => "$('#usergroup_members').toggle(500)"));
 	
-	if (Yii::app()->user->can("event", "assign")) {
+	
 		echo CHtml::link(' Join Event', array(
 						'//usergroup/groups/joinEvent', 'id' => $model->id));
 	}

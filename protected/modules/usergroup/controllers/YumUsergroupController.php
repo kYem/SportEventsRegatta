@@ -76,9 +76,9 @@ class YumUsergroupController extends YumController {
 	}
 
 	public function actionJoinEvent($id = null) {
-		if($id !== null) {
+		/*if($id !== null) {
 			$group = YumUsergroup::model()->findByPk($id);
-			}
+			}*/
 			/*$participants = $p->participants;
 			if(in_array(Yii::app()->user->id, $participants)) {
 				Yum::setFlash(Yum::t('You are already participating in this group'));
