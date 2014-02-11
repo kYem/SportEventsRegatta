@@ -28,6 +28,8 @@ Group:
   ☐ Can only add un assigned members. @form
   ☐ Team Leader can be a member too. @form
 
+User:
+  ☐ Add DOB to every user
 
  Report Deadlines:
    ☐ UI Mock up

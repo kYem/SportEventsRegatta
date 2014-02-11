@@ -13,10 +13,16 @@ $this->menu=array(
     array('label'=>'All Events', 'icon'=>'list', 'url'=>array('index'), 'active'=>true),
 );
 ?>
+<section class="intro">
+	<h1>Events</h1>	
+</section>
 
-<h1>Events</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
+	'template'=>'{items}{pager}',
 	'itemView'=>'_view',
+	/*'sortableAttributes'=>array(
+        'name'=>'By Name',
+    ),*/
 )); ?>

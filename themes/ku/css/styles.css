@@ -163,3 +163,35 @@ div.wide.form .buttons, div.wide.form .hint, div.wide.form .errorMessage
 	     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 	          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 }
+
+section.intro {
+	padding: .25em 5.5% 1.25em;
+	margin: 2em 0 3em;
+	border: .17em solid rgba(0,0,0,.1);
+	background-color: rgba(0,0,0,.02);
+	-webkit-border-radius: .3125em;
+	border-radius: .3125em;
+}
+
+article.view {
+	border-bottom: .3em solid #41b7d8;
+	margin-bottom: 2em;
+	padding: 0 5.5% 2em;
+	float: left;
+}
+
+article.view img {
+float: left;
+overflow: hidden;
+/*width: 8em;*/
+margin: 1.5em 1.5em 0 0;
+-webkit-border-radius: .5em;
+border-radius: .5em;
+}
+.event-img {
+	width: 150px;
+	height: 150px;
+}
+.pager {
+	clear: both;
+}

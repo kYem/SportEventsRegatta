@@ -39,6 +39,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 
  $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'usergroup-grid',
+	'type' => TbHtml::GRID_TYPE_HOVER,
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
@@ -47,7 +48,8 @@ $locale = CLocale::getInstance(Yii::app()->language);
 		'title',
 		'description',
 		array(
-			'class'=>'CButtonColumn',
-		),
+            'class'=>'bootstrap.widgets.TbButtonColumn',
+            'htmlOptions'=>array('style'=>'width: 50px'),
+        ),
 	),
 )); ?>

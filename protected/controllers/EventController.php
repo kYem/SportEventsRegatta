@@ -136,7 +136,17 @@ class EventController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Event');
+		$dataProvider=new CActiveDataProvider(
+			'Event',
+			array(
+			    'criteria' => array(
+			      
+			    ),
+			    'pagination'=>array(
+			      'pageSize'=>9,
+			    ),
+			)
+		);
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

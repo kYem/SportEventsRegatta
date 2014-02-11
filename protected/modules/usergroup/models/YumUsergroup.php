@@ -50,9 +50,16 @@ class YumUsergroup extends YumActiveRecord{
 
 	public function getParticipantDataProvider() {
 		$criteria = new CDbCriteria;
-		$criteria->addInCondition('id', $this->participants);
+		$criteria->compare('id', $this->participants);
 	
 		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
+	}
+
+	public function getEventDataProvider() {
+		$criteria = new CDbCriteria;
+		$criteria->compare('status_id', $this->id);
+	
+		return new CActiveDataProvider('Event', array('criteria' => $criteria));
 	}
 
 	public function getMessageDataProvider() {

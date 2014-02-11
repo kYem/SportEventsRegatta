@@ -5,9 +5,10 @@ $this->breadcrumbs=array(
 	Yii::t('app', 'Assign Memeber'),
 );
 
-
+?>
 <h1> <?php echo Yii::t('app', 'Update');?> Usergroup #<?php echo $model->id; ?> </h1>
 <?php
 $this->renderPartial('_member', array(
-			'model'=>$model));
+			'model'=>$model,
+			'event' => $event));
 ?>
