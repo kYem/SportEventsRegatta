@@ -1,15 +1,22 @@
 <?php
 
 class YumUsergroup extends YumActiveRecord{
+
+	public $eventIds = array();
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
 
 	public function behaviors() {
-		return array('CSerializeBehavior' => array(
+		return array(
+			'CSerializeBehavior' => array(
 					'class' => 'application.modules.user.components.CSerializeBehavior',
-					'serialAttributes' => array('participants')));
+					'serialAttributes' => array('participants')),
+			'ESaveRelatedBehavior' => array(	
+         		'class' => 'application.components.ESaveRelatedBehavior'),
+			);
 	}
 
 	public function tableName()
@@ -23,7 +30,7 @@ class YumUsergroup extends YumActiveRecord{
 			array('title, description', 'required'),
 			array('id, owner_id', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
-			array('participants', 'safe'),
+			array('participants, eventIds', 'safe'),
 			array('id, title, description', 'safe', 'on'=>'search'),
 		);
 	}
@@ -33,7 +40,8 @@ class YumUsergroup extends YumActiveRecord{
 		return array(
 			'owner' => array(self::BELONGS_TO, 'YumUser', 'owner_id'),
 			'messages' => array(self::HAS_MANY, 'YumUsergroupMessage', 'group_id'),
-			'messagesCount' => array(self::STAT, 'YumUsergroupMessage', 'group_id')
+			'messagesCount' => array(self::STAT, 'YumUsergroupMessage', 'group_id'),
+			'events' => array(self::MANY_MANY, 'Event', 'ku_rg_group_event(group_id, event_id)'),
 		);
 	}
 
@@ -70,6 +78,17 @@ class YumUsergroup extends YumActiveRecord{
 		return new CActiveDataProvider('YumUsergroupMessage', array(
 					'criteria' => $criteria));
 	}
+
+	public function afterFind()
+	   {
+	       if (!empty($this->events))
+	       {
+	           foreach ($this->events as $n => $event)
+	               $this->eventIds[] = $event->id;
+	       }
+
+	       parent::afterFind();
+	   }
 
 	public function search()
 	{

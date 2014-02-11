@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 ?>
 <h1>Group <?php echo $model->title; ?> - Join Event  </h1>
 <?php
-$this->renderPartial('_member', array(
+$this->renderPartial('_event', array(
 			'model'=>$model,
 			'event' => $event));
 ?>

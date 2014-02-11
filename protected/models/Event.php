@@ -68,7 +68,8 @@ class Event extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'boats' => array(self::MANY_MANY, 'Boat', 'ku_rg_event_boat(event_id, boat_id)'),
-			'users' => array(self::MANY_MANY, 'User', 'rg_user_event(event_id, user_id)'),
+			'users' => array(self::MANY_MANY, 'YumUser', 'ku_rg_user_event(event_id, user_id)'),
+			'groups' => array(self::MANY_MANY, 'YumUserGroup', 'ku_rg_group_event(event_id, group_id)'),
 			'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
 			'age_group' => array(self::BELONGS_TO, 'Age', 'age_id'),
 			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
@@ -102,8 +103,10 @@ class Event extends CActiveRecord
 	                # use ! if you would like 'keepratio' => false
 	                'thumb' => '!100x60',
 	            )           
-        ),
-	     );
+        	),
+			 'CAdvancedArBehavior' => array(
+                                'class' => 'application.modules.user.components.CAdvancedArBehavior'),
+	    );
 	}
 
 

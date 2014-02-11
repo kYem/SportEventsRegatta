@@ -17,12 +17,12 @@ class YumUsergroupController extends YumController {
 					),
 				array('allow', 
 					'actions'=>array(
-					'getOptions', 'create','update', 'browse', 'join', 'leave', 'write', 'assign', 'Updatep'),
+					'getOptions', 'create','update', 'browse', 'join', 'leave', 'write', 'assign', 'UpdateMembers'),
 					'users'=>array('@'),
 					'expression' => 'Yii::app()->user->can("userGroup", "create")',
 					),
 				array('allow', 
-					'actions'=>array('JoinEvent'),
+					'actions'=>array('JoinEvent', 'JoinInitialEvent'),
 					'users'=>array('admin'),
 					'expression' => 'Yii::app()->user->can("userGroup", "create")',
 					),
@@ -75,23 +75,13 @@ class YumUsergroupController extends YumController {
 		} else throw new CHttpException(404);
 	}
 
+	/**
+	*	Group (Team) can join events on the initial registration.
+	*	If update is successful, the browser will be redirected to the 'view' page.
+	* 	@param integer $id the ID of the model to be updated
+	*/
+
 	public function actionJoinEvent($id = null) {
-		/*if($id !== null) {
-			$group = YumUsergroup::model()->findByPk($id);
-			}*/
-			/*$participants = $p->participants;
-			if(in_array(Yii::app()->user->id, $participants)) {
-				Yum::setFlash(Yum::t('You are already participating in this group'));
-			} else {
-				$participants[] = Yii::app()->user->id;
-				$p->participants = $participants;
-
-				if($p->save(array('participants'))) {
-					Yum::setFlash(Yum::t('You have joined this group'));
-					Yum::log(Yum::t('User {username} joined group id {id}', array(
-									'{username}' => Yii::app()->user->data()->username,
-									'{id}' => $id)));*/
-
 			
 			$model = $this->loadModel($id);
 			$event = new Event;
@@ -99,13 +89,65 @@ class YumUsergroupController extends YumController {
 
 		if(isset($_POST['YumUsergroup'])) {
 			$model->attributes = $_POST['YumUsergroup'];
-			
+			$model->events = $model->eventIds;
 
-			if($model->save()) 
+			if($model->saveWithRelated('events')) {
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('assign',array( 'model'=>$model, 'event' => $event));
+	}
+
+	/**
+	*	Group (Team) can join events on the initial registration.
+	*	If update is successful, the browser will be redirected to the 'view' page.
+	* 	@param integer $id the ID of the model to be updated
+	*/
+
+	public function actionJoinInitialEvent($id = null) {
+			
+			$model = $this->loadModel($id);
+			$event = new Event;
+			$this->performAjaxValidation($model, 'usergroup-eventInitial');
+
+		if(isset($_POST['event-grid_c7'])) {
+
+		    $model->eventIds = $_POST['event-grid_c7'];
+
+		   /* foreach ($event_list as $event_id) {
+		      // train sender to folder_id
+		      $model->setFolderCheckAccount($event_id,$group_id);
+		    }*/
+		     }
+		     else
+		     	Yii::app()->user->setFlash('success', "Data NOT provided!");      
+
+			if(isset($_GET['YumUsergroup']))
+  			$model->attributes=$_GET['YumUsergroup'];
+
+			else if(isset($_POST['YumUsergroup'])) {
+				$model->attributes = $_POST['YumUsergroup'];
+				$model->events = $model->eventIds;
+
+				if($model->saveWithRelated('events')) {
+
+	               foreach ($_POST['YumUsergroup']['categories'] as $categoryId) {
+	                  /* $postCategory = new PostsCategories;
+	                   $postCategory->postId = $model->id;
+	                   $postCategory->categoryId = $categoryId;
+	                   if (!$postCategory->save()) print_r($postCategory->errors);*/
+		          	}
+					Yum::setFlash(Yum::t('You have joined these events'));
+					Yii::app()->user->setFlash('success', "Data NOT saved!");
+					$this->redirect(array('view','id'=>$model->id));
+				} else 
+					Yii::app()->user->setFlash('success', "Data NOT saved!");
+
+			} else 
+				Yii::app()->user->setFlash('success', "YumUsergroup IS Not SET!");
+		
+		$this->render('event-reg',array( 'model'=>$model, 'event' => $event));
 	}
 
   /**
@@ -114,8 +156,6 @@ class YumUsergroupController extends YumController {
 	*/
 
 	public function actionAssign($id = null) {
-		/*echo CHtml::link(Yum::t('Join group'), array(
-				'//usergroup/groups/join', 'id' => $data->id)); */
 
 		if($id !== null) {
 			$p = YumUsergroup::model()->findByPk($id);
@@ -180,7 +220,6 @@ class YumUsergroupController extends YumController {
 					Yum::log(Yum::t('User {username} left group id {id}', array(
 									'{username}' => Yii::app()->user->data()->username,
 									'{id}' => $id)));
-
 				}
 			}
 			$this->redirect(array('//usergroup/groups/index'));
@@ -254,33 +293,19 @@ class YumUsergroupController extends YumController {
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-	public function actionUpdatep($id)
+	public function actionUpdateMembers($id)
 	{
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
-	
 			
 		if(isset($_POST['YumUsergroup'])) {
 			$model->attributes = $_POST['YumUsergroup'];
-			// $model->owner_id = Yii::app()->user->id;
 			// $model->participants = array($model->owner_id);
-
 			if($model->save()) 
 				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		
-			/*if($model->saveWithRelated('boats'))
-				$this->redirect(array('admin'));
-			else
-				$model->addError('aaa', 'Error occured while  saving boats.');*/
-
-		$this->render('assign',array(
-			'model'=>$model,
-		));
+		}	
 	}
 
 	public function actionDelete()

@@ -27,6 +27,9 @@ $this->breadcrumbs=array(
 	
 		echo CHtml::link(' Join Event', array(
 						'//usergroup/groups/joinEvent', 'id' => $model->id));
+
+		echo CHtml::link(' Join Initial Events', array(
+						'//usergroup/groups/joinInitialEvent', 'id' => $model->id));
 	}
 
 		

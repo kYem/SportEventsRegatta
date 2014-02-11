@@ -4,60 +4,22 @@
 </p>
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'id'=>'usergroup-form',
-	// 'action' => Yii::app()->createUrl('//usergroup/groups/Updatep/id/'.$group_id),  //<- your form action here
-	'enableAjaxValidation'=>true,
+'id'=>'usergroup-form',
+'action' => Yii::app()->createUrl('//usergroup/groups/UpdateMembers/id/'.$group_id),  //<- your form action here
+'enableAjaxValidation'=>true,
 	)); 
 	echo $form->errorSummary($model);
 
-
+?>
+<div class="row">
+<?php echo $form->checkBoxListControlGroup($model, 'participants', CHtml::listData(YumUser::model()->getUsersByRole('TeamMember'),'id', 'username')); ?>
+    </div>
+<?php
+echo CHtml::Button(Yum::t('Cancel'), array(
+			'submit' => array('//usergroup/groups/view', 'id' => $model->id))); 
+echo CHtml::submitButton(Yum::t('Save')); 
+$this->endWidget(); 
 
  
-
-		echo CHtml::Button(Yum::t('Cancel'), array(
-					'submit' => array('//usergroup/groups/view', 'id' => $model->id))); 
-		echo CHtml::submitButton(Yum::t('Save')); 
-	$this->endWidget(); 
- $this->widget('bootstrap.widgets.TbGridView', array(
-	'id'=>'event-grid',
-	'type' => TbHtml::GRID_TYPE_HOVER,
-	'dataProvider'=>$model->getEventDataProvider(),
-	// 'ajaxUpdate' => false,
-	// 'filter'=>$model,
-	'columns'=>array(
-		'id',
-		'name',
-		/*array('name'=>'age_group.name',
-	    'header'=> 'Age Group',
-	    'filter'=>CHtml::activeTextField($event,'age_group_search'),
-	    ),
-		array(
-			'name'=>'boats.name',
-			'header'=>'Boat',  
-			'value'=> function ($event) {
-                           $boatName = array();
-                           foreach ($event->boats as $boat) {
-                              $boatName[] = $boat->name;
-                           }
-                           return implode(', ', $boatName);
-                         } ,
-	        'filter'=>CHtml::activeTextField($event,'boat_search'),
-			'type'=>'text'),
-		array('name'=>'organisation.organisation',    
-	    'filter'=>CHtml::activeTextField($event,'organisation_search'),
-	    ),
-		
-		// 'star_date',
-		// 'end_date',
-		array('name'=>'status.name',
-		'header'=> 'Status',    
-	    'filter'=>CHtml::activeTextField($event,'status_search'),
-	    ),*/
-		/*'min_participant',
-		'max_participant',
-		'seats',*/
-		array('class'=>'CCheckBoxColumn','selectableRows'=>2),
-	),
-)); 
 ?>
 </div> <!-- form -->
