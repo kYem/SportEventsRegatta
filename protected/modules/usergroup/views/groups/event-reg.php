@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 );
 
 ?>
-<h1>Group <?php echo $model->title; ?> - Join Event  </h1>
+<h2>Group <?php echo $model->title; ?> - Join Event  </h2>
 <?php if(Yii::app()->user->hasFlash('success')):?>
     <div class="info">
         <?php echo Yii::app()->user->getFlash('success'); ?>
@@ -14,7 +14,7 @@ $this->breadcrumbs=array(
 <?php endif; ?>
 <div class="form">
 <p class="note">
-<?php echo Yii::t('app','Fields with');?> <span class="required">*</span> <?php echo Yii::t('app','are required');?>.
+Please select the events <?php echo $model->title; ?> group would like to join
 </p>
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
@@ -64,15 +64,16 @@ $this->breadcrumbs=array(
 			'seats',
 
 			array(	
-				// 'id'=>'autoId',
+				'id'=>'eventIds',
 				'class'=>'CCheckBoxColumn',
 				'selectableRows'=>2,
+				'checked' => '($data->getRegisteredEvents($data))'
 
 				),
 		),
 	)); 
-	
- 
+	print_r($model->eventIds);
+ 	// print_r($model);
 
 		echo CHtml::Button(Yum::t('Cancel'), array(
 					'submit' => array('//usergroup/groups/view', 'id' => $model->id))); 

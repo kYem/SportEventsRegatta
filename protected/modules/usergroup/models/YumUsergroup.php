@@ -63,9 +63,9 @@ class YumUsergroup extends YumActiveRecord{
 		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
 	}
 
-	public function getEventDataProvider() {
+	public function getEventDataProvider($statusId = 1) {
 		$criteria = new CDbCriteria;
-		$criteria->compare('status_id', $this->id);
+		$criteria->compare('status_id', $statusId);
 	
 		return new CActiveDataProvider('Event', array('criteria' => $criteria));
 	}
@@ -78,6 +78,11 @@ class YumUsergroup extends YumActiveRecord{
 		return new CActiveDataProvider('YumUsergroupMessage', array(
 					'criteria' => $criteria));
 	}
+
+	public function getRegisteredEvents($data) {
+			
+			return in_array($data->id, $data->events);
+		}	
 
 	public function afterFind()
 	   {

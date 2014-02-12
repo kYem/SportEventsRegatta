@@ -29,6 +29,12 @@ class Event extends CActiveRecord
 	public $status_search;
 	public $searchBoat;
 
+	public function init() {
+		Yii::import('application.modules.user.models.*');
+		Yii::import('application.modules.user.controllers.*');
+		Yii::import('application.modules.usergroup.models.*');
+		Yii::import('application.modules.usergroup.controllers.*');
+	}
 
 	/**
 	 * @return string the associated database table name
@@ -222,6 +228,15 @@ class Event extends CActiveRecord
                            }
                            return $boatName;
                          } 
+
+    public function getRegisteredEvents($data = null) {
+    		$event = new Event;
+			foreach ($data->groups as $group)
+		        	if(in_array($data->id, $group->eventIds))     	
+						return true;
+					else
+						return false;
+		}	
 
 	/**
 	 * Returns the static model of the specified AR class.

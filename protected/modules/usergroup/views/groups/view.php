@@ -20,7 +20,7 @@ $this->breadcrumbs=array(
 
 	printf('<h4> %s </h4>', Yum::t('Participants'));
 	
-	if (Yii::app()->user->can("event", "assign")) {
+	if (Yii::app()->user->can("userGroup", "create")) {
 	echo CHtml::link(Yum::t('Assign User'), '', array(
 				'onClick' => "$('#usergroup_members').toggle(500)"));
 	
