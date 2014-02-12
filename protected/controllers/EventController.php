@@ -174,7 +174,7 @@ class EventController extends Controller
 	}
 
 	/**
-	 * Manages all models.
+	 * Manages dashboard 
 	 */
 	public function actionDashboard()
 	{
@@ -193,6 +193,7 @@ class EventController extends Controller
 			'model'=>$model,		
 		));
 	}
+	
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

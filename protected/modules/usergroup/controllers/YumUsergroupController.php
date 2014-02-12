@@ -50,8 +50,10 @@ class YumUsergroupController extends YumController {
 		$this->redirect(array('//usergroup/groups/view',
 					'id' => $message->group_id));
 
-	}	
+	}
 
+
+						
 	public function actionJoin($id = null) {
 		if($id !== null) {
 			$p = YumUsergroup::model()->findByPk($id);
@@ -111,42 +113,17 @@ class YumUsergroupController extends YumController {
 			$event = new Event;
 			$this->performAjaxValidation($model, 'usergroup-eventInitial');
 
-		if(isset($_POST['event-grid_c7'])) {
+		if(isset($_POST['eventIds'])) {
+		    $model->eventIds = $_POST['eventIds'];
+			$model->events = $model->eventIds;
 
-		    $model->eventIds = $_POST['event-grid_c7'];
-
-		   /* foreach ($event_list as $event_id) {
-		      // train sender to folder_id
-		      $model->setFolderCheckAccount($event_id,$group_id);
-		    }*/
-		     }
-		     else
-		     	Yii::app()->user->setFlash('success', "Data NOT provided!");      
-
-			if(isset($_GET['YumUsergroup']))
-  			$model->attributes=$_GET['YumUsergroup'];
-
-			else if(isset($_POST['YumUsergroup'])) {
-				$model->attributes = $_POST['YumUsergroup'];
-				$model->events = $model->eventIds;
-
-				if($model->saveWithRelated('events')) {
-
-	               foreach ($_POST['YumUsergroup']['categories'] as $categoryId) {
-	                  /* $postCategory = new PostsCategories;
-	                   $postCategory->postId = $model->id;
-	                   $postCategory->categoryId = $categoryId;
-	                   if (!$postCategory->save()) print_r($postCategory->errors);*/
-		          	}
-					Yum::setFlash(Yum::t('You have joined these events'));
-					Yii::app()->user->setFlash('success', "Data NOT saved!");
-					$this->redirect(array('view','id'=>$model->id));
-				} else 
-					Yii::app()->user->setFlash('success', "Data NOT saved!");
-
+			if($model->saveWithRelated('events')) {
+				Yii::app()->user->setFlash('success', "Data Was saved!");
+				$this->redirect(array('view','id'=>$model->id));
 			} else 
-				Yii::app()->user->setFlash('success', "YumUsergroup IS Not SET!");
-		
+				Yii::app()->user->setFlash('success', "Data NOT saved!");
+		} 
+
 		$this->render('event-reg',array( 'model'=>$model, 'event' => $event));
 	}
 

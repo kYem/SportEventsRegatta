@@ -13,8 +13,8 @@
    ☐ 
 
  Event:
-  ☐ Style - List All Events page @view
-  ☐ Add groups for initial registration
+  ✔ Style - List All Events page @view @done (14-02-11 22:55)
+  ✔ Add groups for initial registration @done (14-02-11 22:54)
   ☐ race groups for actual schedule
   ☐ People in the boat -> Number picker rather than typing ? @form @optional
      ☐ Schedule the event @schedule
