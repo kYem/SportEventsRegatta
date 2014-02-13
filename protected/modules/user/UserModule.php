@@ -37,7 +37,7 @@ class UserModule extends CWebModule {
 
 	// Show an Captcha after how many unsuccessful logins? Set to 0 to 
 	// always display an captcha, set to false to disable this function
-	public $captchaAfterUnsuccessfulLogins = 3;
+	public $captchaAfterUnsuccessfulLogins = false;
 
 	// After how much seconds without an action does a user gets indicated as
 	// offline? Note that, of course, clicking the Logout button will indicate
@@ -46,7 +46,7 @@ class UserModule extends CWebModule {
 
 	// set to false to enable case insensitive users.
   // for example, demo and Demo would be the same user then
-	public $caseSensitiveUsers = true;
+	public $caseSensitiveUsers = false;
 
 	// set this to true if you do want to access data through a REST api. 
 	// Disabled by default for security reasons.

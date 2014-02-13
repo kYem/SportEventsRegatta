@@ -47,7 +47,7 @@ $this->breadcrumbs=array(
 			); ?>
 	</div>
 <?php 
-$this->widget('zii.widgets.CListView', array(
+$this->widget('bootstrap.widgets.TbListView', array(
     'dataProvider'=>$model->getParticipantDataProvider(),
     'template'=>'{items} {pager}',
     'itemView'=>'_participant', 

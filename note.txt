@@ -28,3 +28,18 @@ $form->dropDownList($model,'sex',array('1'=>'men','2'=>'women'), array('options'
 // Attachment size
 echo '<img src="'.$model->getAttachment('thumb').'" />'; //thumbnail
 echo '<img src="'.$model->attachment.'" />'; //base image
+
+Implementation stage
+
+	array(
+			'name'=>'boats.name',
+			'header'=>'Boat',  
+			'value'=> function ($model) {
+                           $boatName = array();
+                           foreach ($model->boats as $boat) {
+                              $boatName[] = $boat->name;
+                           }
+                           return implode(', ', $boatName);
+                         } ,
+
+How certain paramerts are encode with htmlspecialchars(), therefore you need to return the array into the string array and serve the first value for the correct model instance

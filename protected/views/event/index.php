@@ -18,7 +18,7 @@ $this->menu=array(
 </section>
 
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php $this->widget('bootstrap.widgets.TbListView', array(
 	'dataProvider'=>$dataProvider,
 	'template'=>'{items}{pager}',
 	'itemView'=>'_view',

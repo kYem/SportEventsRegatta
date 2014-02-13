@@ -16,7 +16,11 @@ $this->breadcrumbs=array(
 <p class="note">
 Please select the events <?php echo $model->title; ?> group would like to join
 </p>
+<?php 
+	// Loose Checking
+	$RegisteredEvents = 'in_array($data->id,array('.($model->eventIds ?  implode(',', $model->eventIds) : '').'))';
 
+ ?>
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'usergroup-form',
 	// 'action' => Yii::app()->createUrl('//usergroup/groups/Updatep/id/'.$group_id),  //<- your form action here
@@ -67,17 +71,14 @@ Please select the events <?php echo $model->title; ?> group would like to join
 				'id'=>'eventIds',
 				'class'=>'CCheckBoxColumn',
 				'selectableRows'=>2,
-				'checked' => '($data->getRegisteredEvents($data))'
-
+				'checked' => $RegisteredEvents,
+				// 'disabled' => $RegisteredEvents,
 				),
 		),
 	)); 
-	print_r($model->eventIds);
- 	// print_r($model);
-
 		echo CHtml::Button(Yum::t('Cancel'), array(
-					'submit' => array('//usergroup/groups/view', 'id' => $model->id))); 
-		echo CHtml::submitButton(Yum::t('Save')); 
+					'submit' => array('//usergroup/groups/view', 'id' => $model->id), 'class'=>'btn')); 
+		echo CHtml::submitButton(Yum::t('Save'), array('class'=>'btn')); 
 	$this->endWidget(); 
  
 ?>
