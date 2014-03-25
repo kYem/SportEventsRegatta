@@ -61,7 +61,7 @@ class YumUsergroup extends YumActiveRecord{
 	public function getParticipantDataProvider() {
 		$criteria = new CDbCriteria;
 		// If there is no particpants assigned, search for id 0
-		// Outcome, no results found
+		// Outcome, no results found.
 		$criteria->compare('id', $participants = ($this->participants) ? $this->participants : 0);
 
 		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
