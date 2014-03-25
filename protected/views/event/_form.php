@@ -30,17 +30,17 @@
 	<div class="row">
 		<?php echo $form->labelEx(Boat::model(), 'Boat Type'); ?>
         <?php echo $form->error(Boat::model(), 'name'); ?>
-        <?php echo $form->dropDownList(	Boat::model(),'name', 
+        <?php echo $form->dropDownList(	Boat::model(),'name',
         		CHtml::listData(Boat::model()->findAll(), 'id', 'name'),
         		array('empty' => 'Select Age Group...')
         ); ?>
-       
+
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'star_date'); ?>
 		<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                 'model'=>$model,
-                'attribute'=>'star_date',               
+                'attribute'=>'star_date',
                 'value'=>$model->star_date,
                 'options'=>array(
                     'showAnim'=>'fold',
@@ -60,7 +60,7 @@
 
 		<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
                 'model'=>$model,
-                'attribute'=>'end_date',               
+                'attribute'=>'end_date',
                 'value'=>$model->end_date,
                 'options'=>array(
                     'showAnim'=>'fold',
@@ -97,7 +97,7 @@
 		<?php echo $form->labelEx($model,'age_id'); ?>
 		<?php echo $form->dropDownList(
         		$model,
-        		'age_id', 
+        		'age_id',
         		CHtml::listData(
     			Age::model()->findAll(), 'id', 'name'),
         		array('empty' => 'Select Age Group...')
@@ -109,10 +109,10 @@
 		<?php echo $form->labelEx($model,'organisation_id'); ?>
 		<?php echo $form->dropDownList(
         		$model,
-        		'organisation_id', 
+        		'organisation_id',
         		CHtml::listData(
-        			Organisation::model()->findAll(), 
-        				'id', 
+        			Organisation::model()->findAll(),
+        				'id',
         				'organisation'
         		),
         		array('empty' => 'Select Organisation...')
@@ -129,15 +129,15 @@
 		<?php echo $form->labelEx($model,'status_id'); ?>
 		<?php echo $form->dropDownList(
         		$model,
-        		'status_id', 
+        		'status_id',
         		CHtml::listData(Status::model()->findAll(), 'id', 'name')
 
         ); ?>
 		<?php echo $form->error($model,'status_id'); ?>
 	</div>
 	  <div class="row">
-	  <?php 
-		if ($model->filename) 
+	  <?php
+		if ($model->filename)
 		echo '<img src="'.Yii::app()->baseUrl.'/'. $model->getAttachment('thumb').'" />';
 
 		?>
@@ -146,7 +146,7 @@
         <?php echo $form->error($model,'filename'); ?>
     </div>
 </div>
-	
+
 
 <?php $this->endWidget(); ?>
 

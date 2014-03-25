@@ -76,6 +76,7 @@ class Event extends CActiveRecord
 			'boats' => array(self::MANY_MANY, 'Boat', 'ku_rg_event_boat(event_id, boat_id)'),
 			'users' => array(self::MANY_MANY, 'YumUser', 'ku_rg_user_event(event_id, user_id)'),
 			'groups' => array(self::MANY_MANY, 'YumUserGroup', 'ku_rg_group_event(event_id, group_id)'),
+			'groupCount' => array(self::STAT, 'YumUserGroup', 'ku_rg_group_event(event_id, group_id)'),
 			'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
 			'age_group' => array(self::BELONGS_TO, 'Age', 'age_id'),
 			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
@@ -83,7 +84,7 @@ class Event extends CActiveRecord
 	}
 	public function behaviors(){
         return array(
-        	'ESaveRelatedBehavior' => array(	
+        	'ESaveRelatedBehavior' => array(
          		'class' => 'application.components.ESaveRelatedBehavior'),
         	'image' => array(
 	            'class' => 'ext.AttachmentBehavior.AttachmentBehavior',
@@ -105,10 +106,10 @@ class Event extends CActiveRecord
 	                )
 	            ),*/
 	            'styles' => array(
-	                # name => size 
+	                # name => size
 	                # use ! if you would like 'keepratio' => false
 	                'thumb' => '!100x60',
-	            )           
+	            )
         	),
 			 'CAdvancedArBehavior' => array(
                                 'class' => 'application.modules.user.components.CAdvancedArBehavior'),
@@ -190,7 +191,7 @@ class Event extends CActiveRecord
 		$criteria->compare('organisation.organisation',$this->organisation_search, true);
 		$criteria->compare('t.seats',$this->seats);
 		$criteria->compare('status.name',$this->status_search, true);
-	    
+
 
 	    return new CActiveDataProvider( 'Event', array(
 		    'criteria'=>$criteria,
@@ -219,24 +220,63 @@ class Event extends CActiveRecord
 		));
 	}
 
-	// Function for displaying boat name in the search menu.
-	function showBoatNames($aaa) {
-                           $boatName = array();
-                           foreach ($aaa->boats as $boat) {
-                              $boatName[] = $boat->name;
+	public function adminDashboard()
+	{
+	    $criteria=new CDbCriteria;
+	    $criteria->with = array( 'boats', 'organisation','age_group', 'groups', 'status' );
+	    $criteria->together= true;
+	    // $criteria->alias = 'i';
+	    // $criteria->join= 'JOIN ku_rg_event_boat d ON (i.id=d.id)';
+	    $criteria->compare('t.id',$this->id);
+		$criteria->compare('t.name',$this->name,true);
+		$criteria->compare('boats.name', $this->boat_search, true );
+		$criteria->compare('age_group.name',$this->age_group_search, true);
+		$criteria->compare('organisation.organisation',$this->organisation_search, true);
+		$criteria->compare('t.seats',$this->seats);
+		$criteria->compare('status.name',$this->status_search, true);
 
-                           }
-                           return $boatName;
-                         } 
+	    return new CActiveDataProvider( 'Event', array(
+		    'criteria'=>$criteria,
+		    'sort'=>array(
+		    	'defaultOrder'=>'t.id ASC',
+		        'attributes'=>array(
+		            'organisation.organisation'=>array(
+		                'asc'=>'organisation.organisation',
+		                'desc'=>'organisation.organisation DESC',
+		            ),
+		             'age_group.name'=>array(
+		                'asc'=>'age_group.name',
+		                'desc'=>'age_group.name DESC',
+		            ),
+		            'boats.name'=>array(
+		                'asc'=>'boats.name',
+		                'desc'=>'boats.name DESC',
+		            ),
+
+		            '*',
+		        ),
+		    ),
+		));
+	}
+
+	// Function for displaying boat name in the search menu.
+	public function countRegGroups($model) {
+           $count = GroupEvent::model()->countByAttributes(
+                    array(
+                        'event_id'=> $model->id
+                    )
+                );
+                    return $count;
+         }
 
     public function getRegisteredEvents($data = null) {
     		$event = new Event;
 			foreach ($data->groups as $group)
-		        	if(in_array($data->id, $group->eventIds))     	
+		        	if(in_array($data->id, $group->eventIds))
 						return true;
 					else
 						return false;
-		}	
+		}
 
 	/**
 	 * Returns the static model of the specified AR class.

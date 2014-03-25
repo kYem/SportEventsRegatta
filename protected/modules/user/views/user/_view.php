@@ -1,8 +1,8 @@
-<div class="tooltip" id="tooltip_<?php echo $data->id; ?>"> 
+<div class="tooltip" id="tooltip_<?php echo $data->id; ?>">
 	<?php $this->renderPartial('_tooltip', array('data' =>  $data)); ?>
 </div>
 
-<div class="view_user" id="user_<?php echo $data->id;?>"> 
+<div class="view_user" id="user_<?php echo $data->id;?>">
 
 <?php
 $online = '';
@@ -16,7 +16,7 @@ if(Yum::hasModule('profile') && Yum::module('profile')->enablePrivacySetting) {
 
 ?>
 
-<?php printf('<h5>%s %s</h5>', 
+<?php printf('<h5>%s %s</h5>',
 	($data->profile['firstname'] && $data->profile['lastname']  ? $data->profile['firstname'].' '.$data->profile['lastname']  : ($data->username)), $online); ?>
 
 <?php echo CHtml::link($data->getAvatar(true),
@@ -33,7 +33,7 @@ $('#user_{$data->id}').tooltip({
 'predelay': 100,
 'fadeOutSpeed': 100,
 
-}); 
+});
 ");
 ?>
 

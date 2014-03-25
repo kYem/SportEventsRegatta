@@ -89,6 +89,17 @@ class GroupEvent extends CActiveRecord
 		));
 	}
 
+	// Function for displaying group count name in the search menu.
+	public function groupCount($id)
+	{
+       $count = GroupEvent::model()->countByAttributes(
+                array(
+                    'event_id'=> $model->id
+                )
+            );
+        return $count;
+    }
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!

@@ -9,13 +9,13 @@
     <div class="span3">
         <div id="sidebar">
 
-        
-        
+
+
         <div>
             <?php  echo TbHtml::imageRounded(Yii::app()->getBaseUrl().'/images/crews.png', 'Reggata'); ?>
             <h3></h3>
             <p style="text-align: left; "></p><p style="text-align: left; "></p>
-            <?php 
+            <?php
 
             if (Yii::app()->user->isGuest)        {
                 echo '<h3>Regatta Dates</h3>';
@@ -31,8 +31,8 @@
                  array(
                     'name' => 'name',
                     'header' => 'Event',
-                    
-                ),            
+
+                ),
                 'star_date',
             ),
         )); }?>
@@ -40,11 +40,11 @@
 
         </div>
 
-     <?php 
+     <?php
       if (Yii::app()->user->isAdmin()) {
     $this->widget('bootstrap.widgets.TbNav', array(
             'type' => TbHtml::NAV_TYPE_LIST,
-            'items'=>array(                
+            'items'=>array(
                 array('label'=>'Administration'),
                 array('label'=>'Dashboard', 'icon'=>'cog', 'url'=>array('//event/dashboard')),
                 array('label'=>'Users', 'icon'=>'user',
@@ -104,25 +104,25 @@
                             array('label' => 'Logout', 'url' => array('//user/user/logout')),
                             )
                         ),
-                TbHtml::menuDivider(),  
+                TbHtml::menuDivider(),
                 ),
         ));
     }
      if (!Yii::app()->user->isGuest) {
          $this->widget('bootstrap.widgets.TbNav', array(
             'type' => TbHtml::NAV_TYPE_LIST,
-            'items'=>array(                
+            'items'=>array(
                 array('label'=>'USER SETTINGS'),
                 array('label'=>'Profile', 'icon'=>'user', 'url'=>array('//profile/profile/view')),
                 // array('label'=>'Manage Profile', 'icon'=>'cog', 'url'=>array('//user/user/index')),
-                array('label'=>'Edit Profile', 'icon'=>'pencil', 'url'=>array('//profile/profile/update')),        
+                array('label'=>'Edit Profile', 'icon'=>'pencil', 'url'=>array('//profile/profile/update')),
                 // array('label' => 'Privacy settings','icon'=>'lock', 'url' => array('/profile/privacy/update')),
                  array(
                     'label' => 'Upload avatar image',
                     'url' => array('/avatar/avatar/editAvatar'),
                     'visible' => Yum::hasModule('avatar'),
                     ),
-                TbHtml::menuDivider(),                      
+                TbHtml::menuDivider(),
 
                 array('label' => 'Membership','visible' => Yum::hasModule('membership'),
                     'items' => array(
@@ -131,25 +131,25 @@
                         )
                     ),
 
-                array('label' => 'Messages', 'visible' => Yum::hasModule('message')),    
+                array('label' => 'Messages', 'visible' => Yum::hasModule('message')),
                 array('label' => 'My inbox', 'icon'=>'envelope', 'visible' => Yum::hasModule('message'),'url' => array('/message/message/index')),
                 array('label' => 'Sent messages', 'icon'=>'arrow-right', 'visible' => Yum::hasModule('message'), 'url' => array('/message/message/sent')),
-                 // TbHtml::menuDivider(),      
-                    
-                
+                 // TbHtml::menuDivider(),
+
+
                 array(
                     'label' => 'My friends',
                     'url' => array('/friendship/friendship/index'),
                     'visible' => Yum::hasModule('friendship') && Yii::app()->user->isAdmin()),
                 // array('label' => 'Browse users', 'url' => array('/user/user/browse')),
                 array('label' => 'Group'),
-                array('label' => 'My group', 
+                array('label' => 'My group',
                     'visible' =>  Yum::hasModule('usergroup') && !Yii::app()->user->isAdmin(),
-                    'url' => array('/usergroup/groups/index'), 
+                    'url' => array('/usergroup/groups/index'),
                     'icon'=>'bullhorn'),
-                 array('label' => 'Admin groups', 
+                 array('label' => 'Manage groups',
                     'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->isAdmin(),
-                    'url' => array('//usergroup/groups/admin'), 
+                    'url' => array('//usergroup/groups/admin'),
                     'icon'=>'bullhorn'),
 
 
@@ -159,26 +159,26 @@
                    /* array('label' => 'Browse Groups', 'url' => array(
                             '/usergroup/groups/browse'),
                         'visible' => Yum::hasModule('usergroup')),*/
-                  
-               
 
-               /* TbHtml::menuDivider(),              
+
+
+               /* TbHtml::menuDivider(),
                 array('label' => 'Misc', 'items' => array(
                             array('label' => 'Change password', 'url' => array('//user/user/changePassword')),
                             array('label' => 'Delete account', 'url' => array('//user/user/delete')),
                             array('label' => 'Logout', 'url' => array('//user/user/logout')),
                             )
                         ),*/
-                
-                
+
+
             ),
-        )); 
+        ));
     }
     ?>
     <p>&nbsp;</p>
     <?php
            /* $this->beginWidget('zii.widgets.CPortlet', array(
-                
+
             ));
             $this->widget('bootstrap.widgets.TbNav', array(
                 'type'=>'list',
@@ -188,7 +188,7 @@
             $this->endWidget();*/
 
         ?>
-        
+
         </div><!-- sidebar -->
     </div>
 </div>

@@ -1,10 +1,9 @@
 <?php
-$this->breadcrumbs=array(
-	'Groups'=>array('index'),
-	$model->title=>array('view','id'=>$model->id),
-	Yii::t('app', 'Join Events'),
-);
-
+	$this->breadcrumbs=array(
+		'Groups'=>array('index'),
+		$model->title=>array('view','id'=>$model->id),
+		Yii::t('app', 'Join Events'),
+	);
 ?>
 <h2>Group <?php echo $model->title; ?> - Join Event  </h2>
 <?php if(Yii::app()->user->hasFlash('success')):?>
@@ -13,9 +12,7 @@ $this->breadcrumbs=array(
     </div>
 <?php endif; ?>
 <div class="form">
-<p class="note">
-Please select the events <?php echo $model->title; ?> group would like to join
-</p>
+<p class="note">Please select the events <?php echo $model->title; ?> group would like to join</p>
 <?php 
 	// Loose Checking
 	$RegisteredEvents = 'in_array($data->id,array('.($model->eventIds ?  implode(',', $model->eventIds) : '').'))';
@@ -23,8 +20,7 @@ Please select the events <?php echo $model->title; ?> group would like to join
  ?>
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'usergroup-form',
-	// 'action' => Yii::app()->createUrl('//usergroup/groups/Updatep/id/'.$group_id),  //<- your form action here
-	'enableAjaxValidation'=>true,
+	'enableAjaxValidation'=>false,
 	)); 
 	echo $form->errorSummary($model);
 
@@ -32,8 +28,6 @@ Please select the events <?php echo $model->title; ?> group would like to join
 		'id'=>'event-grid',
 		'type' => TbHtml::GRID_TYPE_HOVER,
 		'dataProvider'=>$model->getEventDataProvider(),
-		// 'ajaxUpdate' => false,
-		// 'filter'=>$event,
 		'columns'=>array(
 			'id',
 			'name',
@@ -44,13 +38,13 @@ Please select the events <?php echo $model->title; ?> group would like to join
 			array(
 				'name'=>'boats.name',
 				'header'=>'Boat',  
-				'value'=> function ($event) {
+				'value'=> 	function ($event) {
 	                           $boatName = array();
 	                           foreach ($event->boats as $boat) {
 	                              $boatName[] = $boat->name;
 	                           }
 	                           return implode(', ', $boatName);
-	                         } ,
+	                        } ,
 		        'filter'=>CHtml::activeTextField($event,'boat_search'),
 				'type'=>'text'),
 			array('name'=>'organisation.organisation',    

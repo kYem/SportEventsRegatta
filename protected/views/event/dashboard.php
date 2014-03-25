@@ -20,36 +20,36 @@ $this->menu=array(
 
 
 
-
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'event-grid',
 	'type' => TbHtml::GRID_TYPE_HOVER,
-	'dataProvider'=>$model->searchEvents(),
+	'dataProvider'=>$model->adminDashboard(),
 	// 'ajaxUpdate' => false,
 	'filter'=>$model,
 	'columns'=>array(
 		// 'id',
-		'name',
-		array('name'=>'age_group.name',
-	    'header'=> 'Age Group',
+		array('name'=>'organisation.organisation',
 	    'filter'=>CHtml::activeTextField($model,'age_group_search'),
 	    ),
+        'name',
 		array(
-			'name'=>'boats.name',
-			'header'=>'Boat',  
+			'header'=>'Groups',
 			'value'=> function ($model) {
-                           $boatName = array();
-                           foreach ($model->boats as $boat) {
-                              $boatName[] = $boat->name;
-                           }
-                           return implode(', ', $boatName);
-                         } ,
+                $count = GroupEvent::model()->countByAttributes(
+                    array(
+                        'event_id'=> $model->id
+                    )
+                );
+                    return $count;
+                    },
 	        'filter'=>CHtml::activeTextField($model,'boat_search'),
 			'type'=>'text'),
-		'seats',
 		array('name'=>'status.name',
-		'header'=> 'Status',    
+		'header'=> 'Progress',
 	    'filter'=>CHtml::activeTextField($model,'status_search'),
 	    ),
 	),
 )); ?>
+
+
+<?php echo '<pre>'; print_r($model->id); echo '</pre>'; ?>

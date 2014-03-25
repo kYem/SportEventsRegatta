@@ -14,7 +14,7 @@ class YumUsergroup extends YumActiveRecord{
 			'CSerializeBehavior' => array(
 					'class' => 'application.modules.user.components.CSerializeBehavior',
 					'serialAttributes' => array('participants')),
-			'ESaveRelatedBehavior' => array(	
+			'ESaveRelatedBehavior' => array(
          		'class' => 'application.components.ESaveRelatedBehavior'),
 			);
 	}
@@ -28,10 +28,10 @@ class YumUsergroup extends YumActiveRecord{
 	{
 		return array(
 			array('title, description', 'required'),
-			array('id, owner_id', 'numerical', 'integerOnly'=>true),
+			array('id, owner_id, organisation_id', 'numerical',  'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('participants, eventIds', 'safe'),
-			array('id, title, description', 'safe', 'on'=>'search'),
+			array('id, title, description, organisation_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,6 +42,7 @@ class YumUsergroup extends YumActiveRecord{
 			'messages' => array(self::HAS_MANY, 'YumUsergroupMessage', 'group_id'),
 			'messagesCount' => array(self::STAT, 'YumUsergroupMessage', 'group_id'),
 			'events' => array(self::MANY_MANY, 'Event', 'ku_rg_group_event(group_id, event_id)'),
+			'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
 		);
 	}
 
@@ -53,20 +54,23 @@ class YumUsergroup extends YumActiveRecord{
 			'description' => Yum::t('Description'),
 			'participants' => Yum::t('Participants'),
 			'owner_id' => Yum::t('Group owner'),
+			'organisation_id' => Yum::t('Organisation')
 		);
 	}
 
 	public function getParticipantDataProvider() {
 		$criteria = new CDbCriteria;
-		$criteria->compare('id', $this->participants);
-	
+		// If there is no particpants assigned, search for id 0
+		// Outcome, no results found
+		$criteria->compare('id', $participants = ($this->participants) ? $this->participants : 0);
+
 		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
 	}
 
 	public function getEventDataProvider($statusId = 1) {
 		$criteria = new CDbCriteria;
 		$criteria->compare('status_id', $statusId);
-	
+
 		return new CActiveDataProvider('Event', array('criteria' => $criteria));
 	}
 
@@ -74,15 +78,15 @@ class YumUsergroup extends YumActiveRecord{
 		Yii::import('application.modules.usergroup.models.*');
 		$criteria = new CDbCriteria;
 		$criteria->compare('group_id', $this->id);
-	
+
 		return new CActiveDataProvider('YumUsergroupMessage', array(
 					'criteria' => $criteria));
 	}
 
 	public function getRegisteredEvents($data) {
-			
+
 			return in_array($data->id, $data->events);
-		}	
+		}
 
 	public function afterFind()
 	   {

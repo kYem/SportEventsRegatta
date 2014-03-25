@@ -11,13 +11,13 @@ $this->title = Yum::t('Usergroups'); ?>
 			'itemView'=>'_view',
 			)); ?>
 
-<?php 
-	if(Yii::app()->user->can('userGroup', 'create')) {
-	
+<?php
+	if(Yii::app()->user->isAdmin()) {
+
 	echo CHtml::button(Yum::t('Create new Group'), array(
-					'submit' => array('//usergroup/groups/create'), 'class'=>'btn')); 
+					'submit' => array('//usergroup/groups/create'), 'class'=>'btn'));
 	}
 
 
-			
+
 ?>
