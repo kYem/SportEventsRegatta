@@ -25,7 +25,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
   		'application.modules.user.models.*',
-  		'application.modules.usergroup.models.*'
+  		'application.modules.usergroup.models.*',
   		'bootstrap.helpers.TbHtml',
   		'bootstrap.helpers.TbArray',
 	),
