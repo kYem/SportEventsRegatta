@@ -223,7 +223,7 @@ class Event extends CActiveRecord
 	public function adminDashboard()
 	{
 	    $criteria=new CDbCriteria;
-	    $criteria->with = array( 'boats', 'organisation','age_group', 'groups', 'status' );
+	    $criteria->with = array( 'boats', 'organisation','age_group', 'status' );
 	    $criteria->together= true;
 	    // $criteria->alias = 'i';
 	    // $criteria->join= 'JOIN ku_rg_event_boat d ON (i.id=d.id)';
