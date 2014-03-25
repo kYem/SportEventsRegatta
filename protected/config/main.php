@@ -15,7 +15,7 @@ return array(
 
 	 // path aliases
     'aliases' => array(
-        'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'), 
+        'bootstrap' => realpath(__DIR__ . '/../extensions/bootstrap'),
       	// yiiwheels configuration
     	'yiiwheels' => realpath(__DIR__ . '/../extensions/yiiwheels'),
     ),
@@ -25,6 +25,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
   		'application.modules.user.models.*',
+  		'application.modules.usergroup.models.*'
   		'bootstrap.helpers.TbHtml',
   		'bootstrap.helpers.TbArray',
 	),
@@ -84,16 +85,16 @@ return array(
 		'cache' => array('class' => 'system.caching.CDummyCache'),
 
 		'bootstrap' => array(
-            'class' => 'bootstrap.components.TbApi',   
+            'class' => 'bootstrap.components.TbApi',
         ),
 		'yiiwheels' => array(
-            'class' => 'yiiwheels.YiiWheels',   
+            'class' => 'yiiwheels.YiiWheels',
         ),
-		
+
 		// uncomment the following to enable URLs in path-format
 		'urlManager'=>array(
 			'urlFormat'=>'path',
-			'showScriptName' => false, 
+			'showScriptName' => false,
 			'rules'=>array(
 				''=>'site/index',
 				'<view:(about)>' => 'site/page',
@@ -106,7 +107,7 @@ return array(
 		),
 				// uncomment the following to use a MySQL database
 		'db' => require(dirname(__FILE__) . '/db.php'),
-		
+
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
@@ -123,7 +124,7 @@ return array(
 		),
 		// Not Tracked local config
 		 'log'=>require(dirname(__FILE__) . '/log.php'),
-		
+
 	),
 
 	// application-level parameters that can be accessed
