@@ -4,8 +4,7 @@ $this->title = Yum::t('{role}', array(
 
 $this->breadcrumbs=array(
 	Yum::t('Roles')=>array('index'),
-	Yum::t('View'),
-	$model->title
+	Yum::t($model->title)
 );
 
 echo $model->description;
@@ -14,15 +13,15 @@ echo $model->description;
  ?>
 
 <br />
-<?php echo Yum::p('These users have been assigned to this role'); ?> 
+<?php echo Yum::p('These users have been assigned to this role'); ?>
 
-<?php 
+<?php
 if($assignedUsers);
 $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider'=>$assignedUsers,
     'columns'=>array(
-        'username',          
-        'status',          
+        'username',
+        'status',
     ),
 ));
 ?>
@@ -34,7 +33,7 @@ if(Yum::hasModule('membership') && $model->membership_priority) {
 		echo Yum::t('Membership price') . ': '. $model->price . '<br />';
 		echo Yum::t('Membership duration') . ': '. $model->duration . '<br />';
 
-		echo Yum::p('These users have a ordered memberships of this role'); 
+		echo Yum::p('These users have a ordered memberships of this role');
 
 		if($activeMemberships)
 			$this->widget('bootstrap.widgets.TbGridView', array(

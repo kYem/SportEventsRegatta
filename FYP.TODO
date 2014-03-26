@@ -8,7 +8,7 @@
  ☐ Group view inconsistent menu
 
  Dashboard:
-   ☐ Design Dashboard
+   ✔ Design Dashboard @done (14-03-26 03:16)
      ☐ Scetch layout for each role
    ☐ Add overview of current events at bottom of $content
    ☐
@@ -23,11 +23,10 @@
 Group:
   ☐ Change layout of group @view
   ☐ if user is owner -> show admin interface
-    ☐ Allow group leader to show interest in status = initial registration  events
+    ✔ Allow group leader to show interest in status = initial registration  events @done (14-03-26 03:16)
     ☐ Add users to open events
  Leaders:
   ☐ Can only add un assigned members. @form
-  ☐ Team Leader can be a member too. @form
 
 User:
   ☐ Add DOB to every user

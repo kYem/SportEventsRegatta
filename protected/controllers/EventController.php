@@ -32,16 +32,16 @@ class EventController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('admin'),
+				'actions'=>array('dashboard'),
+				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'dashboard'),
+				'actions'=>array('admin','delete', 'create','update', 'ChangeRegattaPhase'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
-				// 'deniedCallback' =>  function() { Yii::app()->controller->redirect(array ('/site/index')); }
+				'deniedCallback' =>  function() { Yii::app()->controller->redirect(array ('/site/index')); }
 			),
 		);
 	}
@@ -71,15 +71,15 @@ class EventController extends Controller
 		if(isset($_POST['Event']))
 		{
 			$model->attributes=$_POST['Event'];
-			
+
 			if(isset($_POST['Boat']))
 			{
 				$model->boats = $_POST['Boat'];
 			}
-			
+
 			if($model->saveWithRelated('boats')) {
 				$this->redirect(array('admin'));
-			} 
+			}
 		}
 
 		$this->render('create',array(
@@ -140,7 +140,7 @@ class EventController extends Controller
 			'Event',
 			array(
 			    'criteria' => array(
-			      
+
 			    ),
 			    'pagination'=>array(
 			      'pageSize'=>9,
@@ -169,12 +169,12 @@ class EventController extends Controller
     }
 			/*Event::model()->attributes = $_GET['Boat'];*/
 		$this->render('admin',array(
-			'model'=>$model,		
+			'model'=>$model,
 		));
 	}
 
 	/**
-	 * Manages dashboard 
+	 * Manages dashboard
 	 */
 	public function actionDashboard()
 	{
@@ -190,10 +190,26 @@ class EventController extends Controller
     }
 			/*Event::model()->attributes = $_GET['Boat'];*/
 		$this->render('dashboard',array(
-			'model'=>$model,		
+			'model'=>$model,
 		));
 	}
-	
+
+
+	/**
+	 * Change Phase for all Events
+	 */
+	public function actionChangeRegattaPhase()
+	{
+		if(isset($_POST['Event']['status_id']))
+			$stat_id = (int) $_POST['Event']['status_id'];
+
+		$sql='UPDATE ku_rg_event set status_id = '.$stat_id.';';
+
+		$result = Yii::app()->db->createCommand($sql)->execute();
+		if($result)
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('dashboard'));
+	}
+
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

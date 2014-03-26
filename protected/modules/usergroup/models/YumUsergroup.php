@@ -27,7 +27,7 @@ class YumUsergroup extends YumActiveRecord{
 	public function rules()
 	{
 		return array(
-			array('title, description', 'required'),
+			array('title, organisation_id', 'required'),
 			array('id, owner_id, organisation_id', 'numerical',  'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('participants, eventIds', 'safe'),

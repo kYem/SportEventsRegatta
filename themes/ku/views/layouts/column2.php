@@ -113,6 +113,11 @@
             'type' => TbHtml::NAV_TYPE_LIST,
             'items'=>array(
                 array('label'=>'USER SETTINGS'),
+                array(
+                    'label'=>'Dashboard', 'icon'=>'cog',
+                    'url'=>array('//event/dashboard'),
+                    'visible' => !Yii::app()->user->isAdmin(),
+                    ),
                 array('label'=>'Profile', 'icon'=>'user', 'url'=>array('//profile/profile/view')),
                 // array('label'=>'Manage Profile', 'icon'=>'cog', 'url'=>array('//user/user/index')),
                 array('label'=>'Edit Profile', 'icon'=>'pencil', 'url'=>array('//profile/profile/update')),
@@ -124,24 +129,12 @@
                     ),
                 TbHtml::menuDivider(),
 
-                array('label' => 'Membership','visible' => Yum::hasModule('membership'),
-                    'items' => array(
-                        array('label' => 'My memberships', 'url' => array('/membership/membership/index')),
-                        array('label' => 'Browse memberships', 'url' => array('/membership/membership/order')),
-                        )
-                    ),
-
-                array('label' => 'Messages', 'visible' => Yum::hasModule('message')),
-                array('label' => 'My inbox', 'icon'=>'envelope', 'visible' => Yum::hasModule('message'),'url' => array('/message/message/index')),
-                array('label' => 'Sent messages', 'icon'=>'arrow-right', 'visible' => Yum::hasModule('message'), 'url' => array('/message/message/sent')),
-                 // TbHtml::menuDivider(),
 
 
                 array(
                     'label' => 'My friends',
                     'url' => array('/friendship/friendship/index'),
                     'visible' => Yum::hasModule('friendship') && Yii::app()->user->isAdmin()),
-                // array('label' => 'Browse users', 'url' => array('/user/user/browse')),
                 array('label' => 'Group'),
                 array('label' => 'My group',
                     'visible' =>  Yum::hasModule('usergroup') && !Yii::app()->user->isAdmin(),

@@ -43,10 +43,10 @@ $locale = CLocale::getInstance(Yii::app()->language);
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
-		'owner_id',
+		// 'id',
+		'owner.profile.fullname',
 		'title',
-		'description',
+		// 'description',
 		array(
             'class'=>'bootstrap.widgets.TbButtonColumn',
             'htmlOptions'=>array('style'=>'width: 50px'),

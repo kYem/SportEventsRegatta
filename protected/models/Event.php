@@ -127,11 +127,11 @@ class Event extends CActiveRecord
 			'name' => 'Name',
 			'star_date' => 'Start Date',
 			'end_date' => 'End Date',
-			'min_participant' => 'Min Participant',
-			'max_participant' => 'Max Participant',
+			'min_participant' => 'Min Groups',
+			'max_participant' => 'Max Groups',
 			'age_id' => 'Age Group',
 			'organisation_id' => 'Organisation',
-			'seats' => 'Seats',
+			'seats' => 'Number in a boat',
 			'status_id' => 'Status',
 			'filename' => 'Image'
 		);

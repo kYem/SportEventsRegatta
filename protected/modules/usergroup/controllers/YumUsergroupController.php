@@ -11,24 +11,24 @@ class YumUsergroupController extends YumController {
 
 	public function accessRules() {
 		return array(
-				array('allow',  
+				array('allow',
 					'actions'=>array('index','view'),
 					'users'=>array('*'),
 					),
-				array('allow', 
+				array('allow',
 					'actions'=>array(
 					'getOptions', 'create','update', 'browse', 'join', 'leave', 'write', 'assign', ),
 					'users'=>array('@'),
 					),
-				array('allow', 
+				array('allow',
 					'actions'=>array('JoinEvent', 'JoinInitialEvent', 'UpdateMembers'),
 					'expression' => 'Yii::app()->user->can("userGroup", "create")',
 					),
-				array('allow', 
+				array('allow',
 					'actions'=>array('admin','delete'),
 					'users'=>array('admin'),
 					),
-				array('deny', 
+				array('deny',
 					'users'=>array('*'),
 					),
 				);
@@ -43,7 +43,7 @@ class YumUsergroupController extends YumController {
 			$message->author_id = Yii::app()->user->id;
 
 			$message->save();
-		}	
+		}
 
 		$this->redirect(array('//usergroup/groups/view',
 					'id' => $message->group_id));
@@ -51,7 +51,7 @@ class YumUsergroupController extends YumController {
 	}
 
 
-						
+
 	public function actionJoin($id = null) {
 		if($id !== null) {
 			$p = YumUsergroup::model()->findByPk($id);
@@ -82,7 +82,7 @@ class YumUsergroupController extends YumController {
 	*/
 
 	public function actionJoinEvent($id = null) {
-			
+
 			$model = $this->loadModel($id);
 			$event = new Event;
 		$this->performAjaxValidation($model, 'usergroup-form');
@@ -106,7 +106,7 @@ class YumUsergroupController extends YumController {
 	*/
 
 	public function actionJoinInitialEvent($id = null) {
-			
+
 			$model = $this->loadModel($id);
 			$event = new Event;
 			$this->performAjaxValidation($model, 'usergroup-eventInitial');
@@ -118,9 +118,9 @@ class YumUsergroupController extends YumController {
 			if($model->saveWithRelated('events')) {
 				Yii::app()->user->setFlash('success', "Data Was saved!");
 				$this->redirect(array('view','id'=>$model->id));
-			} else 
+			} else
 				Yii::app()->user->setFlash('success', "Data NOT saved!");
-		} 
+		}
 
 		$this->render('event-reg',array( 'model'=>$model, 'event' => $event));
 	}
@@ -153,7 +153,7 @@ class YumUsergroupController extends YumController {
 			$this->redirect(array('//usergroup/groups/view', 'id' => $id));
 		} else throw new CHttpException(404, 'You Cannot Assign Members to the Team');
 
-				
+
 		$participants = $model->findByPk($group_id)->participants;
 
 		print_r($participants);
@@ -163,12 +163,12 @@ class YumUsergroupController extends YumController {
 		  foreach($groupMembers as $key => $groupMember) {
 		      foreach($participants as $key => $participantId) {
 		        if($groupMember->id == $participantId)
-		        print_r('<br />'.$participantId);          
+		        print_r('<br />'.$participantId);
 		      // print_r(YumUser::model()->getUsersByRole('TeamMember'));
 		      }
 		  }
-		}  
-	
+		}
+
 	}
 
   /**
@@ -213,9 +213,9 @@ class YumUsergroupController extends YumController {
 	{
 		if($this->_model === null)
 		{
-			if(is_numeric($id))	
+			if(is_numeric($id))
 				$this->_model = YumUsergroup::model()->findByPk($id);
-			else if(is_string($id))	
+			else if(is_string($id))
 				$this->_model = YumUsergroup::model()->find('title = :title', array(
 							':title' => $id));
 			if($this->_model === null)
@@ -231,10 +231,11 @@ class YumUsergroupController extends YumController {
 
 		if(isset($_POST['YumUsergroup'])) {
 			$model->attributes = $_POST['YumUsergroup'];
-			$model->owner_id = Yii::app()->user->id;
-			$model->participants = array($model->owner_id);
+			// Current User Becomes the owner
+			// $model->owner_id = Yii::app()->user->id;
+			// $model->participants = array($model->owner_id);
 
-			if($model->save()) 
+			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
@@ -274,13 +275,13 @@ class YumUsergroupController extends YumController {
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-			
+
 		if(isset($_POST['YumUsergroup'])) {
 			$model->attributes = $_POST['YumUsergroup'];
 			// $model->participants = array($model->owner_id);
-			if($model->save()) 
+			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
-		}	
+		}
 	}
 
 	public function actionDelete()
@@ -292,7 +293,7 @@ class YumUsergroupController extends YumController {
 			if(!isset($_GET['ajax']))
 			{
 				if(isset($_POST['returnUrl']))
-					$this->redirect($_POST['returnUrl']); 
+					$this->redirect($_POST['returnUrl']);
 				else
 					$this->redirect(array('admin'));
 			}

@@ -2,6 +2,7 @@
 
 class YumProfile extends YumActiveRecord
 {
+	public $fullName;
 
 	public function recentComments($count = 3) {
 		$criteria = new CDbCriteria;
@@ -21,7 +22,7 @@ class YumProfile extends YumActiveRecord
 	}
 
 	/**
-	 * Returns resolved table name 
+	 * Returns resolved table name
 	 * @return string
 	 */
 	public function tableName()
@@ -30,7 +31,7 @@ class YumProfile extends YumActiveRecord
 		return $this->_tableName;
 	}
 
-	// define your project-specific profile field rules in your 
+	// define your project-specific profile field rules in your
 	// config/main.php  'profile' => 'profileRules' section
 	public function rules() {
 		$rules = array();
@@ -39,8 +40,8 @@ class YumProfile extends YumActiveRecord
 
 		foreach(Yum::module('profile')->requiredProfileFields as $field)
 			$rules[] = array($field, 'required');
-	
-		$rules = array_merge($rules, Yum::module('profile')->profileRules);	
+
+		$rules = array_merge($rules, Yum::module('profile')->profileRules);
 
 		return $rules;
 
@@ -92,7 +93,7 @@ class YumProfile extends YumActiveRecord
 	}
 
 	public function afterSave() {
-		if($this->isNewRecord) 
+		if($this->isNewRecord)
 			Yii::log(Yum::t( 'A profile been created: {profile}', array(
 							'{profile}' => json_encode($this->attributes))));
 		else
@@ -103,4 +104,12 @@ class YumProfile extends YumActiveRecord
 	}
 
 
+	/**
+	 * Combine First and Last Name
+	 * @return type
+	 */
+	function getFullName()
+	{
+	    return $fullName = $this->firstname.' '.$this->lastname;
+	}
 }

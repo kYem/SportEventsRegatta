@@ -137,7 +137,7 @@ class YumUser extends YumActiveRecord
     $criteria->compare('t.createtime', $this->createtime, true);
     $criteria->compare('t.lastvisit', $this->lastvisit, true);
 
-    $sort->attributes[] = '*'; 
+    $sort->attributes[] = '*';
 
     return new CActiveDataProvider(get_class($this), array(
       'criteria' => $criteria,
@@ -147,7 +147,7 @@ class YumUser extends YumActiveRecord
   }
 
   public function beforeValidate() {
-    if ($this->isNewRecord) 
+    if ($this->isNewRecord)
       $this->createtime = time();
 
     return true;
@@ -174,7 +174,7 @@ class YumUser extends YumActiveRecord
 
   public function afterSave()
   {
-    if (Yum::hasModule('profile') 
+    if (Yum::hasModule('profile')
       && Yum::module('profile')->enablePrivacySetting) {
         // create a new privacy setting, if not already available
         $setting = YumPrivacySetting::model()->findByPk($this->id);
@@ -252,7 +252,7 @@ class YumUser extends YumActiveRecord
       // require an avatar image in the avatar upload screen
       $rules[] = array('avatar', 'required', 'on' => 'avatarUpload');
 
-      // if automatic scaling is deactivated, require the exact size	
+      // if automatic scaling is deactivated, require the exact size
       $rules[] = array('avatar', 'EPhotoValidator',
         'allowEmpty' => true,
         'mimeType' => array('image/jpeg', 'image/png', 'image/gif'),
@@ -264,7 +264,7 @@ class YumUser extends YumActiveRecord
     }
 
 
-    if (Yum::hasModule('role')) 
+    if (Yum::hasModule('role'))
       $rules[] = array('filter_role', 'safe');
 
     return $rules;
@@ -286,8 +286,8 @@ class YumUser extends YumActiveRecord
         'insert into %s (user_id, role_id) values(%s, %s)',
         Yum::module('role')->userRoleTable,
         $this->id,
-        $role->id))->execute(); 
-    else 
+        $role->id))->execute();
+    else
       return false;
   }
 
@@ -306,7 +306,7 @@ class YumUser extends YumActiveRecord
     }
 
     foreach ($roles as $role)
-      if ((is_numeric($role) && $role == $role_title) 
+      if ((is_numeric($role) && $role == $role_title)
         || ($role->id == $role_title || $role->title == $role_title))
         return true;
 
@@ -343,7 +343,7 @@ class YumUser extends YumActiveRecord
 
     $role_ids = array();
 
-    foreach ($roles as $role) 
+    foreach ($roles as $role)
       $role_ids[] = $role->id;
 
     $cmd = Yii::app()->db->createCommand()
@@ -367,7 +367,7 @@ class YumUser extends YumActiveRecord
   }
 
   // checks if the user can access a give action.
-  // when a subaction is specified, both actions need to be 
+  // when a subaction is specified, both actions need to be
   // fulfilled (for example action 'forum', subaction 'read')
   public function can($action, $subaction = null) {
     $permissions = $this->getPermissions($subaction);
@@ -522,21 +522,21 @@ class YumUser extends YumActiveRecord
 		$profile->save(false);
 
 		if(Yum::hasModule('role'))
-			foreach(Yum::module('registration')->defaultHybridAuthRoles as $role) 
+			foreach(Yum::module('registration')->defaultHybridAuthRoles as $role)
 				Yii::app()->db->createCommand(sprintf(
 							'insert into %s (user_id, role_id) values(%s, %s)',
 							Yum::module('role')->userRoleTable,
 							$this->id,
-							$role))->execute(); 
+							$role))->execute();
 
 		return true;
 	}
 
-	// Registers a user 
+	// Registers a user
 	public function register($username = null,
 			$password = null,
 			$profile = null) {
-		if (!($profile instanceof YumProfile)) 
+		if (!($profile instanceof YumProfile))
 			return false;
 
 		if ($username !== null && $password !== null) {
@@ -564,12 +564,12 @@ class YumUser extends YumActiveRecord
 			$this->profile = $profile;
 
 			if(Yum::hasModule('role'))
-				foreach(Yum::module('registration')->defaultRoles as $role) 
+				foreach(Yum::module('registration')->defaultRoles as $role)
 					Yii::app()->db->createCommand(sprintf(
 								'insert into %s (user_id, role_id) values(%s, %s)',
 								Yum::module('role')->userRoleTable,
 								$this->id,
-								$role))->execute(); 
+								$role))->execute();
 
 			Yum::log(Yum::t('User {username} registered. Generated activation Url is {activation_url} and has been sent to {email}',
 						array(
@@ -751,6 +751,18 @@ class YumUser extends YumActiveRecord
 		return $role ? $role->users : null;
 	}
 
+  /**
+   * Get all users with a specified role.
+   * @param string $roleTitle title of role to be searched
+   * @return array users with specified role. Null if none are found.
+   */
+  public static function getUsersByRoleNotIn($roleTitle)
+  {
+    Yii::import('application.modules.role.models.*');
+    $role = YumRole::model()->findByAttributes(array('title' => $roleTitle));
+    return $role ? $role->users : null;
+  }
+
 	/**
 	 * Return admins.
 	 * @return array syperusers names
@@ -765,11 +777,11 @@ class YumUser extends YumActiveRecord
 	}
 
 	public function getGravatarHash() {
-		return md5(strtolower(trim($this->profile->email)));		
+		return md5(strtolower(trim($this->profile->email)));
 	}
 
 	public function syncRoles($roles = null) {
-		if(Yum::hasModule('role')){ 
+		if(Yum::hasModule('role')){
 			Yii::import('application.modules.role.models.*');
 
 				$query = sprintf("delete from %s where user_id = %s",
@@ -800,7 +812,7 @@ class YumUser extends YumActiveRecord
 
 			$return = '<div class="avatar">';
 
-			if(Yum::module('avatar')->enableGravatar && $this->avatar == 'gravatar') 
+			if(Yum::module('avatar')->enableGravatar && $this->avatar == 'gravatar')
 				return CHtml::image(
 						'http://www.gravatar.com/avatar/'. $this->getGravatarHash(),
 						Yum::t('Avatar image'),
@@ -819,4 +831,12 @@ class YumUser extends YumActiveRecord
 			return $return;
 		}
 	}
+  /**
+   * Combine First and Last Name
+   * @return type
+   */
+  function getFullName()
+  {
+      return $fullName = $this->profile->firstname.' '.$this->profile->lastname;
+  }
 }

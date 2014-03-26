@@ -4,19 +4,19 @@
 </p>
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-'id'=>'usergroup-form',
-'action' => Yii::app()->createUrl('//usergroup/groups/UpdateMembers/id/'.$group_id),  //<- your form action here
+'id'=>'changePhase-form',
+'action' => Yii::app()->createUrl('//event/ChangeRegattaPhase'),  //<- your form action here
 'enableAjaxValidation'=>true,
-	));
-	echo $form->errorSummary($model);
+    ));
+    echo $form->errorSummary($model);
 
 ?>
 <div class="row">
-<?php echo $form->checkBoxListControlGroup($model, 'participants', CHtml::listData(YumUser::model()->getUsersByRole('Group member'),'id', 'username')); ?>
+<?php echo $form->dropDownList($model, 'status_id', CHtml::listData(Status::model()->findAll(array('order' => 'id ASC')),'id', 'name')); ?>
     </div>
 <?php
 echo CHtml::Button(Yum::t('Cancel'), array(
-			'submit' => array('//usergroup/groups/view', 'id' => $model->id)));
+            'submit' => array('//usergroup/groups/view', 'id' => $model->id)));
 echo CHtml::submitButton(Yum::t('Save'));
 $this->endWidget();
 
