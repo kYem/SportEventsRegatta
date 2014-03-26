@@ -15,9 +15,9 @@ class ProfileModule extends CWebModule {
 	// set this to true to allow all users to access user profiles
 	public $profilesViewableByGuests = true;
 
-	public $enableProfileVisitLogging = true;
+	public $enableProfileVisitLogging = false;
 	public $enablePrivacySetting = true;
-	public $enableProfileComments = true;
+	public $enableProfileComments = false;
 
 	public $profileTable = '{{profile}}';
 	public $privacySettingTable = '{{privacysetting}}';
@@ -42,7 +42,7 @@ class ProfileModule extends CWebModule {
 
 	// Which columns should be displayed in the user administration Grid
 	// public $gridColumns = array('email', 'firstname', 'lastname', 'street');
-  	public $gridColumns = array('email', 'firstname', 'lastname');
+  	public $gridColumns = array('email', 'firstname', 'lastname', 'dob');
 	public $controllerMap=array(
 			'comments'=>array(
 				'class'=>'ProfileModule.controllers.YumProfileCommentController'),

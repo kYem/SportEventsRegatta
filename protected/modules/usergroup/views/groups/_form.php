@@ -5,6 +5,7 @@
 <?php
 
     // Get Group Leaders without a group
+    // @TODO move it to the model
     $criteria = new CDbCriteria;
     $criteria->select = 't.user_id, t.firstname, t.lastname ';
     $criteria->join = ' INNER JOIN `ku_user_role` AS `user_role` ON t.user_id = user_role.user_id';

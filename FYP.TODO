@@ -23,10 +23,12 @@
 Group:
   ☐ Change layout of group @view
   ☐ if user is owner -> show admin interface
+  ☐ Groups are created by Event Organiser only
     ✔ Allow group leader to show interest in status = initial registration  events @done (14-03-26 03:16)
     ☐ Add users to open events
+  ☐ Move getLeadersWithoutGroup to model from _form.php
  Leaders:
-  ☐ Can only add un assigned members. @form
+  ✔ Can only add un assigned members. @form @done (14-03-26 04:34)
 
 User:
   ☐ Add DOB to every user
