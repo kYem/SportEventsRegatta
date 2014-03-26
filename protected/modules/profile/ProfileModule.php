@@ -37,8 +37,8 @@ class ProfileModule extends CWebModule {
 		'application.modules.profile.views.profileComment.index';
 	public $profileCommentCreateView =
 		'application.modules.profile.views.profileComment.create';
-  public $profileEditView = '/profile/update';
-  public $privacySettingView= '/privacy/update';
+  	public $profileEditView = '/profile/update';
+  	public $privacySettingView= '/privacy/update';
 
 	// Which columns should be displayed in the user administration Grid
 	// public $gridColumns = array('email', 'firstname', 'lastname', 'street');
