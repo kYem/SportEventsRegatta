@@ -23,14 +23,13 @@ if(Yii::app()->user->hasFlash('success')){
 	printf('<h4> %s </h4>', Yum::t('Participants'));
 
 	if (Yii::app()->user->can("userGroup", "create")) {
-	echo CHtml::link(Yum::t('Assign User'), '', array(
+	   echo CHtml::link(Yum::t('Assign User'), '', array(
 				'onClick' => "$('#usergroup_members').toggle(500)", 'class'=>'btn'));
 
 		echo CHtml::link(' Join Event', array(
 						'//usergroup/groups/joinEvent', 'id' => $model->id),array('class'=>'btn'));
 
-		echo CHtml::link(' Join Initial Events', array(
-						'//usergroup/groups/joinInitialEvent', 'id' => $model->id),array('class'=>'btn'));
+		// echo CHtml::link(' Join Initial Events', array('//usergroup/groups/JoinEventCheck', 'id' => $model->id),array('class'=>'btn'));
 	}
 
 

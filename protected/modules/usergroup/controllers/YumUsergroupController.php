@@ -21,7 +21,7 @@ class YumUsergroupController extends YumController {
 					'users'=>array('@'),
 					),
 				array('allow',
-					'actions'=>array('JoinEvent', 'JoinInitialEvent', 'UpdateMembers'),
+					'actions'=>array('JoinEvent', 'JoinEventCheck', 'UpdateMembers'),
 					'expression' => 'Yii::app()->user->can("userGroup", "create")',
 					),
 				array('allow',
@@ -81,7 +81,9 @@ class YumUsergroupController extends YumController {
 	* 	@param integer $id the ID of the model to be updated
 	*/
 
-	public function actionJoinEvent($id = null) {
+	/* Alternative version, only checkboxes */
+
+	public function actionJoinEventCheck($id = null) {
 
 			$model = $this->loadModel($id);
 			$event = new Event;
@@ -102,18 +104,27 @@ class YumUsergroupController extends YumController {
 	/**
 	*	Group (Team) can join events on the initial registration.
 	*	If update is successful, the browser will be redirected to the 'view' page.
-	* 	@param integer $id the ID of the model to be updated
+	* 	@param integer $id the ID of the group to be updated
 	*/
 
-	public function actionJoinInitialEvent($id = null) {
+	public function actionJoinEvent($id = null) {
 
 			$model = $this->loadModel($id);
 			$event = new Event;
 			$this->performAjaxValidation($model, 'usergroup-eventInitial');
 
-		if(isset($_POST['eventIds'])) {
-		    $model->eventIds = $_POST['eventIds'];
-			$model->events = $model->eventIds;
+		// If form was submitted
+		if(isset($_POST['yt1'])) {
+			// IF any values events were selected
+			if (isset($_POST['eventIds'])) {
+				$model->eventIds = $_POST['eventIds'];
+				$model->events = $model->eventIds;
+
+			} else {
+				// No events where selected
+			    $model->eventIds = null;
+				$model->events = $model->eventIds;
+			}
 
 			if($model->saveWithRelated('events')) {
 
@@ -121,6 +132,8 @@ class YumUsergroupController extends YumController {
 				$this->redirect(array('view','id'=>$model->id));
 			} else
 				Yii::app()->user->setFlash('error', "Data NOT saved!");
+		} else {
+
 		}
 
 		$this->render('event-reg',array( 'model'=>$model, 'event' => $event));
@@ -285,11 +298,12 @@ class YumUsergroupController extends YumController {
 		}
 	}
 
-	public function actionDelete()
+	public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
-			$this->loadModel()->delete();
+			// $this->loadModel()->delete();
+			$this->loadModel($id)->delete();
 
 			if(!isset($_GET['ajax']))
 			{

@@ -123,7 +123,7 @@ return array(
 			),
 		),
 		// Not Tracked local config
-		 'log'=>require(dirname(__FILE__) . '/log.php'),
+		 // 'log'=>require(dirname(__FILE__) . '/log.php'),
 
 	),
 

@@ -47,6 +47,7 @@ $locale = CLocale::getInstance(Yii::app()->language);
 		'owner.profile.fullname',
 		'title',
 		// 'description',
+		'organisation.organisation',
 		array(
             'class'=>'bootstrap.widgets.TbButtonColumn',
             'htmlOptions'=>array('style'=>'width: 50px'),

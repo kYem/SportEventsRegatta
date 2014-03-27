@@ -35,20 +35,23 @@
         ); ?>
         <?php echo $form->error($model,'organisation_id'); ?>
     </div>
+    <?php if ($model->listLeaders()) : ?>
 <div class="row">
         <?php echo $form->labelEx($model,'owner_id'); ?>
         <?php echo $form->dropDownList(
                 $model,
                 'owner_id',
-                CHtml::listData(
-                    $model->getLeadersWithoutGroup(),
-                        'user_id',
-                        'fullname'
-                ),
+                $model->listLeaders(),
                 array('empty' => 'Select Group Leader...')
         ); ?>
         <?php echo $form->error($model,'owner_id'); ?>
     </div>
+<?php else : ?>
+<div class="row">
+    <?php echo $form->labelEx($model,'owner_id'); ?>
+    <h5>No Available Group Leaders</h5>
+</div>
+<?php endif; ?>
 <?php
 echo CHtml::Button(Yum::t('Cancel'), array(
 			'submit' => array('groups/index')));

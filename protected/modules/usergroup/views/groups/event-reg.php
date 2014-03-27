@@ -33,17 +33,7 @@
 		    'header'=> 'Age Group',
 		    'filter'=>CHtml::activeTextField($event,'age_group_search'),
 		    ),
-			array(
-				'header'=>'Boat',
-				'value'=> 	function ($event) {
-	                           $boatName = array();
-	                           foreach ($event->boats as $boat) {
-	                              $boatName[] = $boat->name;
-	                           }
-	                           return implode(', ', $boatName);
-	                        } ,
-		        'filter'=>CHtml::activeTextField($event,'boat_search'),
-				'type'=>'text'),
+
 			array('name'=>'status.name',
 			'header'=> 'Status',
 		    'filter'=>CHtml::activeTextField($event,'status_search'),

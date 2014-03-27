@@ -53,35 +53,42 @@ class YumUsergroup extends YumActiveRecord{
 			'title' => Yum::t('Group title'),
 			'description' => Yum::t('Description'),
 			'participants' => Yum::t('Participants'),
-			'owner_id' => Yum::t('Group owner'),
+			'owner_id' => Yum::t('Group Leader'),
 			'organisation_id' => Yum::t('Organisation')
 		);
 	}
 
 	public function getParticipantDataProvider() {
 		$criteria = new CDbCriteria;
-		// If there is no particpants assigned, search for id 0
+		// If there is no participants assigned, search for id 0
 		// Outcome, no results found.
 		$criteria->compare('id', ($this->participants) ? $this->participants : 0);
 
 		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
 	}
-
-	public function getEventDataProvider($statusId = 1) {
+	/**
+	 * Get All available events
+	 * @param int $statusId Get only events with status
+	 * @return type
+	 */
+	public function getEventDataProvider($statusId = null) {
 		$criteria = new CDbCriteria;
+		if ($statusId) {
 		$criteria->compare('status_id', $statusId);
+		}
 		// Can only join events for same organisation
 		$criteria->compare('organisation_id', $this->organisation_id);
 
 		return new CActiveDataProvider('Event', array('criteria' => $criteria));
 	}
-
-	public function getRegisteredEventDataProvider($statusId = 1) {
+	/**
+	 * Get all events that the group is registered for
+	 * @return CActiveDataProvider object
+	 */
+	public function getRegisteredEventDataProvider() {
 		$criteria = new CDbCriteria;
 		$criteria->join = ' INNER JOIN `ku_rg_group_event` AS `group_event` ON t.id = group_event.event_id';
 	    $criteria->addCondition("group_event.group_id = ".$this->id." ");
-		// Can only join events for same organisation
-		$criteria->compare('organisation_id', $this->organisation_id);
 
 		return new CActiveDataProvider('Event', array('criteria' => $criteria));
 	}
@@ -98,8 +105,8 @@ class YumUsergroup extends YumActiveRecord{
 
 	/**
 	 * Get Group Leaders without a group
-	 * @param string $roleTitle title of role to be searched
-	 * @return array group leaders with a group. Null if none are found.
+	 * @param string $roleId id of role to be searched
+	 * @return Object array $groupLeaders Leaders without a group. Null if none are found.
 	 */
 	public static function getLeadersWithoutGroup($roleId = 6)
 	{
@@ -115,12 +122,23 @@ class YumUsergroup extends YumActiveRecord{
 	  	return $groupLeaders ? $groupLeaders : null;
 	}
 
-	public function getGroupId($owner_id)
+	public function listLeaders()
 	{
-		# SELECT id FROM fyp.ku_usergroup where owner_id = 4 LIMIT 1
+		$groupLeaders = $this->getLeadersWithoutGroup();
+		if ($groupLeaders) {
+			return CHtml::listData(
+                    $groupLeaders,
+                        'user_id',
+                        'fullname'
+                );
+		}
+		else {
+			return null;
+		}
 
 
 	}
+
 
 	public function getRegisteredEvents($data) {
 
