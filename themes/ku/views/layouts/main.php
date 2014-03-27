@@ -26,9 +26,9 @@
                 array('label'=>'Spectators', 'url'=>array('/site/page', 'view'=>'map-of-course')),
                 array('label'=>'Results & Photos', 'url'=>array('/site/page', 'view'=>'regatta-results-photos')),
                 array('label'=>'Contact', 'url'=>array('//site/contact')),
-               
+
                 array('label'=>'Login', 'url'=>array('//user/auth/'), 'visible'=>Yii::app()->user->isGuest),
-                array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('//site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+                array('label'=>'Logout ('.Yii::app()->user->data()->profile->firstname.')', 'url'=>array('//site/logout'), 'visible'=>!Yii::app()->user->isGuest)
             ),
         ),
     ),

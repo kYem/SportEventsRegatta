@@ -759,7 +759,7 @@ class YumUser extends YumActiveRecord
   public static function getUsersByRoleNotIn($roleTitle)
   {
     Yii::import('application.modules.role.models.*');
-    $role = YumRole::model()->findByAttributes(array('title' => $roleTitle));
+    $role = YumRole::model()->findByAttributes(array('title' => !$roleTitle));
     return $role ? $role->users : null;
   }
 

@@ -62,7 +62,7 @@ class YumUsergroup extends YumActiveRecord{
 		$criteria = new CDbCriteria;
 		// If there is no particpants assigned, search for id 0
 		// Outcome, no results found.
-		$criteria->compare('id', $participants = ($this->participants) ? $this->participants : 0);
+		$criteria->compare('id', ($this->participants) ? $this->participants : 0);
 
 		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
 	}
@@ -70,6 +70,18 @@ class YumUsergroup extends YumActiveRecord{
 	public function getEventDataProvider($statusId = 1) {
 		$criteria = new CDbCriteria;
 		$criteria->compare('status_id', $statusId);
+		// Can only join events for same organisation
+		$criteria->compare('organisation_id', $this->organisation_id);
+
+		return new CActiveDataProvider('Event', array('criteria' => $criteria));
+	}
+
+	public function getRegisteredEventDataProvider($statusId = 1) {
+		$criteria = new CDbCriteria;
+		$criteria->join = ' INNER JOIN `ku_rg_group_event` AS `group_event` ON t.id = group_event.event_id';
+	    $criteria->addCondition("group_event.group_id = ".$this->id." ");
+		// Can only join events for same organisation
+		$criteria->compare('organisation_id', $this->organisation_id);
 
 		return new CActiveDataProvider('Event', array('criteria' => $criteria));
 	}
@@ -101,6 +113,13 @@ class YumUsergroup extends YumActiveRecord{
 	    $groupLeaders    =    YumProfile::model()->findAll($criteria);
 
 	  	return $groupLeaders ? $groupLeaders : null;
+	}
+
+	public function getGroupId($owner_id)
+	{
+		# SELECT id FROM fyp.ku_usergroup where owner_id = 4 LIMIT 1
+
+
 	}
 
 	public function getRegisteredEvents($data) {

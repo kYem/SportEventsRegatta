@@ -116,10 +116,11 @@ class YumUsergroupController extends YumController {
 			$model->events = $model->eventIds;
 
 			if($model->saveWithRelated('events')) {
-				Yii::app()->user->setFlash('success', "Data Was saved!");
+
+				Yii::app()->user->setFlash('success', "Success! The Event list have been updated");
 				$this->redirect(array('view','id'=>$model->id));
 			} else
-				Yii::app()->user->setFlash('success', "Data NOT saved!");
+				Yii::app()->user->setFlash('error', "Data NOT saved!");
 		}
 
 		$this->render('event-reg',array( 'model'=>$model, 'event' => $event));

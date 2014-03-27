@@ -15,12 +15,9 @@
 	<?php echo CHtml::encode(substr($data->description, 0, 100)) . '... '; ?>
 
 	<br />
-	<b><?php echo Yum::t('Participant count'); ?> : </b>
+	<b><?php echo Yum::t('Member count'); ?> : </b>
 	<?php echo count($data->participants); ?>
 
-	<br />
-	<b><?php echo Yum::t('Message count'); ?> : </b>
-	<?php echo $data->messagesCount; ?>
 
 	<br />
 	<br />

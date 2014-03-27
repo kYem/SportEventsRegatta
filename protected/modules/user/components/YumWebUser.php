@@ -20,7 +20,7 @@ class YumWebUser extends CWebUser
 		if(!Yum::hasModule('role') ||	Yum::module('role')->useYiiCheckAccess)
 			return parent::checkAccess($operation, $params, $allowCaching);
 		else
-			return $this->can($operation);	
+			return $this->can($operation);
 	}
 
   public function can($action, $subaction = null) {
@@ -57,24 +57,41 @@ class YumWebUser extends CWebUser
 
 		$flag = false;
 		if(isset($user->roles))
-			foreach($user->roles as $role) 
+			foreach($user->roles as $role)
 				if (isset($role->roles) && $role->roles !== array())
 					$flag = true;
 
 		return $flag;
 	}
 
-public function getRoles() {
-	$t = ' ';
-	$user = Yii::app()->user->data();
-	$roles = $user->roles;
-	if($user instanceof YumUser && $roles) 
-		foreach($roles as $role)
-			$t .= $role->title .' ';
+	public function getRoles() {
+		$t = ' ';
+		$user = Yii::app()->user->data();
+		$roles = $user->roles;
+		if($user instanceof YumUser && $roles)
+			foreach($roles as $role)
+				$t .= $role->title .' ';
 
-	return $t;
+		return $t;
 
-}
+	}
+
+
+	public function getGroup() {
+		# SELECT id FROM fyp.ku_usergroup where owner_id = 4 LIMIT 1
+		$userId = Yii::app()->user->id;
+		$group = YumUsergroup::model()->findByAttributes(
+                array(
+                    'owner_id'=> $userId,
+                )
+            );
+		if ($group) {
+			$group = $group->id;
+		} else {
+			$group = null;
+		}
+		return $group;
+	}
 
 	/**
 	 * Checks if this (non-admin) User can administrate the given user
@@ -93,8 +110,8 @@ public function getRoles() {
 		if(!is_array($username))
 			$username = array ($username);
 
-		if(isset($user->users)) 
-			foreach($user->users as $userobj) 
+		if(isset($user->users))
+			foreach($user->users as $userobj)
 			{
 				if(in_array($userobj->username, $username) ||
 					in_array($userobj->id, $username))
@@ -106,7 +123,7 @@ public function getRoles() {
 	/**
 	 * Checks if the user has the given Role
 	 * @mixed Role string or array of strings that should be checked
-	 * @int (optional) id of the user that should be checked 
+	 * @int (optional) id of the user that should be checked
 	 * @return bool Return value tells if the User has access or hasn't access.
 	 */
 	public function hasRole($role, $uid = 0) {
@@ -127,7 +144,7 @@ public function getRoles() {
 				if(Yum::hasModule('membership'))
 					$roles = array_merge($roles, $user->getActiveMemberships());
 
-				if(isset($roles)) 
+				if(isset($roles))
 					foreach($roles as $roleobj) {
 						if(in_array($roleobj->title, $role) ||
 								in_array($roleobj->id, $role))
@@ -152,7 +169,7 @@ public function getRoles() {
 	public function isAdmin() {
 		if($this->isGuest)
 			return false;
-		else 
+		else
 			return Yii::app()->user->data()->superuser;
 	}
 }

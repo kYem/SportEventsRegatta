@@ -107,9 +107,8 @@
                 TbHtml::menuDivider(),
                 ),
         ));
-    }
-     if (!Yii::app()->user->isGuest) {
-         $this->widget('bootstrap.widgets.TbNav', array(
+        // User and Groups
+        $this->widget('bootstrap.widgets.TbNav', array(
             'type' => TbHtml::NAV_TYPE_LIST,
             'items'=>array(
                 array('label'=>'USER SETTINGS'),
@@ -119,41 +118,51 @@
                     'visible' => !Yii::app()->user->isAdmin(),
                     ),
                 array('label'=>'Profile', 'icon'=>'user', 'url'=>array('//profile/profile/view')),
-                // array('label'=>'Manage Profile', 'icon'=>'cog', 'url'=>array('//user/user/index')),
                 array('label'=>'Edit Profile', 'icon'=>'pencil', 'url'=>array('//profile/profile/update')),
-                // array('label' => 'Privacy settings','icon'=>'lock', 'url' => array('/profile/privacy/update')),
-                 array(
-                    'label' => 'Upload avatar image',
-                    'url' => array('/avatar/avatar/editAvatar'),
-                    'visible' => Yum::hasModule('avatar'),
-                    ),
                 TbHtml::menuDivider(),
 
 
+                array('label' => 'Manage Groups', 'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup()),
+                array('label' => 'Manage Groups',
+                    'visible' =>  Yum::hasModule('usergroup'),
+                    'url' => array('/usergroup/groups/admin'),
+                    'icon'=>'bullhorn'),
+                array('label' => 'Create new Group',
+                    'url' => array('/usergroup/groups/create'),
+                    'icon'=>'plus'),
 
+               /* TbHtml::menuDivider(),
+                array('label' => 'Misc', 'items' => array(
+                            array('label' => 'Change password', 'url' => array('//user/user/changePassword')),
+                            array('label' => 'Delete account', 'url' => array('//user/user/delete')),
+                            array('label' => 'Logout', 'url' => array('//user/user/logout')),
+                            )
+                        ),*/
+
+
+            ),
+        ));
+    } elseif (!Yii::app()->user->isGuest && !Yii::app()->user->isAdmin()) {
+         $this->widget('bootstrap.widgets.TbNav', array(
+            'type' => TbHtml::NAV_TYPE_LIST,
+            'items'=>array(
+                array('label'=>'USER SETTINGS'),
                 array(
-                    'label' => 'My friends',
-                    'url' => array('/friendship/friendship/index'),
-                    'visible' => Yum::hasModule('friendship') && Yii::app()->user->isAdmin()),
-                array('label' => 'Group'),
-                array('label' => 'My group',
-                    'visible' =>  Yum::hasModule('usergroup') && !Yii::app()->user->isAdmin(),
-                    'url' => array('/usergroup/groups/index'),
+                    'label'=>'Dashboard', 'icon'=>'cog',
+                    'url'=>array('//event/dashboard'),
+                    // 'visible' => !Yii::app()->user->isAdmin(),
+                    ),
+                array('label'=>'Profile', 'icon'=>'user', 'url'=>array('//profile/profile/view')),
+                array('label'=>'Edit Profile', 'icon'=>'pencil', 'url'=>array('//profile/profile/update')),
+                TbHtml::menuDivider(),
+
+
+                array('label' => 'My Group', 'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup()),
+                array('label' => 'Overview',
+                    'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),
+                    // array('/site/page', 'view'=>'map-of-course')
+                    'url' => array('/usergroup/groups/view', 'id'=>Yii::app()->user->getGroup()),
                     'icon'=>'bullhorn'),
-                 array('label' => 'Manage groups',
-                    'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->isAdmin(),
-                    'url' => array('//usergroup/groups/admin'),
-                    'icon'=>'bullhorn'),
-
-
-                array('label' => 'Create new Group', 'icon'=>'plus', 'url' => array(
-                        '/usergroup/groups/create'),
-                    'visible' => Yum::hasModule('usergroup')),
-                   /* array('label' => 'Browse Groups', 'url' => array(
-                            '/usergroup/groups/browse'),
-                        'visible' => Yum::hasModule('usergroup')),*/
-
-
 
                /* TbHtml::menuDivider(),
                 array('label' => 'Misc', 'items' => array(
@@ -168,20 +177,6 @@
         ));
     }
     ?>
-    <p>&nbsp;</p>
-    <?php
-           /* $this->beginWidget('zii.widgets.CPortlet', array(
-
-            ));
-            $this->widget('bootstrap.widgets.TbNav', array(
-                'type'=>'list',
-                'items'=>$this->menu,
-                'htmlOptions'=>array('class'=>'operations'),
-            ));
-            $this->endWidget();*/
-
-        ?>
-
         </div><!-- sidebar -->
     </div>
 </div>
