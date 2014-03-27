@@ -75,8 +75,8 @@ class Event extends CActiveRecord
 		return array(
 			'boats' => array(self::MANY_MANY, 'Boat', 'ku_rg_event_boat(event_id, boat_id)'),
 			'users' => array(self::MANY_MANY, 'YumUser', 'ku_rg_user_event(event_id, user_id)'),
-			'groups' => array(self::MANY_MANY, 'YumUserGroup', 'ku_rg_group_event(event_id, group_id)'),
-			'groupCount' => array(self::STAT, 'YumUserGroup', 'ku_rg_group_event(event_id, group_id)'),
+			'groups' => array(self::MANY_MANY, 'YumUsergroup', 'ku_rg_group_event(event_id, group_id)'),
+			'groupCount' => array(self::STAT, 'YumUsergroup', 'ku_rg_group_event(event_id, group_id)'),
 			'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
 			'age_group' => array(self::BELONGS_TO, 'Age', 'age_id'),
 			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),

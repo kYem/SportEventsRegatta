@@ -195,3 +195,7 @@ border-radius: .5em;
 .pager {
 	clear: both;
 }
+
+.btn-control .btn {
+	margin: 10px 5px;
+}

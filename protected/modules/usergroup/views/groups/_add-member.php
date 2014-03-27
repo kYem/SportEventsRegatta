@@ -12,7 +12,20 @@
 
 ?>
 <div class="row">
-<?php echo $form->checkBoxListControlGroup($model, 'participants', CHtml::listData(YumUser::model()->getUsersByRole('Group member'),'id', 'username')); ?>
+<?php
+// echo $form->checkBoxListControlGroup($model, 'participants', CHtml::listData(YumUser::model()->getUsersByRole('Group member'),'id', 'username'));
+?>
+    </div>
+    <div class="row">
+        <?php echo $form->labelEx(YumUser::model(),'id');
+         echo $form->dropDownList(
+                YumUser::model(),
+                'id',
+                $model->listMembers(),
+                array('empty' => 'Select Group Member...')
+        );
+         echo $form->error(YumUser::model(),'id');
+     ?>
     </div>
 <?php
 echo CHtml::Button(Yum::t('Cancel'), array(

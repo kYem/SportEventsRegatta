@@ -290,12 +290,28 @@ class YumUsergroupController extends YumController {
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['YumUsergroup'])) {
-			$model->attributes = $_POST['YumUsergroup'];
-			// $model->participants = array($model->owner_id);
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		if(isset($_POST['yt1'])) {
+			if(isset($_POST['YumUsergroup'])) {
+
+				$model->attributes = $_POST['YumUsergroup'];
+
+				if(isset($_POST['YumUser']))
+				{
+					$model->user = $_POST['YumUser'];
+				}
+
+				if($model->saveWithRelated('user')){
+					Yii::app()->user->setFlash('success', "Success! The New Member have been added.");
+					$this->redirect(array('view','id'=>$model->id));
+				}
+
+				else {
+					Yii::app()->user->setFlash('success', "Success! The Event list have been updated");
+					$this->redirect(array('view','id'=>$model->id));
+				}
+			}
 		}
+
 	}
 
 	public function actionDelete($id)

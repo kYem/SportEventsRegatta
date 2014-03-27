@@ -20,8 +20,10 @@ if(Yii::app()->user->hasFlash('success')){
 				CHtml::link($model->owner->profile->fullname, array(
 						'//profile/profile/view', 'id' => $model->owner_id)));
 
-	printf('<h4> %s </h4>', Yum::t('Participants'));
-
+    echo "<br>";
+    ?>
+    <div class="btn-control">
+    <?php
 	if (Yii::app()->user->can("userGroup", "create")) {
 	   echo CHtml::link(Yum::t('Assign User'), '', array(
 				'onClick' => "$('#usergroup_members').toggle(500)", 'class'=>'btn'));
@@ -31,14 +33,12 @@ if(Yii::app()->user->hasFlash('success')){
 
 		// echo CHtml::link(' Join Initial Events', array('//usergroup/groups/JoinEventCheck', 'id' => $model->id),array('class'=>'btn'));
 	}
-
-
-
 ?>
+    </div>
 	<br />
 	<?php // Add Member Ajax roll over ?>
 	<div style="display:none;" id="usergroup_members">
-		<h4> <?php echo Yum::t('Add members to the team'); ?> </h4>
+		<h4> <?php echo Yum::t('Add new members to the group'); ?> </h4>
 
 		<?php $this->renderPartial('_add-member', array(
 				'model' => $model,
@@ -47,6 +47,7 @@ if(Yii::app()->user->hasFlash('success')){
 			); ?>
 	</div>
 <?php
+printf('<h4> %s </h4>', Yum::t('Registered Events'));
 	// Show Registered Event
 if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
 	$this->widget('bootstrap.widgets.TbGridView', array(
@@ -81,6 +82,7 @@ if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
 echo "<br>";
 
 // Show Current Participants
+printf('<h4> %s </h4>', Yum::t('Participants'));
  $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'usergroup-grid',
 	'type' => TbHtml::GRID_TYPE_HOVER,

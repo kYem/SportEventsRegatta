@@ -42,6 +42,8 @@ class YumUsergroup extends YumActiveRecord{
 			'messages' => array(self::HAS_MANY, 'YumUsergroupMessage', 'group_id'),
 			'messagesCount' => array(self::STAT, 'YumUsergroupMessage', 'group_id'),
 			'events' => array(self::MANY_MANY, 'Event', 'ku_rg_group_event(group_id, event_id)'),
+			// The order must match database order
+			'user' => array(self::MANY_MANY, 'YumUser', 'ku_rg_team(group_id, user_id)'),
 			'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
 		);
 	}
@@ -108,7 +110,7 @@ class YumUsergroup extends YumActiveRecord{
 	 * @param string $roleId id of role to be searched
 	 * @return Object array $groupLeaders Leaders without a group. Null if none are found.
 	 */
-	public static function getLeadersWithoutGroup($roleId = 6)
+	public static function getLeadersWithoutGroup($owner_id = null, $roleId = 6)
 	{
 	  	Yii::import('application.modules.profile.models.*');
 	  	$criteria = new CDbCriteria;
@@ -116,15 +118,23 @@ class YumUsergroup extends YumActiveRecord{
 	    $criteria->join = ' INNER JOIN `ku_user_role` AS `user_role` ON t.user_id = user_role.user_id';
 	    $criteria->addCondition("t.user_id NOT IN (SELECT owner_id FROM fyp.ku_usergroup)");
 	    $criteria->addCondition("user_role.role_id = {$roleId}");
-	    // $criteria->addCondition("ku_profile.user_id IN (SELECT user_id FROM fyp.ku_user_role)");
+	    if ($owner_id) {
+	    	$criteria->compare('t.user_id', $owner_id, false, 'OR');
+	    	// $criteria->addCondition("t.user_id = ".$owner_id." ");
+	    }
 	    $groupLeaders    =    YumProfile::model()->findAll($criteria);
 
 	  	return $groupLeaders ? $groupLeaders : null;
 	}
 
+	/**
+	 * Clistdata, If its there is no results return null.
+	 * @return type
+	 */
 	public function listLeaders()
 	{
-		$groupLeaders = $this->getLeadersWithoutGroup();
+		// On update, we need to pass the current owner id as well
+		$groupLeaders = $this->getLeadersWithoutGroup($this->owner_id);
 		if ($groupLeaders) {
 			return CHtml::listData(
                     $groupLeaders,
@@ -139,6 +149,47 @@ class YumUsergroup extends YumActiveRecord{
 
 	}
 
+	/**
+	 * Get Group Leaders without a group
+	 * @param string $roleId id of role to be searched
+	 * @return Object array $groupLeaders Leaders without a group. Null if none are found.
+	 */
+	public static function getMembersWithoutGroup($roleId = 7)
+	{
+	  	Yii::import('application.modules.profile.models.*');
+	  	$criteria = new CDbCriteria;
+	    $criteria->select = 't.user_id, t.firstname, t.lastname ';
+	    $criteria->join = ' INNER JOIN `ku_user_role` AS `user_role` ON t.user_id = user_role.user_id';
+	    // $criteria->join = ' INNER JOIN `ku_rg_team` AS `team` ON t.user_id = team.user_id';
+	    $criteria->addCondition("t.user_id NOT IN (SELECT ku_rg_team.user_id FROM fyp.ku_rg_team)");
+	    $criteria->addCondition("user_role.role_id = {$roleId}");
+
+	    $groupMember    =    YumProfile::model()->findAll($criteria);
+
+	  	return $groupMember ? $groupMember : null;
+	}
+
+	/**
+	 * Clistdata, If its there is no results return null.
+	 * @return type
+	 */
+	public function listMembers()
+	{
+		// On update, we need to pass the current owner id as well
+		$groupMember = $this->getMembersWithoutGroup();
+		if ($groupMember) {
+			return CHtml::listData(
+                    $groupMember,
+                        'user_id',
+                        'fullname'
+                );
+		}
+		else {
+			return null;
+		}
+
+
+	}
 
 	public function getRegisteredEvents($data) {
 

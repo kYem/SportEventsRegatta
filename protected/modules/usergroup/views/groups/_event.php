@@ -7,10 +7,10 @@
 	'id'=>'usergroup-form',
 	// 'action' => Yii::app()->createUrl('//usergroup/groups/Updatep/id/'.$group_id),  //<- your form action here
 	'enableAjaxValidation'=>true,
-	)); 
+	));
 	echo $form->errorSummary($model);
 	?>
-	
+
 	<div class="row oneLineLabel">
         <?php echo $form->labelEx($model, 'events'); ?>
         <?php echo $form->checkBoxList($model, 'eventIds',
@@ -20,9 +20,9 @@
     </div>
 	<?php
 		echo CHtml::Button(Yum::t('Cancel'), array(
-					'submit' => array('//usergroup/groups/view', 'id' => $model->id))); 
-		echo CHtml::submitButton(Yum::t('Save')); 
-	$this->endWidget(); 
- 
+					'submit' => array('//usergroup/groups/view', 'id' => $model->id)));
+		echo CHtml::submitButton(Yum::t('Save'));
+	$this->endWidget();
+
 ?>
 </div> <!-- form -->

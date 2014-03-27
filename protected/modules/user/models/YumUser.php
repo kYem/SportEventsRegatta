@@ -441,6 +441,8 @@ class YumUser extends YumActiveRecord
 				$relations['memberships'] = array(
 						self::HAS_MANY, 'YumMembership', 'user_id');
 			}
+      $relations['groups'] = array(
+            self::MANY_MANY, 'YumUsergroup', 'ku_rg_team(group_id, user_id');
 
 			Yii::app()->cache->set('yum_user_relations', $relations, 3600);
 		}
