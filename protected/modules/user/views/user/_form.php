@@ -1,5 +1,5 @@
 <div class="form">
-<?php 
+<?php
 $form = $this->beginWidget('CActiveForm', array(
 			'id'=>'user-form',
 			'enableAjaxValidation'=>false,
@@ -44,26 +44,35 @@ echo $form->dropDownList($user, 'superuser',YumUser::itemAlias('AdminStatus'));
 echo $form->error($user, 'superuser'); ?>
 </div>
 
-<p> Leave password <em> empty </em> to 
-<?php echo $user->isNewRecord 
-? 'generate a random Password' 
+<p> Leave password <em> empty </em> to
+<?php echo $user->isNewRecord
+? 'generate a random Password'
 : 'keep it <em> unchanged </em>'; ?> </p>
 <?php $this->renderPartial('/user/passwordfields', array(
 			'form'=>$passwordform)); ?>
 
-<?php if(Yum::hasModule('role')) { 
+<?php if(Yum::hasModule('role')) {
 	Yii::import('application.modules.role.models.*');
 ?>
 <div class="row roles">
 <label> <?php echo Yum::t('User belongs to these roles'); ?> </label>
 
+<?php // Only Admin/Event Organiser can create other Ovent Organizer/Group Leader
+	if (Yii::app()->user->isAdmin() || Yii::app()->user->can('event', 'assign') ) {
+		$roleCondition = null;
+	} else {
+		$roleCondition = array("condition"=>"title = 'Group Member'");
+	}
+
+
+?>
 <?php $this->widget('YumModule.components.select2.ESelect2', array(
 				'model' => $user,
 				'attribute' => 'roles',
 				'htmlOptions' => array(
 					'multiple' => 'multiple',
 					'style' => 'width:220px;'),
-				'data' => CHtml::listData(YumRole::model()->findAll(), 'id', 'title'),
+				'data' => CHtml::listData(YumRole::model()->findAll($roleCondition), 'id', 'title'),
 				)); ?>
 </div>
 <?php } ?>
@@ -71,7 +80,7 @@ echo $form->error($user, 'superuser'); ?>
 </div>
 
 <div class="span3">
-<?php if(Yum::hasModule('profile')) 
+<?php if(Yum::hasModule('profile'))
 $this->renderPartial(Yum::module('profile')->profileFormView, array(
 			'profile' => $profile)); ?>
 </div>

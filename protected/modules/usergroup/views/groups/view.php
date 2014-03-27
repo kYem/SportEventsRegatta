@@ -82,7 +82,7 @@ if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
 echo "<br>";
 
 // Show Current Participants
-printf('<h4> %s </h4>', Yum::t('Participants'));
+printf('<h4> %s </h4>', Yum::t('Members'));
  $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'usergroup-grid',
 	'type' => TbHtml::GRID_TYPE_HOVER,
@@ -90,7 +90,7 @@ printf('<h4> %s </h4>', Yum::t('Participants'));
 	'columns'=>array(
 		// This is YumUser model attributes
 		'id',
-		'username',
+		// 'username',
 		array(
 			'header'=>'First Name',
 			'name'=> 'profile.firstname'
@@ -99,6 +99,10 @@ printf('<h4> %s </h4>', Yum::t('Participants'));
 			'header'=>'Last Name',
 			'name'=> 'profile.lastname'
 		),
+        array(
+            'header'=>'Date of birth',
+            'name'=> 'profile.dob'
+        ),
 	),
 ));
 ?>
