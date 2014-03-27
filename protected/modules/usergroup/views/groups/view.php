@@ -86,7 +86,7 @@ printf('<h4> %s </h4>', Yum::t('Participants'));
  $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'usergroup-grid',
 	'type' => TbHtml::GRID_TYPE_HOVER,
-	'dataProvider'=>$model->getParticipantDataProvider(),
+	'dataProvider'=>$model->getGroupMembers(),
 	'columns'=>array(
 		// This is YumUser model attributes
 		'id',

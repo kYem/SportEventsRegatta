@@ -3,6 +3,7 @@
 class YumUsergroup extends YumActiveRecord{
 
 	public $eventIds = array();
+	public $memberId = array();
 
 	public static function model($className=__CLASS__)
 	{
@@ -150,8 +151,8 @@ class YumUsergroup extends YumActiveRecord{
 	}
 
 	/**
-	 * Get Group Leaders without a group
-	 * @param string $roleId id of role to be searched
+	 * Get Group Members without a group
+	 * @param string $roleId id of role to be searched, Group Members = 7
 	 * @return Object array $groupLeaders Leaders without a group. Null if none are found.
 	 */
 	public static function getMembersWithoutGroup($roleId = 7)
@@ -190,6 +191,20 @@ class YumUsergroup extends YumActiveRecord{
 
 
 	}
+
+	/**
+	 * Get all members of the group
+	 * @return CActiveDataProvider object
+	 */
+	public function getGroupMembers() {
+		$criteria = new CDbCriteria;
+		$criteria->join = ' INNER JOIN `ku_rg_team` AS `team` ON t.id = team.user_id';
+	    $criteria->addCondition("team.group_id = ".$this->id." ");
+
+		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
+	}
+
+
 
 	public function getRegisteredEvents($data) {
 

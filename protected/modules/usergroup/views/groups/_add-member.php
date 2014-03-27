@@ -5,17 +5,19 @@
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 'id'=>'usergroup-form',
-'action' => Yii::app()->createUrl('//usergroup/groups/UpdateMembers/id/'.$group_id),  //<- your form action here
-'enableAjaxValidation'=>true,
+'action' => Yii::app()->createUrl('//usergroup/groups/AddMember/id/'.$group_id),  //<- your form action here
+// CANT SAVE NORMALLY ON MANY_MANY WITH VALIDATION ON
+// 'enableAjaxValidation'=>true,
 	));
 	echo $form->errorSummary($model);
 
 ?>
 <div class="row">
 <?php
-// echo $form->checkBoxListControlGroup($model, 'participants', CHtml::listData(YumUser::model()->getUsersByRole('Group member'),'id', 'username'));
-?>
+ // echo $form->labelEx($form,'Id');
+ ?>
     </div>
+     <?php if ($model->listMembers()) : ?>
     <div class="row">
         <?php echo $form->labelEx(YumUser::model(),'id');
          echo $form->dropDownList(
@@ -25,8 +27,15 @@
                 array('empty' => 'Select Group Member...')
         );
          echo $form->error(YumUser::model(),'id');
+
      ?>
     </div>
+    <?php else : ?>
+    <div class="row">
+        <?php echo $form->labelEx(YumUser::model(),'id'); ?>
+        <h5>No Available Group Members</h5>
+    </div>
+    <?php endif; ?>
 <?php
 echo CHtml::Button(Yum::t('Cancel'), array(
 			'submit' => array('//usergroup/groups/view', 'id' => $model->id)));

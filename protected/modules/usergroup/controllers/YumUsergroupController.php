@@ -21,7 +21,7 @@ class YumUsergroupController extends YumController {
 					'users'=>array('@'),
 					),
 				array('allow',
-					'actions'=>array('JoinEvent', 'JoinEventCheck', 'UpdateMembers'),
+					'actions'=>array('JoinEvent','AddMember', 'JoinEventCheck', 'UpdateMembers'),
 					'expression' => 'Yii::app()->user->can("userGroup", "create")',
 					),
 				array('allow',
@@ -287,21 +287,19 @@ class YumUsergroupController extends YumController {
 	{
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['yt1'])) {
 			if(isset($_POST['YumUsergroup'])) {
 
-				$model->attributes = $_POST['YumUsergroup'];
+				$model->id = $id;
 
 				if(isset($_POST['YumUser']))
 				{
 					$model->user = $_POST['YumUser'];
 				}
 
-				if($model->saveWithRelated('user')){
+				if($model->saveWithRelated(array('user'))){
 					Yii::app()->user->setFlash('success', "Success! The New Member have been added.");
+					echo '<pre>'; print_r($_POST); echo '</pre>';
 					$this->redirect(array('view','id'=>$model->id));
 				}
 
@@ -312,6 +310,22 @@ class YumUsergroupController extends YumController {
 			}
 		}
 
+	}
+
+	public function actionAddMember($id)
+	{
+		$model=$this->loadModel($id);
+		if(isset($_POST['YumUser'])) {
+			$memberId = $_POST['YumUser']['id'];
+		}
+
+
+		$sql = "INSERT INTO `fyp`.`ku_rg_team` (`user_id`,`group_id`)
+				VALUES (".$memberId.",".$model->id.")";
+		$result = Yii::app()->db->createCommand($sql)->execute();
+		if ($result) {
+			$this->redirect(array('view','id'=>$model->id));
+		}
 	}
 
 	public function actionDelete($id)
