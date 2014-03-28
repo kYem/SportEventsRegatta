@@ -199,3 +199,7 @@ border-radius: .5em;
 .btn-control .btn {
 	margin: 10px 5px;
 }
+
+.member-reg-succes {
+	color: green;
+}

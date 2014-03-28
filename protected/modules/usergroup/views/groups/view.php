@@ -1,5 +1,4 @@
-<?php Yum::register('css/yum.css');
-
+<?php
 $this->breadcrumbs=array(
 		$model->title,
 		);
@@ -48,39 +47,73 @@ if(Yii::app()->user->hasFlash('success')){
 	</div>
 <?php
 printf('<h4> %s </h4>', Yum::t('Registered Events'));
-	// Show Registered Event
+
+    // Get current group id for closure value
+    $gui = $model->id;
+
+    // Show Registered Event GridView
 if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
 	$this->widget('bootstrap.widgets.TbGridView', array(
         'id'=>'event-grid',
         'type' => TbHtml::GRID_TYPE_HOVER,
         'dataProvider'=>$model->getRegisteredEventDataProvider(),
-        // 'ajaxUpdate' => false,
         // 'filter'=>Event::model(),
+
         'columns'=>array(
             'name',
-            // array(
-            //     'header'=>'Members',
-            //     'value'=> function ($event, $model) {
-            //         $count = GroupEvent::model()->countByAttributes(
-            //             array(
-            //                 'event_id'=> $event->id,
-            //                 // 'group_id'=> $model->id,
-            //             )
-            //         );
-            //             return $count;
-            //             },
-            //     'type'=>'text'),
+            array(
+                'header'=>'Participanting Groups',
+                'value'=> function ($model) {
+                    $count = GroupEvent::model()->countByAttributes(
+                        array('event_id'=> $model->id,));
+                        return $count;
+                    },
+                'type'=>'text'
+            ),
             'seats',
+            array(
+                'class'=>'TbDataColumn',
+
+                'header'=>'Registered Members',
+                'value'=> function ($model)  use ($gui){
+                $a =YumUsergroup::model()->getParticipantCount($model, $gui);
+                return $a;
+                },
+                // 'cssClassExpression' => '$data->id <= 32 ? "member-reg-succes" : ""',
+                'type'=>'text',
+                ),
+             array(
+                'class'=>'TbDataColumn',
+
+                'header'=>'Member Number',
+                'value'=> function ($model)  use ($gui){
+                $a =YumUsergroup::model()->getParticipantCount($model, $gui);
+                return $a;
+                },
+                // 'cssClassExpression' => '$data->id <= 32 ? "member-reg-succes" : ""',
+                'type'=>'text',
+                ),
             array('name'=>'status.name',
             'header'=> 'Progress',
             ),
-        ),
+            array(
+                'class'=>'bootstrap.widgets.TbButtonColumn',
+                'htmlOptions'=>array('style'=>'width: 50px'),
+                'buttons'=>array(
+                            'delete' => array(
+                              'label'=>'Remove Event',
+                            ),
+                          ),
+                'updateButtonUrl'=>'Yii::app()->createUrl("usergroup/groups/view/", array("id"=>$data->id))',
+                'deleteButtonUrl'=>'Yii::app()->createUrl("usergroup/groups/view/", array("id"=>$data->id))',
+            ),
+        ), // Columns
     ));
 } else {
 	echo '<h5>'.$model->title.' have not registered for any events</h5>';
 }
-echo "<br>";
 
+echo "<br>";
 // Show Current Participants
 printf('<h4> %s </h4>', Yum::t('Members'));
  $this->widget('bootstrap.widgets.TbGridView', array(

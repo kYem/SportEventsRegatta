@@ -1,7 +1,4 @@
 <div class="form">
-<p class="note">
-<?php echo Yii::t('app','Fields with');?> <span class="required">*</span> <?php echo Yii::t('app','are required');?>.
-</p>
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 'id'=>'usergroup-form',
@@ -9,17 +6,11 @@
 // CANT SAVE NORMALLY ON MANY_MANY WITH VALIDATION ON
 // 'enableAjaxValidation'=>true,
 	));
-	echo $form->errorSummary($model);
 
 ?>
-<div class="row">
-<?php
- // echo $form->labelEx($form,'Id');
- ?>
-    </div>
-     <?php if ($model->listMembers()) : ?>
+    <?php if ($model->listMembers()) : ?>
     <div class="row">
-        <?php echo $form->labelEx(YumUser::model(),'id');
+        <?php
          echo $form->dropDownList(
                 YumUser::model(),
                 'id',
@@ -38,8 +29,8 @@
     <?php endif; ?>
 <?php
 echo CHtml::Button(Yum::t('Cancel'), array(
-			'submit' => array('//usergroup/groups/view', 'id' => $model->id)));
-echo CHtml::submitButton(Yum::t('Save'));
+			'submit' => array('//usergroup/groups/view', 'id' => $model->id), 'class'=>'btn'));
+echo CHtml::submitButton(Yum::t('Save'), array('class'=>'btn'));
 $this->endWidget();
 
 

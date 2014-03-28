@@ -2,33 +2,28 @@
  ☐ Report             04/04/2014    ~60%
  ☐ Demo               31/03/2014    ~20%
  ☐ In class notes     27/03/2014    ~10%
- ✔ Proposal                         ~10% @done (13-10-11 21:49)~~~~
 
  Menu:
- ☐ Group view inconsistent menu
+ ✔ Group view inconsistent menu @done (14-03-28 03:46)
 
  Dashboard:
-   ✔ Design Dashboard @done (14-03-26 03:16)
      ☐ Scetch layout for each role
    ☐ Add overview of current events at bottom of $content
    ☐
 
  Event:
-  ✔ Style - List All Events page @view @done (14-02-11 22:55)
-  ✔ Add groups for initial registration @done (14-02-11 22:54)
   ☐ race groups for actual schedule
-  ☐ People in the boat -> Number picker rather than typing ? @form @optional
      ☐ Schedule the event @schedule
+  ☐ Change Phase Names
 
 Group:
-  ☐ Change layout of group @view
+  ✔ Change layout of group @view @done (14-03-28 03:46)
   ☐ if user is owner -> show admin interface
   ☐ Groups are created by Event Organiser only
-    ✔ Allow group leader to show interest in status = initial registration  events @done (14-03-26 03:16)
     ☐ Add users to open events
-  ✔ Move getLeadersWithoutGroup to model from _form.php @done (14-03-26 19:11)
+
  Leaders:
-  ✔ Can only add un assigned members. @form @done (14-03-26 04:34)
+
 
 User:
   ☐ Add DOB to every user
@@ -36,8 +31,6 @@ User:
  Report Deadlines:
    ☐ UI Mock up
    ☐ Table of Contents @Report
-   ✔ System Requirements @Report @done (14-01-31 03:35)
-   ✔ Chapter 4: design   17/02/2014 @done (14-03-25 00:40)
    ☐ Chapter 5: Implementation
    ☐ Report Draft
 
@@ -53,23 +46,25 @@ User:
  ☐ Database UML deisgn
  ☐ Database Relations
 
- Stage 2:
-
- Stage 3:
-
- Stage 4:
-
  Final Stage:
 
 
 ＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿＿
 Archive:
+ ✔ Move getLeadersWithoutGroup to model from _form.php @done (14-03-26 19:11) @project(Group)
+ ✔ Can only add un assigned members. @form @done (14-03-26 04:34) @project(Group / Leaders)
+ ✔ Design Dashboard @done (14-03-26 03:16) @project(Dashboard)
+ ✔ Allow group leader to show interest in status = initial registration  events @done (14-03-26 03:16) @project(Group)
+ ✔ Chapter 4: design   17/02/2014 @done (14-03-25 00:40) @project(User / Report Deadlines)
+ ✔ Style - List All Events page @view @done (14-02-11 22:55) @project(Event)
+ ✔ Add groups for initial registration @done (14-02-11 22:54) @project(Event)
  ✔ Allow team leaders to add users to their team @form @done (14-02-05 01:28) @project(Leaders)
+ ✔ Admin and view events, should show the boat and age group as well @done (14-02-05 01:28) @project(Event)
+ ✔ Create age group and add it to the event form @form @done (14-02-05 01:27) @project(Event)
+ ✔ Change date format from YYYY-MM-DD to DD-MM-YYYY @form @done (14-02-05 01:27) @project(Event)
+ ✔ System Requirements @Report @done (14-01-31 03:35) @project(User / Report Deadlines)
  ✔ Change to Yiistrap for additional widgets and update forms. @form @done (14-01-20 02:11) @project(Event)
  ✔ Add data picker for the date type input @form @done (14-01-20 02:11) @project(Event)
- ✔ Change date format from YYYY-MM-DD to DD-MM-YYYY @form @done (14-02-05 01:27) @project(Event)
- ✔ Create age group and add it to the event form @form @done (14-02-05 01:27) @project(Event)
- ✔ Admin and view events, should show the boat and age group as well @done (14-02-05 01:28) @project(Event)
  ✔ Validate unique entry, show error @validate @done (14-01-15 22:58) @project(Deadlines)
  ✔ UML Database Diagrams @done (14-01-11 23:39) @project(Deadlines)
  ✔ Create the  event @done (14-01-11 23:39) @project(Deadlines)
@@ -77,5 +72,6 @@ Archive:
  ✔ Setup Local version: Implement database @done (14-01-04 21:30) @project(Deadlines)
  ✔ Nov 26th: Hardcopy of an Interim Literature Report identifying the various topics you have discovered about the subject, and a list of references for each. Remember the skiing example: Skills and Techniques, Safety, Clothing and Brands, Popular Resorts, Qualification and Governing bodies, etc @done (13-11-26 20:13)    @project(Deadlines)
  ✔ Project Proposal   25/10/2013    ~10% --> New date 01/11/2013 @done (13-11-20 00:48)
+ ✔ Proposal                         ~10% @done (13-10-11 21:49)~~~~
  ✔ Notepad list of your Actors and their Requirements @done  @project(Deadlines)
 

@@ -90,10 +90,25 @@ class YumUsergroup extends YumActiveRecord{
 	 */
 	public function getRegisteredEventDataProvider() {
 		$criteria = new CDbCriteria;
+		$criteria->with =array('groups');
 		$criteria->join = ' INNER JOIN `ku_rg_group_event` AS `group_event` ON t.id = group_event.event_id';
 	    $criteria->addCondition("group_event.group_id = ".$this->id." ");
 
 		return new CActiveDataProvider('Event', array('criteria' => $criteria));
+	}
+	/**
+	 * Get all events that the group is registered for
+	 * @return CActiveDataProvider object
+	 *
+	 * 			NOT USED AT THE MOMENT
+	 */
+	public function getRegisteredGroupEvents() {
+		$criteria = new CDbCriteria;
+		$criteria->with =array('groups');
+		$criteria->join = ' INNER JOIN `ku_rg_group_event` AS `group_event` ON t.id = group_event.event_id';
+	    $criteria->addCondition("group_event.group_id = ".$this->id." ");
+
+		return new CActiveDataProvider('YumUserGroup', array('criteria' => $criteria));
 	}
 
 	public function getMessageDataProvider() {
@@ -196,7 +211,8 @@ class YumUsergroup extends YumActiveRecord{
 	 * Get all members of the group
 	 * @return CActiveDataProvider object
 	 */
-	public function getGroupMembers() {
+	public function getGroupMembers()
+	{
 		$criteria = new CDbCriteria;
 		$criteria->join = ' INNER JOIN `ku_rg_team` AS `team` ON t.id = team.user_id';
 	    $criteria->addCondition("team.group_id = ".$this->id." ");
@@ -210,6 +226,48 @@ class YumUsergroup extends YumActiveRecord{
 
 			return in_array($data->id, $data->events);
 		}
+
+	public function getParticipantCount($data, $group_id)
+	{
+		$sql  =		'SELECT COUNT(*) FROM fyp.ku_rg_user_event as t ';
+		$sql .=		'INNER JOIN ku_rg_event as rg_event on t.event_id = rg_event.id ';
+		$sql .=		'WHERE rg_event.id = '.$data->id.' ';
+		$sql .=		'AND t.user_id IN (SELECT user_id FROM fyp.ku_rg_team WHERE group_id= '.$group_id.') ';
+		$result = Yii::app()->db->createCommand($sql)->queryAll(false);
+		if ($result) {
+			// As It is count, only one row 1 and first index will be the value
+			if ($result[0][0] != 0) {
+				return $result[0][0];
+			} else {
+				return "None";
+			}
+		} else {
+			return 'N/A';
+		}
+	}
+
+	public function getParticipantNumber($data, $group_id)
+	{
+		// function ($model)  use ($gui)
+                $a =YumUsergroup::model()->getParticipantCount($model, $gui);
+                // return $a;
+
+		$sql  =		'SELECT COUNT(*) FROM fyp.ku_rg_user_event as t ';
+		$sql .=		'INNER JOIN ku_rg_event as rg_event on t.event_id = rg_event.id ';
+		$sql .=		'WHERE rg_event.id = '.$data->id.' ';
+		$sql .=		'AND t.user_id IN (SELECT user_id FROM fyp.ku_rg_team WHERE group_id= '.$group_id.') ';
+		$result = Yii::app()->db->createCommand($sql)->queryAll(false);
+		if ($result) {
+			// As It is count, only one row 1 and first index will be the value
+			if ($result[0][0] != 0) {
+				return $result[0][0];
+			} else {
+				return "None";
+			}
+		} else {
+			return 'N/A';
+		}
+	}
 
 	public function afterFind()
 	   {
