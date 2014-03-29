@@ -28,6 +28,7 @@ class Event extends CActiveRecord
 	public $boatEvent_search;
 	public $status_search;
 	public $searchBoat;
+	public $memberIds;
 
 	public function init() {
 		Yii::import('application.modules.user.models.*');
