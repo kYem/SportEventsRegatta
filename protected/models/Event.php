@@ -15,6 +15,7 @@
  * @property integer $seats
  * @property integer $status_id
  * @property integer $filename
+ * @property integer $regatta_id
  *
  * The followings are the available model relations:
  * @property Boat[] $Boats
@@ -53,7 +54,7 @@ class Event extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('min_participant, max_participant, age_id, status_id, organisation_id, seats',  'numerical', 'integerOnly'=>true),
+			array('min_participant, max_participant, age_id, status_id, organisation_id, regatta_id, seats',  'numerical', 'integerOnly'=>true),
 			array('name, organisation_id, status_id, age_id', 'required'),
 			array('name, filename', 'length', 'max'=>45),
 			array('name', 'unique', 'message'=>'This event by this name already exists.'),
@@ -62,7 +63,7 @@ class Event extends CActiveRecord
 			array('filename', 'unsafe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, boat, boat_search, boatEvent_search, organisation_search, age_group_search, star_date, end_date, min_participant, max_participant, age_id, organisation_id, status_id, status_search, seats, filename', 'safe', 'on'=>'search'),
+			array('id, name, boat, boat_search, boatEvent_search, organisation_search, age_group_search, star_date, end_date, min_participant, max_participant, age_id, organisation_id, status_id, regatta_id, status_search, seats, filename', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,6 +82,7 @@ class Event extends CActiveRecord
 			'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
 			'age_group' => array(self::BELONGS_TO, 'Age', 'age_id'),
 			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
+			'regatta' => array(self::BELONGS_TO, 'Regatta', 'regatta_id'),
 		);
 	}
 	public function behaviors(){
@@ -134,7 +136,8 @@ class Event extends CActiveRecord
 			'organisation_id' => 'Organisation',
 			'seats' => 'Number in a boat',
 			'status_id' => 'Status',
-			'filename' => 'Image'
+			'filename' => 'Image',
+			'regatta_id'=> 'Regatta'
 		);
 	}
 
@@ -167,6 +170,7 @@ class Event extends CActiveRecord
 		$criteria->compare('t.seats',$this->seats);
 		$criteria->compare('t.status_id',$this->status_id);
 		$criteria->compare('t.filename',$this->filename);
+		// $criteria->compare('t.regatta_id',$this->regatta_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

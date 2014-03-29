@@ -22,5 +22,5 @@ license.txt
 .DS_Store
 .htaccess
 *.log
-.TODO
+*.TODO
 note.txt
