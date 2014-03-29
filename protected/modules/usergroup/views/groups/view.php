@@ -50,7 +50,6 @@ printf('<h4> %s </h4>', Yum::t('Registered Events'));
 
     // Get current group id for closure value
     $gui = $model->id;
-
     // Show Registered Event GridView
 if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
 	$this->widget('bootstrap.widgets.TbGridView', array(
@@ -86,10 +85,7 @@ if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
                 'class'=>'TbDataColumn',
 
                 'header'=>'Member Number',
-                'value'=> function ($model)  use ($gui){
-                $a =YumUsergroup::model()->getParticipantCount($model, $gui);
-                return $a;
-                },
+                'value'=> '$data->groups[0]->title',
                 // 'cssClassExpression' => '$data->id <= 32 ? "member-reg-succes" : ""',
                 'type'=>'text',
                 ),
@@ -104,7 +100,8 @@ if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
                               'label'=>'Remove Event',
                             ),
                           ),
-                'updateButtonUrl'=>'Yii::app()->createUrl("usergroup/groups/view/", array("id"=>$data->id))',
+                'updateButtonUrl'=>'$this->grid->controller->createUrl("groups/addParticipant/", array("groupId"=>'.$gui.', "eventId"=>$data->id))',
+                // 'updateButtonUrl'=>'$this->grid->controller->createUrl("usergroup/groups/addParticipant/", array("id"=>$data->groups[0]->id))',
                 'deleteButtonUrl'=>'Yii::app()->createUrl("usergroup/groups/view/", array("id"=>$data->id))',
             ),
         ), // Columns
@@ -112,7 +109,6 @@ if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
 } else {
 	echo '<h5>'.$model->title.' have not registered for any events</h5>';
 }
-
 echo "<br>";
 // Show Current Participants
 printf('<h4> %s </h4>', Yum::t('Members'));

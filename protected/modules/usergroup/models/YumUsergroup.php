@@ -3,7 +3,7 @@
 class YumUsergroup extends YumActiveRecord{
 
 	public $eventIds = array();
-	public $memberId = array();
+	public $memberIds = array();
 
 	public static function model($className=__CLASS__)
 	{
@@ -45,6 +45,7 @@ class YumUsergroup extends YumActiveRecord{
 			'events' => array(self::MANY_MANY, 'Event', 'ku_rg_group_event(group_id, event_id)'),
 			// The order must match database order
 			'user' => array(self::MANY_MANY, 'YumUser', 'ku_rg_team(group_id, user_id)'),
+			// 'userEvent' => array(self::MANY_MANY, 'UserEvent', 'ku_rg_user_event(user_id, group_id, event_id)'),
 			'organisation' => array(self::BELONGS_TO, 'Organisation', 'organisation_id'),
 		);
 	}
@@ -90,7 +91,7 @@ class YumUsergroup extends YumActiveRecord{
 	 */
 	public function getRegisteredEventDataProvider() {
 		$criteria = new CDbCriteria;
-		$criteria->with =array('groups');
+		// $criteria->with =array('groups');
 		$criteria->join = ' INNER JOIN `ku_rg_group_event` AS `group_event` ON t.id = group_event.event_id';
 	    $criteria->addCondition("group_event.group_id = ".$this->id." ");
 
@@ -104,7 +105,7 @@ class YumUsergroup extends YumActiveRecord{
 	 */
 	public function getRegisteredGroupEvents() {
 		$criteria = new CDbCriteria;
-		$criteria->with =array('groups');
+		$criteria->with =array('events');
 		$criteria->join = ' INNER JOIN `ku_rg_group_event` AS `group_event` ON t.id = group_event.event_id';
 	    $criteria->addCondition("group_event.group_id = ".$this->id." ");
 
@@ -246,6 +247,13 @@ class YumUsergroup extends YumActiveRecord{
 		}
 	}
 
+
+	/**
+	 * Trying to clean up the getParticipantCount
+	 * @param type $data
+	 * @param type $group_id
+	 * @return type
+	 */
 	public function getParticipantNumber($data, $group_id)
 	{
 		// function ($model)  use ($gui)

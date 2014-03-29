@@ -21,7 +21,7 @@ class YumUsergroupController extends YumController {
 					'users'=>array('@'),
 					),
 				array('allow',
-					'actions'=>array('JoinEvent','AddMember', 'JoinEventCheck', 'UpdateMembers'),
+					'actions'=>array('JoinEvent','AddMember', 'JoinEventCheck', 'UpdateMembers', 'AddParticipant'),
 					'expression' => 'Yii::app()->user->can("userGroup", "create")',
 					),
 				array('allow',
@@ -221,6 +221,38 @@ class YumUsergroupController extends YumController {
 		$this->render('view',array(
 					'model' => $model,
 					));
+	}
+
+	public function actionAddParticipant($groupId, $eventId) {
+		$model = $this->loadModel($groupId);
+			$event = Event::model()->findByPk($eventId);
+
+		// If form was submitted
+		if(isset($_POST['yt2'])) {
+			// IF any values events were selected
+			if (isset($_POST['memberIds'])) {
+				$event->memberIds = $_POST['memberIds'];
+				$event->users = $event->memberIds;
+
+			} else {
+				// No users where selected
+			    $event->memberIds = null;
+				$event->users = $event->memberIds;
+			}
+
+			if($event->saveWithRelated('users')) {
+
+				Yii::app()->user->setFlash('success', "Success! The Event list have been updated");
+				$this->redirect(array('view','id'=>$model->id));
+			} else
+				Yii::app()->user->setFlash('error', "Data NOT saved!");
+				$this->redirect(array('view','id'=>$model->id));
+				// echo '<pre>'; print_r($_POST); echo '</pre>';
+		} else {
+
+		}
+
+		$this->render('add-participant',array( 'model'=>$model, 'event' => $event, 'eventId' =>$eventId));
 	}
 
 	public function loadModel($id = false)
