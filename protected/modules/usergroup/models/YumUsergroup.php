@@ -133,7 +133,7 @@ class YumUsergroup extends YumActiveRecord{
 	  	$criteria = new CDbCriteria;
 	    $criteria->select = 't.user_id, t.firstname, t.lastname ';
 	    $criteria->join = ' INNER JOIN `ku_user_role` AS `user_role` ON t.user_id = user_role.user_id';
-	    $criteria->addCondition("t.user_id NOT IN (SELECT owner_id FROM fyp.ku_usergroup)");
+	    $criteria->addCondition("t.user_id NOT IN (SELECT owner_id FROM ku_usergroup)");
 	    $criteria->addCondition("user_role.role_id = {$roleId}");
 	    if ($owner_id) {
 	    	$criteria->compare('t.user_id', $owner_id, false, 'OR');
@@ -178,10 +178,10 @@ class YumUsergroup extends YumActiveRecord{
 	    $criteria->select = 't.user_id, t.firstname, t.lastname ';
 	    $criteria->join = ' INNER JOIN `ku_user_role` AS `user_role` ON t.user_id = user_role.user_id';
 	    // $criteria->join = ' INNER JOIN `ku_rg_team` AS `team` ON t.user_id = team.user_id';
-	    $criteria->addCondition("t.user_id NOT IN (SELECT ku_rg_team.user_id FROM fyp.ku_rg_team)");
+	    $criteria->addCondition("t.user_id NOT IN (SELECT ku_rg_team.user_id FROM ku_rg_team)");
 	    $criteria->addCondition("user_role.role_id = {$roleId}");
 
-	    $groupMember    =    YumProfile::model()->findAll($criteria);
+	    $groupMember = YumProfile::model()->findAll($criteria);
 
 	  	return $groupMember ? $groupMember : null;
 	}
@@ -230,10 +230,10 @@ class YumUsergroup extends YumActiveRecord{
 
 	public function getParticipantCount($data, $group_id)
 	{
-		$sql  =		'SELECT COUNT(*) FROM fyp.ku_rg_user_event as t ';
+		$sql  =		'SELECT COUNT(*) FROM ku_rg_user_event as t ';
 		$sql .=		'INNER JOIN ku_rg_event as rg_event on t.event_id = rg_event.id ';
 		$sql .=		'WHERE rg_event.id = '.$data->id.' ';
-		$sql .=		'AND t.user_id IN (SELECT user_id FROM fyp.ku_rg_team WHERE group_id= '.$group_id.') ';
+		$sql .=		'AND t.user_id IN (SELECT user_id FROM ku_rg_team WHERE group_id= '.$group_id.') ';
 		$result = Yii::app()->db->createCommand($sql)->queryAll(false);
 		if ($result) {
 			// As It is count, only one row 1 and first index will be the value
@@ -260,10 +260,10 @@ class YumUsergroup extends YumActiveRecord{
                 $a =YumUsergroup::model()->getParticipantCount($model, $gui);
                 // return $a;
 
-		$sql  =		'SELECT COUNT(*) FROM fyp.ku_rg_user_event as t ';
+		$sql  =		'SELECT COUNT(*) FROM ku_rg_user_event as t ';
 		$sql .=		'INNER JOIN ku_rg_event as rg_event on t.event_id = rg_event.id ';
 		$sql .=		'WHERE rg_event.id = '.$data->id.' ';
-		$sql .=		'AND t.user_id IN (SELECT user_id FROM fyp.ku_rg_team WHERE group_id= '.$group_id.') ';
+		$sql .=		'AND t.user_id IN (SELECT user_id FROM ku_rg_team WHERE group_id= '.$group_id.') ';
 		$result = Yii::app()->db->createCommand($sql)->queryAll(false);
 		if ($result) {
 			// As It is count, only one row 1 and first index will be the value

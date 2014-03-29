@@ -21,7 +21,7 @@ class UserModule extends CWebModule {
 	public $enableOnlineStatus = true;
 
 	// Cost for Password generation. See CPasswordHelper::hashPassword() for
-	// details. 
+	// details.
 	public $passwordHashCost = 13;
 
 	// enable pStrength jquery widget
@@ -35,7 +35,7 @@ class UserModule extends CWebModule {
 			'symbols' => 1,
 			);
 
-	// Show an Captcha after how many unsuccessful logins? Set to 0 to 
+	// Show an Captcha after how many unsuccessful logins? Set to 0 to
 	// always display an captcha, set to false to disable this function
 	public $captchaAfterUnsuccessfulLogins = false;
 
@@ -48,7 +48,7 @@ class UserModule extends CWebModule {
   // for example, demo and Demo would be the same user then
 	public $caseSensitiveUsers = false;
 
-	// set this to true if you do want to access data through a REST api. 
+	// set this to true if you do want to access data through a REST api.
 	// Disabled by default for security reasons.
 	public $enableRESTapi = false;
 
@@ -64,9 +64,9 @@ class UserModule extends CWebModule {
 	public $activationPasswordSet = false;
 	public $autoLogin = false;
 
-	// set to swift to active emailing by swiftMailer or 
+	// set to swift to active emailing by swiftMailer or
 	// PHPMailer to use PHPMailer as emailing lib.
-	public $mailer = 'yum'; 
+	public $mailer = 'yum';
 	public $phpmailer = null; // PHPMailer array options.
 	public $adminEmail = 'admin@example.com';
 
@@ -78,12 +78,12 @@ class UserModule extends CWebModule {
   public $rteadapter = false; // Don't use an Adapter
 
 	public $customCsvExportCriteria = '1';
-	
+
 	// valid callback function that executes after user login
 	public $afterLogin = false;
 
 	// Set this to true to really remove users instead of setting the status
-	// to -2 (YumUser::REMOVED)	
+	// to -2 (YumUser::REMOVED)
 	// Handle with care. User and Profile will get removed physically from the db.
 	public $trulyDelete = false;
 
@@ -123,9 +123,9 @@ class UserModule extends CWebModule {
 			'messageCompose' =>'application.modules.message.views.message.compose');
 
 	// LoginType :
-	// If you want to activate many types of login just sum up the values below 
-	// and assign them to 'loginType' in the user module configuration. For 
-	// example, to allow login by username, email and hybridauth, set this 
+	// If you want to activate many types of login just sum up the values below
+	// and assign them to 'loginType' in the user module configuration. For
+	// example, to allow login by username, email and hybridauth, set this
 	// value to 7. Defaults to only allow login by username (value set to 1)
 	const LOGIN_BY_USERNAME	= 1;
 	const LOGIN_BY_EMAIL = 2;
@@ -162,8 +162,9 @@ class UserModule extends CWebModule {
 	public $usernameRequirements=array(
 		'minLen'=>3,
 		'maxLen'=>30,
-		'match' => '/^[A-Za-z0-9_-\s]+$/u',
-		'dontMatchMessage' => 'Incorrect symbol\'s. (A-z0-9)',
+		// 'match' => '/^[A-Za-z0-9_-\s]+$/u',
+		'match' => '/^[A-Za-z0-9_\-]+$/u',
+		'dontMatchMessage' => 'Incorrect Username symbol\'s. (A-z0-9)',
 	);
 
 	public $passwordRequirements = array(

@@ -71,7 +71,7 @@ class YumUserController extends YumController {
 						// $profile->privacy = 'protected';
 						$profile->email = 'e@mail.de';
 						$profile->save();
-					} 
+					}
 				}
 			}
 		}
@@ -264,7 +264,7 @@ class YumUserController extends YumController {
 	public function actionUpdate($id) {
 		$user = $this->loadUser($id);
 		$profile = false;
-		if(Yum::hasModule('profile')) 
+		if(Yum::hasModule('profile'))
 			$profile = $user->profile;
 		$passwordform = new YumUserChangePassword();
 
@@ -290,7 +290,7 @@ class YumUserController extends YumController {
 				}
 
 				if(!$passwordform->hasErrors() && $user->save()) {
-					if(isset($profile) && $profile) 
+					if(isset($profile) && $profile)
 						$profile->save();
 
 					$this->redirect(array('admin'));
@@ -301,7 +301,7 @@ class YumUserController extends YumController {
 		$this->render('update', array(
 					'user'=>$user,
 					'passwordform' =>$passwordform,
-					'profile' => $profile, 
+					'profile' => $profile,
 					));
 	}
 
@@ -339,7 +339,7 @@ class YumUserController extends YumController {
 				Yum::setFlash('Wrong password confirmation! Account was not deleted');
 			}
 			$this->redirect(Yum::module()->deleteUrl);
-		} 
+		}
 
 		$this->render('confirmDeletion', array('model' => $user));
 	}
@@ -353,15 +353,15 @@ class YumUserController extends YumController {
 
 		/*		if(Yum::hasModule('profile')) {
 					$criteria->join = 'LEFT JOIN '.Yum::module('profile')->privacysettingTable .' on t.id = privacysetting.user_id';
-					$criteria->addCondition('appear_in_search = 1'); 
+					$criteria->addCondition('appear_in_search = 1');
 					} */
 
 		$criteria->addCondition('status = 1 or status = 2 or status = 3');
-		if($search) 
+		if($search)
 			$criteria->addCondition("username = '{$search}'");
 
 		$dataProvider=new CActiveDataProvider('YumUser', array(
-					'criteria' => $criteria, 
+					'criteria' => $criteria,
 					'pagination'=>array(
 						'pageSize'=>50,
 						)));
@@ -376,7 +376,7 @@ class YumUserController extends YumController {
 		$dataProvider=new CActiveDataProvider('YumUser', array(
 					'pagination'=>array(
 						/*'criteria'=>array(
-							'condition'=>'status > 0', 
+							'condition'=>'status > 0',
 							),*/
 						'pageSize'=>Yum::module()->pageSize,
 						)));

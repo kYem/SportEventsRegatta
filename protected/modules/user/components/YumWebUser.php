@@ -78,7 +78,6 @@ class YumWebUser extends CWebUser
 
 
 	public function getGroup() {
-		# SELECT id FROM fyp.ku_usergroup where owner_id = 4 LIMIT 1
 		$userId = Yii::app()->user->id;
 		$group = YumUsergroup::model()->findByAttributes(
                 array(

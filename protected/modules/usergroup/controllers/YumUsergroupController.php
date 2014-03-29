@@ -352,7 +352,7 @@ class YumUsergroupController extends YumController {
 		}
 
 
-		$sql = "INSERT INTO `fyp`.`ku_rg_team` (`user_id`,`group_id`)
+		$sql = "INSERT INTO `ku_rg_team` (`user_id`,`group_id`)
 				VALUES (".$memberId.",".$model->id.")";
 		$result = Yii::app()->db->createCommand($sql)->execute();
 		if ($result) {
