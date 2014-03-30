@@ -51,7 +51,7 @@
 	));
 		echo CHtml::Button(Yum::t('Cancel'), array(
 					'submit' => array('//usergroup/groups/view', 'id' => $model->id), 'class'=>'btn'));
-		echo CHtml::submitButton(Yum::t('Save'), array('class'=>'btn'));
+		echo CHtml::submitButton(Yum::t('Save'), array('class'=>'btn', 'name'=> 'submit'));
 	$this->endWidget();
 
 ?>

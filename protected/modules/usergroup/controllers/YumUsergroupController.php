@@ -114,7 +114,7 @@ class YumUsergroupController extends YumController {
 			$this->performAjaxValidation($model, 'usergroup-eventInitial');
 
 		// If form was submitted
-		if(isset($_POST['yt1'])) {
+		if(isset($_POST['submit'])) {
 			// IF any values events were selected
 			if (isset($_POST['eventIds'])) {
 				$model->eventIds = $_POST['eventIds'];
@@ -133,7 +133,7 @@ class YumUsergroupController extends YumController {
 			} else
 				Yii::app()->user->setFlash('error', "Data NOT saved!");
 		} else {
-
+			Yii::app()->user->setFlash('error', "Nothing was Submited!");
 		}
 
 		$this->render('event-reg',array( 'model'=>$model, 'event' => $event));
@@ -229,7 +229,7 @@ class YumUsergroupController extends YumController {
 			$event = Event::model()->findByPk($eventId);
 
 		// If form was submitted
-		if(isset($_POST['yt2'])) {
+		if(isset($_POST['submit'])) {
 			// IF any values events were selected
 			if (isset($_POST['memberIds'])) {
 				$event->memberIds = $_POST['memberIds'];
@@ -246,7 +246,7 @@ class YumUsergroupController extends YumController {
 
 			if($event->saveWithRelated('users')) {
 
-				Yii::app()->user->setFlash('success', "Success! The Event list have been updated");
+				Yii::app()->user->setFlash('success', "Success! The Participant list have been updated");
 				$this->redirect(array('view','id'=>$model->id));
 			} else
 				Yii::app()->user->setFlash('error', "Data NOT saved!");

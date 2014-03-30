@@ -15,7 +15,6 @@ if(Yii::app()->user->hasFlash('success')){
         // Get current group id for closure value
     $gui = $model->id;
     echo "<br>";
-    // echo '<pre>'; print_r($model->getGroupMembersByAge($event->age_group->lower, $event->age_group->upper)->getData()); echo '</pre>';
 ?>
 <h3> <?php echo $model->title.' - add participants to '. $event->name; ?> </h3>
 <h4>Please select <?php echo $event->seats; ?> member<?php echo ($event->seats >= 2) ? 's':'' ?></h4>
@@ -61,7 +60,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 ),
 	),
 ));
-        echo CHtml::submitButton(Yum::t('Save'), array('class'=>'btn'));
+        echo CHtml::submitButton(Yum::t('Save'), array('class'=>'btn', 'name'=>'submit'));
     $this->endWidget();
 ?>
  <div style="clear: both;"> </div>
