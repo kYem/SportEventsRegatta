@@ -24,7 +24,7 @@ if(Yii::app()->user->hasFlash('success')){
     <div class="btn-control">
     <?php
 	if (Yii::app()->user->can("userGroup", "create")) {
-	   echo CHtml::link(Yum::t('Assign User'), '', array(
+	   echo CHtml::link(Yum::t('Add Member'), '', array(
 				'onClick' => "$('#usergroup_members').toggle(500)", 'class'=>'btn'));
 
 		echo CHtml::link(' Join Event', array(
@@ -45,9 +45,12 @@ if(Yii::app()->user->hasFlash('success')){
 				)
 			); ?>
 	</div>
-<?php
-printf('<h4> %s </h4>', Yum::t('Registered Events'));
 
+<?php printf('<h4> %s </h4>', Yum::t('Registered Events')); ?>
+
+<h5>Regatta <?php echo $regatta->name ?> - current Phase: <?php echo $regatta->status->name ?></h5>
+
+<?php
     // Get current group id for closure value
     $gui = $model->id;
     // Show Registered Event GridView
@@ -63,21 +66,18 @@ if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
             array(
                 'header'=>'Participanting Groups',
                 'value'=> function ($model) {
-                    $count = GroupEvent::model()->countByAttributes(
+                    return GroupEvent::model()->countByAttributes(
                         array('event_id'=> $model->id,));
-                        return $count;
                     },
                 'type'=>'text'
             ),
             'seats',
             array(
+                'name' => 'memberCount',
                 'header'=>'Registered Members',
                 'value'=> function ($model)  use ($gui){
                     return YumUsergroup::model()->getParticipantCount($model, $gui);
                 },
-            ),
-            array('name'=>'status.name',
-            'header'=> 'Progress',
             ),
             array(
                 'class'=>'bootstrap.widgets.TbButtonColumn',

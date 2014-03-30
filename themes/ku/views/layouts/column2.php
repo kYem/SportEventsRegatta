@@ -147,22 +147,20 @@
             'type' => TbHtml::NAV_TYPE_LIST,
             'items'=>array(
                 array('label'=>'USER SETTINGS'),
-                array(
-                    'label'=>'Dashboard', 'icon'=>'cog',
-                    'url'=>array('//event/dashboard'),
-                    // 'visible' => !Yii::app()->user->isAdmin(),
-                    ),
                 array('label'=>'Profile', 'icon'=>'user', 'url'=>array('//profile/profile/view')),
                 array('label'=>'Edit Profile', 'icon'=>'pencil', 'url'=>array('//profile/profile/update')),
                 TbHtml::menuDivider(),
 
 
                 array('label' => 'My Group', 'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup()),
-                array('label' => 'Overview',
+                array('label' => 'Dashboard',
                     'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),
-                    // array('/site/page', 'view'=>'map-of-course')
                     'url' => array('/usergroup/groups/view', 'id'=>Yii::app()->user->getGroup()),
                     'icon'=>'bullhorn'),
+                array('label' => 'Join Event',
+                    'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),
+                    'url' => array('/usergroup/groups/joinEvent', 'id'=>Yii::app()->user->getGroup()),
+                    'icon'=>'plus'),
 
                /* TbHtml::menuDivider(),
                 array('label' => 'Misc', 'items' => array(

@@ -8,8 +8,8 @@ Small 472px to 765px
 
 if(YumUser::model()->find('username = bob')->can('removeUsers')) { ...
 
-A Permission can have a Subordinate. With this feature, you can 
-further restrict, what a action can affect. 
+A Permission can have a Subordinate. With this feature, you can
+further restrict, what a action can affect.
 
 A Permission can also have a Subaction. For example, to check if the current
 user can remove users:
@@ -33,7 +33,7 @@ Implementation stage
 
 	array(
 			'name'=>'boats.name',
-			'header'=>'Boat',  
+			'header'=>'Boat',
 			'value'=> function ($model) {
                            $boatName = array();
                            foreach ($model->boats as $boat) {
@@ -43,3 +43,11 @@ Implementation stage
                          } ,
 
 How certain paramerts are encode with htmlspecialchars(), therefore you need to return the array into the string array and serve the first value for the correct model instance
+
+
+
+
+
+/// SQL GET BETWEEN
+
+SELECT t.user_id, t.firstname, t.lastname, FROM `ku_profile` `t` INNER JOIN `ku_rg_team` AS `team` ON t.id = team.user_id WHERE (team.group_id = 1 ) AND (DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(dob, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(dob, '00-%m-%d')) BETWEEN :ycp0 AND :ycp1)

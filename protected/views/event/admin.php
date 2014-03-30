@@ -40,7 +40,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <div class="search-form" style="display:none">
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
-)); 
+));
 ?>
 </div><!-- search-form -->
 
@@ -51,7 +51,9 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	// 'ajaxUpdate' => false,
 	'filter'=>$model,
 	'columns'=>array(
-		'id',
+        array('name'=>'organisation.organisation',
+        'filter'=>CHtml::activeTextField($model,'organisation_search'),
+        ),
 		'name',
 		array('name'=>'age_group.name',
 	    'header'=> 'Age Group',
@@ -59,7 +61,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	    ),
 		array(
 			'name'=>'boats.name',
-			'header'=>'Boat',  
+			'header'=>'Boat',
 			'value'=> function ($model) {
                            $boatName = array();
                            foreach ($model->boats as $boat) {
@@ -69,18 +71,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
                          } ,
 	        'filter'=>CHtml::activeTextField($model,'boat_search'),
 			'type'=>'text'),
-		array('name'=>'organisation.organisation',    
-	    'filter'=>CHtml::activeTextField($model,'organisation_search'),
-	    ),
-		
-		// 'star_date',
-		// 'end_date',
-		array('name'=>'status.name',
-		'header'=> 'Status',    
-	    'filter'=>CHtml::activeTextField($model,'status_search'),
-	    ),
+
 		'min_participant',
-		'max_participant',
 		'seats',
 		array(
             'class'=>'bootstrap.widgets.TbButtonColumn',

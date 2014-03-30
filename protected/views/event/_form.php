@@ -35,44 +35,6 @@
         ); ?>
 
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'star_date'); ?>
-		<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-                'model'=>$model,
-                'attribute'=>'star_date',
-                'value'=>$model->star_date,
-                'options'=>array(
-                    'showAnim'=>'fold',
-                    'dateFormat'=>'yy-mm-dd',
-                ),
-                'htmlOptions'=>array(
-                	'style'=>'height:20px;'
-                ),
-            ));
-		?>
-
-		<?php echo $form->error($model,'star_date'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'end_date'); ?>
-
-		<?php $this->widget('zii.widgets.jui.CJuiDatePicker',array(
-                'model'=>$model,
-                'attribute'=>'end_date',
-                'value'=>$model->end_date,
-                'options'=>array(
-                    'showAnim'=>'fold',
-                    'dateFormat'=>'yy-mm-dd',
-                ),
-                'htmlOptions'=>array(
-                	'style'=>'height:20px;'
-                ),
-            ));
-		?>
-
-		<?php echo $form->error($model,'end_date'); ?>
-	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'min_participant'); ?>

@@ -221,6 +221,31 @@ class YumUsergroup extends YumActiveRecord{
 		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
 	}
 
+	/**
+	 * Get all members of the group
+	 * @return CActiveDataProvider object
+	 */
+	public function getGroupMembersByAge($lower = 0, $upper = null)
+	{
+		$criteria = new CDbCriteria;
+		$criteria->select = 't.id, profile.firstname, profile.lastname, profile.dob ';
+		$criteria->join = ' INNER JOIN `ku_rg_team` AS `team` ON t.id = team.user_id ';
+		$criteria->join .= ' INNER JOIN `ku_profile` AS `profile` ON t.id = profile.user_id ';
+	    $criteria->addCondition("team.group_id = ".$this->id." ");
+	    if ($lower || $upper) {
+	    	$criteria->addBetweenCondition("DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(profile.dob, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(profile.dob, '00-%m-%d'))", $lower, $upper);
+	    }
+
+	    // SELECT name
+        // FROM users WHERE dob BETWEEN DATE_ADD(CURDATE(), INTERVAL -{$age1} YEAR) AND DATE_ADD(CURDATE(), INTERVAL -{$age2} YEAR)
+
+	    // SELECT DATE_FORMAT(NOW(), '%Y') - DATE_FORMAT(dob, '%Y') - (DATE_FORMAT(NOW(), '00-%m-%d') < DATE_FORMAT(dob, '00-%m-%d')) AS age
+	    // select firstname,extract(year from (from_days(dateDiff(current_timestamp,dob)))) from ku_profile;
+	    // SELECT DATE_FORMAT(reference, '%Y') - DATE_FORMAT(birthdate, '%Y') - (DATE_FORMAT(reference, '00-%m-%d') < DATE_FORMAT(birthdate, '00-%m-%d')) AS age
+
+		return new CActiveDataProvider('YumUser', array('criteria' => $criteria));
+	}
+
 
 
 	public function getRegisteredEvents($data) {

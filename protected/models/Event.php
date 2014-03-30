@@ -182,8 +182,6 @@ class Event extends CActiveRecord
 	    $criteria=new CDbCriteria;
 	    $criteria->with = array( 'boats', 'organisation','age_group', 'status' );
 	    $criteria->together= true;
-	    // $criteria->alias = 'i';
-	    // $criteria->join= 'JOIN ku_rg_event_boat d ON (i.id=d.id)';
 	    $criteria->compare('t.id',$this->id);
 		$criteria->compare('t.name',$this->name,true);
 		$criteria->compare('boats.name', $this->boat_search, true );
@@ -201,7 +199,7 @@ class Event extends CActiveRecord
 	    return new CActiveDataProvider( 'Event', array(
 		    'criteria'=>$criteria,
 		    'sort'=>array(
-		    	'defaultOrder'=>'t.id ASC',
+		    	'defaultOrder'=>'organisation.organisation DESC',
 		        'attributes'=>array(
 		            'organisation.organisation'=>array(
 		                'asc'=>'organisation.organisation',

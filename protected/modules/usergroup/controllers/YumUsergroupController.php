@@ -217,9 +217,10 @@ class YumUsergroupController extends YumController {
 
 	public function actionView($id) {
 		$model = $this->loadModel($id);
-
+		$regatta = Regatta::model()->findByPk(1);
 		$this->render('view',array(
 					'model' => $model,
+					'regatta'=> $regatta,
 					));
 	}
 

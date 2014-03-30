@@ -12,11 +12,13 @@ $this->breadcrumbs=array(
 <h4>Current Phase: <?php echo $regatta->status->name ?></h4>
 
 
-    <div class="btn-control">
+
     <?php
 
     if (Yii::app()->user->isAdmin()) {
+        echo '<div class="btn-control">';
         // Event Organiser / Admin View
+        echo '</div>';
         echo CHtml::link(Yum::t('Change Events Phase'), '', array(
             'onClick' => "$('#change-phase').toggle(500)",
             'class'=>'btn'));
@@ -26,7 +28,6 @@ $this->breadcrumbs=array(
              'class'=>'btn'));
         }
     ?>
-    </div>
     <div style="display:none;" id="change-phase">
         <h4> <?php echo Yum::t('Please select the phase for the Regatta'); ?> </h4>
 

@@ -15,22 +15,12 @@ if(Yii::app()->user->hasFlash('success')){
         // Get current group id for closure value
     $gui = $model->id;
     echo "<br>";
+    // echo '<pre>'; print_r($model->getGroupMembersByAge($event->age_group->lower, $event->age_group->upper)->getData()); echo '</pre>';
 ?>
 <h3> <?php echo $model->title.' - add participants to '. $event->name; ?> </h3>
-	<br />
-	<?php // Add Member Ajax roll over ?>
-	<div style="display:none;" id="usergroup_members">
-		<h4> <?php echo Yum::t('Add new members to the group'); ?> </h4>
-
-		<?php $this->renderPartial('_add-member', array(
-				'model' => $model,
-				'group_id' => $model->id,
-				)
-			); ?>
-	</div>
+<h4>Please select <?php echo $event->seats; ?> member<?php echo ($event->seats >= 2) ? 's':'' ?></h4>
+<br>
 <?php
-// Testing
-
 
 // Show Current Participants
 printf('<h4> %s </h4>', Yum::t('Members'));
@@ -46,11 +36,10 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
  $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'usergroup-grid',
 	'type' => TbHtml::GRID_TYPE_HOVER,
-	'dataProvider'=>$model->getGroupMembers(),
+	'dataProvider'=>$model->getGroupMembersByAge($event->age_group->lower, $event->age_group->upper),
 	'columns'=>array(
-		// This is YumUser model attributes
-		'id',
-		// 'username',
+		// This is YumProfile model attributes
+		// 'id',
 		array(
 			'header'=>'First Name',
 			'name'=> 'profile.firstname'
