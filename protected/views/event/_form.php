@@ -20,7 +20,7 @@
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->errorSummary(array($model)); ?>
 <div class="span4">
 	<div class="row">
 		<?php echo $form->labelEx($model,'name'); ?>
@@ -31,8 +31,7 @@
 		<?php echo $form->labelEx(Boat::model(), 'Boat Type'); ?>
         <?php echo $form->error(Boat::model(), 'name'); ?>
         <?php echo $form->dropDownList(	Boat::model(),'name',
-        		CHtml::listData(Boat::model()->findAll(), 'id', 'name'),
-        		array('empty' => 'Select Age Group...')
+        		CHtml::listData(Boat::model()->findAll(), 'id', 'name')
         ); ?>
 
 	</div>
@@ -93,6 +92,20 @@
 </div>
 
 <div class="span4">
+    <div class="row">
+        <?php echo $form->labelEx($model,'regatta_id'); ?>
+        <?php echo $form->dropDownList(
+                $model,
+                'regatta_id',
+                CHtml::listData(
+                    Regatta::model()->findAll(),
+                        'id',
+                        'name'
+                ),
+                array('empty' => 'Select Regatta...')
+        ); ?>
+        <?php echo $form->error($model,'regatta_id'); ?>
+    </div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'age_id'); ?>
 		<?php echo $form->dropDownList(
@@ -111,7 +124,7 @@
         		$model,
         		'organisation_id',
         		CHtml::listData(
-        			Organisation::model()->findAll(),
+        			Organisation::model()->findAll(array('order' => 'id ASC')),
         				'id',
         				'organisation'
         		),
@@ -130,7 +143,7 @@
 		<?php echo $form->dropDownList(
         		$model,
         		'status_id',
-        		CHtml::listData(Status::model()->findAll(), 'id', 'name')
+        		CHtml::listData(Status::model()->findAll(array('order' => 'id ASC')), 'id', 'name')
 
         ); ?>
 		<?php echo $form->error($model,'status_id'); ?>

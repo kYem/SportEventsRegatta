@@ -233,11 +233,14 @@ class YumUsergroupController extends YumController {
 			if (isset($_POST['memberIds'])) {
 				$event->memberIds = $_POST['memberIds'];
 				$event->users = $event->memberIds;
+				$model->memberIds = $event->memberIds;
+
 
 			} else {
 				// No users where selected
 			    $event->memberIds = null;
 				$event->users = $event->memberIds;
+				$model->memberIds = $event->memberIds;
 			}
 
 			if($event->saveWithRelated('users')) {
@@ -247,9 +250,6 @@ class YumUsergroupController extends YumController {
 			} else
 				Yii::app()->user->setFlash('error', "Data NOT saved!");
 				$this->redirect(array('view','id'=>$model->id));
-				// echo '<pre>'; print_r($_POST); echo '</pre>';
-		} else {
-
 		}
 
 		$this->render('add-participant',array( 'model'=>$model, 'event' => $event, 'eventId' =>$eventId));

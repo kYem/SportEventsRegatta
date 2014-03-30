@@ -6,33 +6,41 @@ $this->breadcrumbs=array(
 	'Events'=>array('index'),
 	'Dashboard',
 );
-
-$this->menu=array(
-   	array('label'=>'Event Administration'),
-    array('label'=>'Overview', 'icon'=>'home', 'url'=>array('admin'), 'active'=>true),
-    array('label'=>'Create', 'icon'=>'pencil', 'url'=>array('create')),
-    array('label'=>'All Events', 'icon'=>'list', 'url'=>array('index')),
-
-	);
 ?>
 
-<h1>Dashboard</h1>
+<h2>Dashboard - Regatta <?php echo $regatta->name ?></h2>
+<h4>Current Phase: <?php echo $regatta->status->name ?></h4>
 
 
+    <div class="btn-control">
+    <?php
 
-<?php
-if (Yii::app()->user->isAdmin()) {
-    // Event Organiser / Admin View
-    echo CHtml::link(Yum::t('Change Events Phase'), '', array(
-        'onClick' => "$('#change-phase').toggle(500)",
-        'class'=>'btn')); ?>
-
+    if (Yii::app()->user->isAdmin()) {
+        // Event Organiser / Admin View
+        echo CHtml::link(Yum::t('Change Events Phase'), '', array(
+            'onClick' => "$('#change-phase').toggle(500)",
+            'class'=>'btn'));
+        if ($regatta->status_id == 4) {
+            echo CHtml::link(Yum::t('Generate Schedule'), '', array(
+             'onClick' => "$('#generate-schedule').toggle(500)",
+             'class'=>'btn'));
+        }
+    ?>
+    </div>
     <div style="display:none;" id="change-phase">
         <h4> <?php echo Yum::t('Please select the phase for the Regatta'); ?> </h4>
 
         <?php $this->renderPartial('_change-phase', array(
                 'model' => $model,
-                'group_id' => $model->id,
+                )
+            ); ?>
+    </div>
+    <div style="display:none;" id="generate-schedule">
+        <h4> <?php echo Yum::t('Generate Schedule for all Events'); ?> </h4>
+
+        <?php $this->renderPartial('_generate-schedule', array(
+                'model' => $model,
+                'regatta' => $regatta,
                 )
             ); ?>
     </div>
@@ -41,7 +49,7 @@ if (Yii::app()->user->isAdmin()) {
     $this->widget('bootstrap.widgets.TbGridView', array(
     	'id'=>'event-grid',
     	'type' => TbHtml::GRID_TYPE_HOVER,
-    	'dataProvider'=>$model->adminDashboard(),
+    	'dataProvider'=>Event::model()->adminDashboard(),
     	// 'ajaxUpdate' => false,
     	'filter'=>$model,
     	'columns'=>array(

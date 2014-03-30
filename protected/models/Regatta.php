@@ -48,7 +48,7 @@ class Regatta extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'status' => array(self::BELONGS_TO, 'RgStatus', 'status_id'),
+			'status' => array(self::BELONGS_TO, 'Status', 'status_id'),
 		);
 	}
 

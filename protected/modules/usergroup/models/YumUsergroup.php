@@ -247,6 +247,19 @@ class YumUsergroup extends YumActiveRecord{
 		}
 	}
 
+	public function getRegisteredMemberIds($user_id)
+	{
+		$criteria = new CDbCriteria;
+		$criteria->select = 't.user_id';
+		$criteria->condition = 't.event_id = '.$user_id;
+
+		$userIds = array();
+		$data = UserEvent::model()->findAll($criteria);
+		foreach ($data as $key => $UserEvent) {
+		    $userIds[] = $UserEvent->user_id;
+		}
+		return $userIds;
+	}
 
 	/**
 	 * Trying to clean up the getParticipantCount

@@ -180,17 +180,16 @@ class EventController extends Controller
 	{
 		$model=new Event('search');
 		$model->unsetAttributes();  // clear any default values
-		$boat = new Boat('search');
-		$boat->unsetAttributes();
-		$model->searchBoat = $boat;
+		$regatta = Regatta::model()->findByPk(1);
 		if(isset($_GET['Event']))
 			$model->attributes=$_GET['Event'];
 		if (isset($_GET['Boat'])) {
         	$boat->attributes = $_GET['Boat'];
     }
-			/*Event::model()->attributes = $_GET['Boat'];*/
+
 		$this->render('dashboard',array(
 			'model'=>$model,
+			'regatta'=>$regatta,
 		));
 	}
 
@@ -203,7 +202,8 @@ class EventController extends Controller
 		if(isset($_POST['Event']['status_id']))
 			$stat_id = (int) $_POST['Event']['status_id'];
 
-		$sql='UPDATE ku_rg_event set status_id = '.$stat_id.';';
+		$sql  = 'UPDATE ku_rg_event set status_id = '.$stat_id.';';
+		$sql .= 'UPDATE ku_rg_regatta set status_id = '.$stat_id.';';
 
 		$result = Yii::app()->db->createCommand($sql)->execute();
 		if($result)

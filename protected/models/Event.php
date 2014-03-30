@@ -170,7 +170,7 @@ class Event extends CActiveRecord
 		$criteria->compare('t.seats',$this->seats);
 		$criteria->compare('t.status_id',$this->status_id);
 		$criteria->compare('t.filename',$this->filename);
-		// $criteria->compare('t.regatta_id',$this->regatta_id);
+		$criteria->compare('t.regatta_id',$this->regatta_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

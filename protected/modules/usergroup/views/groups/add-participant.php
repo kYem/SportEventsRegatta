@@ -30,14 +30,14 @@ if(Yii::app()->user->hasFlash('success')){
 	</div>
 <?php
 // Testing
-echo '<pre>'; print_r($model->memberIds); echo '</pre>';
-echo '<pre>'; print_r($_POST); echo '</pre>';
 
 
 // Show Current Participants
 printf('<h4> %s </h4>', Yum::t('Members'));
-$RegisteredMembers = 'in_array($data->id,array('.($model->memberIds ?  implode(',', $model->memberIds) : '').'))';
+$userIds = $model->getRegisteredMemberIds($event->id);
+$isRegistered = 'in_array($data->id,array('.($userIds ?  implode(',', $userIds) : '').'))';
 
+//
 $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id'=>'usergroup-form',
     'enableAjaxValidation'=>false,
@@ -67,7 +67,7 @@ $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
                 'id'=>'memberIds',
                 'class'=>'CCheckBoxColumn',
                 'selectableRows'=>2,
-                'checked' => $RegisteredMembers,
+                'checked' => $isRegistered,
                 // 'disabled' => $RegisteredEvents,
                 ),
 	),

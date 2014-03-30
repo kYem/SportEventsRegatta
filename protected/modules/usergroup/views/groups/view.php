@@ -71,38 +71,25 @@ if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
             ),
             'seats',
             array(
-                'class'=>'TbDataColumn',
-
                 'header'=>'Registered Members',
                 'value'=> function ($model)  use ($gui){
-                $a =YumUsergroup::model()->getParticipantCount($model, $gui);
-                return $a;
+                    return YumUsergroup::model()->getParticipantCount($model, $gui);
                 },
-                // 'cssClassExpression' => '$data->id <= 32 ? "member-reg-succes" : ""',
-                'type'=>'text',
-                ),
-             array(
-                'class'=>'TbDataColumn',
-
-                'header'=>'Member Number',
-                'value'=> '$data->groups[0]->title',
-                // 'cssClassExpression' => '$data->id <= 32 ? "member-reg-succes" : ""',
-                'type'=>'text',
-                ),
+            ),
             array('name'=>'status.name',
             'header'=> 'Progress',
             ),
             array(
                 'class'=>'bootstrap.widgets.TbButtonColumn',
                 'htmlOptions'=>array('style'=>'width: 50px'),
+                'template'=>'{view}{update}',
                 'buttons'=>array(
                             'delete' => array(
                               'label'=>'Remove Event',
                             ),
                           ),
+                'viewButtonUrl'=>'Yii::app()->createUrl("event/view/", array("id"=>$data->id))',
                 'updateButtonUrl'=>'$this->grid->controller->createUrl("groups/addParticipant/", array("groupId"=>'.$gui.', "eventId"=>$data->id))',
-                // 'updateButtonUrl'=>'$this->grid->controller->createUrl("usergroup/groups/addParticipant/", array("id"=>$data->groups[0]->id))',
-                'deleteButtonUrl'=>'Yii::app()->createUrl("usergroup/groups/view/", array("id"=>$data->id))',
             ),
         ), // Columns
     ));
