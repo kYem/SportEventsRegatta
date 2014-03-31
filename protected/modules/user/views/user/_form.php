@@ -31,7 +31,7 @@ if($m->hasErrors())
 echo $form->textField($user, 'username');
 echo $form->error($user, 'username'); ?>
 </div>
-
+<?php if (Yii::app()->user->isAdmin() || Yii::app()->user->can('event', 'assign') ) { ?>
 <div class="row">
 <?php echo $form->labelEx($user,'status');
 echo $form->dropDownList($user,'status',YumUser::itemAlias('UserStatus'));
@@ -43,7 +43,7 @@ echo $form->error($user,'status'); ?>
 echo $form->dropDownList($user, 'superuser',YumUser::itemAlias('AdminStatus'));
 echo $form->error($user, 'superuser'); ?>
 </div>
-
+<?php } ?>
 <p> Leave password <em> empty </em> to
 <?php echo $user->isNewRecord
 ? 'generate a random Password'

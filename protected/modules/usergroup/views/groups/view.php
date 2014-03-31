@@ -24,7 +24,7 @@ if(Yii::app()->user->hasFlash('success')){
     <div class="btn-control">
     <?php
 	if (Yii::app()->user->can("event", "create") || $model->owner_id == Yii::app()->user->id || Yii::app()->user->isAdmin()) {
-        if ($regatta->status->name == 'Group Registration') {
+        if ($regatta->status->id == 2 || Yii::app()->user->isAdmin()) {
             $onclick = "return true";
             $disabled = null;
 
@@ -61,8 +61,18 @@ if(Yii::app()->user->hasFlash('success')){
 <h5>Regatta <?php echo $regatta->name ?> - current Phase: <?php echo $regatta->status->name ?></h5>
 
 <?php
+
+
     // Get current group id for closure value
     $gui = $model->id;
+
+    if ($regatta->status->id == 3 || Yii::app()->user->isAdmin()) {
+    $addPart =   '$this->grid->controller->createUrl("groups/addParticipant/", array("groupId"=>'.$gui.', "eventId"=>$data->id))';
+
+    }
+    else {
+        $addPart = null;
+    }
     // Show Registered Event GridView
 if (Yii::app()->user->can("event", "create") || $model->owner_id == Yii::app()->user->id || Yii::app()->user->isAdmin()) {
     if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
@@ -100,7 +110,7 @@ if (Yii::app()->user->can("event", "create") || $model->owner_id == Yii::app()->
                                 ),
                               ),
                     'viewButtonUrl'=>'Yii::app()->createUrl("event/view/", array("id"=>$data->id))',
-                    'updateButtonUrl'=>'$this->grid->controller->createUrl("groups/addParticipant/", array("groupId"=>'.$gui.', "eventId"=>$data->id))',
+                    'updateButtonUrl'=>$addPart,
                 ),
             ), // Columns
         ));

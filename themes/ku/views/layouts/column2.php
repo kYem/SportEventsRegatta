@@ -153,6 +153,10 @@
                     'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),
                     'url' => array('/usergroup/groups/joinEvent', 'id'=>Yii::app()->user->getGroup()),
                     'icon'=>'plus'),
+                 array('label' => 'Create new User',
+                    'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),
+                    'url' => array('//user/user/create'),
+                    'icon'=>'plus'),
             ),
         ));
     }
