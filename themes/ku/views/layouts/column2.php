@@ -126,13 +126,6 @@
                     'url' => array('/usergroup/groups/create'),
                     'icon'=>'plus'),
 
-               /* TbHtml::menuDivider(),
-                array('label' => 'Misc', 'items' => array(
-                            array('label' => 'Change password', 'url' => array('//user/user/changePassword')),
-                            array('label' => 'Delete account', 'url' => array('//user/user/delete')),
-                            array('label' => 'Logout', 'url' => array('//user/user/logout')),
-                            )
-                        ),*/
 
 
             ),
@@ -147,7 +140,7 @@
                 TbHtml::menuDivider(),
 
 
-                array('label' => 'My Group', 'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup()),
+                array('label' => 'My Group', 'visible' =>  Yum::hasModule('usergroup') && (Yii::app()->user->getGroup()) OR Yii::app()->user->getMemberGroupId()),
                 array('label' => 'Dashboard',
                     'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),
                     'url' => array('/usergroup/groups/view', 'id'=>Yii::app()->user->getGroup()),
@@ -160,16 +153,6 @@
                     'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),
                     'url' => array('/usergroup/groups/joinEvent', 'id'=>Yii::app()->user->getGroup()),
                     'icon'=>'plus'),
-
-               /* TbHtml::menuDivider(),
-                array('label' => 'Misc', 'items' => array(
-                            array('label' => 'Change password', 'url' => array('//user/user/changePassword')),
-                            array('label' => 'Delete account', 'url' => array('//user/user/delete')),
-                            array('label' => 'Logout', 'url' => array('//user/user/logout')),
-                            )
-                        ),*/
-
-
             ),
         ));
     }

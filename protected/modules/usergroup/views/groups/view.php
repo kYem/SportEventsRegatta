@@ -24,11 +24,21 @@ if(Yii::app()->user->hasFlash('success')){
     <div class="btn-control">
     <?php
 	if (Yii::app()->user->can("event", "create") || $model->owner_id == Yii::app()->user->id || Yii::app()->user->isAdmin()) {
+        if ($regatta->status->name == 'Group Registration') {
+            $onclick = "return true";
+            $disabled = null;
+
+        } else {
+             $disabled = 'disabled';
+            $onclick = "return false;";
+        }
+
+
 	   echo CHtml::link(Yum::t('Add Member'), '', array(
 				'onClick' => "$('#usergroup_members').toggle(500)", 'class'=>'btn'));
 
 		echo CHtml::link(' Join Event', array(
-						'//usergroup/groups/joinEvent', 'id' => $model->id),array('class'=>'btn'));
+						'//usergroup/groups/joinEvent', 'id' => $model->id),array('onClick' => $onclick, 'class'=>'btn', 'disabled'=>$disabled));
 
 		// echo CHtml::link(' Join Initial Events', array('//usergroup/groups/JoinEventCheck', 'id' => $model->id),array('class'=>'btn'));
 	}
@@ -105,8 +115,6 @@ if (Yii::app()->user->can("event", "create") || $model->owner_id == Yii::app()->
             'id'=>'event-grid',
             'type' => TbHtml::GRID_TYPE_HOVER,
             'dataProvider'=>$model->getRegisteredMemberEvents(),
-            // 'filter'=>Event::model(),
-
             'columns'=>array(
                 'name',
                 array(

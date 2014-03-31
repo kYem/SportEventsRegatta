@@ -134,7 +134,7 @@ class Event extends CActiveRecord
 			'max_participant' => 'Max Groups',
 			'age_id' => 'Age Group',
 			'organisation_id' => 'Organisation',
-			'seats' => 'Number in a boat',
+			'seats' => 'Boat Seats',
 			'status_id' => 'Status',
 			'filename' => 'Image',
 			'regatta_id'=> 'Regatta'

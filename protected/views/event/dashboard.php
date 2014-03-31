@@ -75,6 +75,11 @@ $this->breadcrumbs=array(
     		'header'=> 'Progress',
     	    'filter'=>CHtml::activeTextField($model,'status_search'),
     	    ),
+            array(
+                    'class'=>'bootstrap.widgets.TbButtonColumn',
+                    'htmlOptions'=>array('style'=>'width: 50px'),
+                    'template'=>'{view}{update}',
+                ),
     	),
     ));
 }
