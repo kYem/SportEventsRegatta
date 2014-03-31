@@ -92,6 +92,19 @@ class YumWebUser extends CWebUser
 		return $group;
 	}
 
+
+
+	public function getMemberGroupId() {
+		$userId = Yii::app()->user->id;
+		$group = Team::model()->findByAttributes(array('user_id'=> $userId));
+		if ($group) {
+			$group = $group->group_id;
+		} else {
+			$group = null;
+		}
+		return $group;
+	}
+
 	/**
 	 * Checks if this (non-admin) User can administrate the given user
 	 */

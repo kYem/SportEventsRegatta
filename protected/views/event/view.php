@@ -27,7 +27,10 @@ $this->breadcrumbs=array(
 
 		'min_participant',
 		'max_participant',
-		'age.age_id',
+        array(
+            'name'=> 'age_group.name',
+            'label'=>'Age Group',
+            ),
 		'seats',
 	),
 ));
@@ -36,9 +39,14 @@ $this->breadcrumbs=array(
 <ul>
 <?php
 $groups =$model->groups;
-foreach ($groups as $key => $group) {
-    $link = Yii::app()->createUrl("usergroup/groups/view/", array("id"=> $group->id ));
-    echo '<li><a href="'.$link.'">'.$group->title.'</a></li>';
+if ($groups) {
+
+    foreach ($groups as $key => $group) {
+        $link = Yii::app()->createUrl("usergroup/groups/view/", array("id"=> $group->id ));
+        echo '<li><a href="'.$link.'">'.$group->title.'</a></li>';
+    }
+} else {
+    echo '<h5>None</h5>';
 }
 
 ?>

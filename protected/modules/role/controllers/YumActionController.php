@@ -8,25 +8,26 @@ class YumActionController extends YumController {
 
 	public function filters() {
 		return array(
-			'accessControl', 
+			'accessControl',
 		);
 	}
 
 	public function accessRules() {
 		return array(
-			array('allow',  
+			array('allow',
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
-			array('allow', 
+			array('allow',
 				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
-			array('allow', 
+			array('allow',
 				'actions'=>array('admin','delete'),
 				'expression' => 'Yii::app()->user->isAdmin()',
+				'expression' => 'Yii::app()->user->can("event", "create")',
 			),
-			array('deny',  
+			array('deny',
 				'users'=>array('*'),
 			),
 		);
@@ -101,7 +102,7 @@ class YumActionController extends YumController {
 	{
 		$this->layout = Yum::module()->adminLayout;
 		$model=new YumAction('search');
-		$model->unsetAttributes();  
+		$model->unsetAttributes();
 		if(isset($_GET['YumAction']))
 			$model->attributes=$_GET['YumAction'];
 

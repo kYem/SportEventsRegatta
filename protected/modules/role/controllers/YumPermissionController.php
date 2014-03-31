@@ -14,6 +14,7 @@ class YumPermissionController extends YumController
 				array('allow',
 					'actions'=>array('admin', 'create', 'index', 'delete'),
 					'expression' => 'Yii::app()->user->isAdmin()',
+					'expression' => 'Yii::app()->user->can("event", "create")',
 					),
 				array('deny',  // deny all other users
 					'users'=>array('*'),
@@ -32,14 +33,14 @@ class YumPermissionController extends YumController
 			Yum::setFlash(Yum::t('The permission has been removed'));
 		else
 			Yum::setFlash(Yum::t('Error while removing the permission'));
-	
-		$this->redirect(array('//role/permission/admin')); 
+
+		$this->redirect(array('//role/permission/admin'));
 	}
 
 	public function actionAdmin() {
 		$this->layout = Yum::module('role')->layout;
 		$model = new YumPermission('search');
-		$model->unsetAttributes();  
+		$model->unsetAttributes();
 
 		if(isset($_GET['YumPermission']))
 			$model->attributes=$_GET['YumPermission'];

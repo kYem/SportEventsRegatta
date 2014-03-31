@@ -29,6 +29,7 @@ class YumUserController extends YumController {
 						'generateData',
 						'csv'),
 					'expression' => 'Yii::app()->user->can("create")',
+					'expression' => 'Yii::app()->user->can("event", "create")',
 					),
 				array('allow',
 					'actions'=>array('update'),

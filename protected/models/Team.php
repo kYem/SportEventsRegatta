@@ -40,9 +40,6 @@ class Team extends CActiveRecord
 	}
 	public function behaviors() {
 		return array(
-			'CSerializeBehavior' => array(
-					'class' => 'application.modules.user.components.CSerializeBehavior',
-					'serialAttributes' => array('participants')),
 			'ESaveRelatedBehavior' => array(
          		'class' => 'application.components.ESaveRelatedBehavior'),
 			);

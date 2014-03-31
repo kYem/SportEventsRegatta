@@ -203,3 +203,7 @@ border-radius: .5em;
 .member-reg-succes {
 	color: green;
 }
+
+.pagination {
+	clear: both;
+}

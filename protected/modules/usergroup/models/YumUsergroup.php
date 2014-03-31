@@ -97,6 +97,21 @@ class YumUsergroup extends YumActiveRecord{
 
 		return new CActiveDataProvider('Event', array('criteria' => $criteria));
 	}
+
+
+	/**
+	 * Show Events that the user is registered for
+	 * @return type
+	 */
+	public function getRegisteredMemberEvents($id = null) {
+		$id = (!$id) ? Yii::app()->user->id : '0' ;
+		$criteria = new CDbCriteria;
+		// $criteria->with =array('groups');
+		$criteria->join = ' INNER JOIN `ku_rg_user_event` AS `user_event` ON t.id = user_event.event_id';
+	    $criteria->addCondition("user_event.user_id = ".$id." ");
+
+		return new CActiveDataProvider('Event', array('criteria' => $criteria));
+	}
 	/**
 	 * Get all events that the group is registered for
 	 * @return CActiveDataProvider object

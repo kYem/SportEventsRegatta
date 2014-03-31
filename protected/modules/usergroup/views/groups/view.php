@@ -23,7 +23,7 @@ if(Yii::app()->user->hasFlash('success')){
     ?>
     <div class="btn-control">
     <?php
-	if (Yii::app()->user->can("userGroup", "create")) {
+	if (Yii::app()->user->can("event", "create") || $model->owner_id == Yii::app()->user->id || Yii::app()->user->isAdmin()) {
 	   echo CHtml::link(Yum::t('Add Member'), '', array(
 				'onClick' => "$('#usergroup_members').toggle(500)", 'class'=>'btn'));
 
@@ -54,47 +54,88 @@ if(Yii::app()->user->hasFlash('success')){
     // Get current group id for closure value
     $gui = $model->id;
     // Show Registered Event GridView
-if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
-	$this->widget('bootstrap.widgets.TbGridView', array(
-        'id'=>'event-grid',
-        'type' => TbHtml::GRID_TYPE_HOVER,
-        'dataProvider'=>$model->getRegisteredEventDataProvider(),
-        // 'filter'=>Event::model(),
+if (Yii::app()->user->can("event", "create") || $model->owner_id == Yii::app()->user->id || Yii::app()->user->isAdmin()) {
+    if ($model->getRegisteredEventDataProvider()->itemCount > 0) {
+    	$this->widget('bootstrap.widgets.TbGridView', array(
+            'id'=>'event-grid',
+            'type' => TbHtml::GRID_TYPE_HOVER,
+            'dataProvider'=>$model->getRegisteredEventDataProvider(),
+            // 'filter'=>Event::model(),
 
-        'columns'=>array(
-            'name',
-            array(
-                'header'=>'Participanting Groups',
-                'value'=> function ($model) {
-                    return GroupEvent::model()->countByAttributes(
-                        array('event_id'=> $model->id,));
+            'columns'=>array(
+                'name',
+                array(
+                    'header'=>'Participanting Groups',
+                    'value'=> function ($model) {
+                        return GroupEvent::model()->countByAttributes(
+                            array('event_id'=> $model->id,));
+                        },
+                    'type'=>'text'
+                ),
+                'seats',
+                array(
+                    'name' => 'memberCount',
+                    'header'=>'Registered Members',
+                    'value'=> function ($model)  use ($gui){
+                        return YumUsergroup::model()->getParticipantCount($model, $gui);
                     },
-                'type'=>'text'
-            ),
-            'seats',
-            array(
-                'name' => 'memberCount',
-                'header'=>'Registered Members',
-                'value'=> function ($model)  use ($gui){
-                    return YumUsergroup::model()->getParticipantCount($model, $gui);
-                },
-            ),
-            array(
-                'class'=>'bootstrap.widgets.TbButtonColumn',
-                'htmlOptions'=>array('style'=>'width: 50px'),
-                'template'=>'{view}{update}',
-                'buttons'=>array(
-                            'delete' => array(
-                              'label'=>'Remove Event',
-                            ),
-                          ),
-                'viewButtonUrl'=>'Yii::app()->createUrl("event/view/", array("id"=>$data->id))',
-                'updateButtonUrl'=>'$this->grid->controller->createUrl("groups/addParticipant/", array("groupId"=>'.$gui.', "eventId"=>$data->id))',
-            ),
-        ), // Columns
-    ));
-} else {
-	echo '<h5>'.$model->title.' have not registered for any events</h5>';
+                ),
+                array(
+                    'class'=>'bootstrap.widgets.TbButtonColumn',
+                    'htmlOptions'=>array('style'=>'width: 50px'),
+                    'template'=>'{view}{update}',
+                    'buttons'=>array(
+                                'delete' => array(
+                                  'label'=>'Remove Event',
+                                ),
+                              ),
+                    'viewButtonUrl'=>'Yii::app()->createUrl("event/view/", array("id"=>$data->id))',
+                    'updateButtonUrl'=>'$this->grid->controller->createUrl("groups/addParticipant/", array("groupId"=>'.$gui.', "eventId"=>$data->id))',
+                ),
+            ), // Columns
+        ));
+    } else {
+    	echo '<p>'.$model->title.' have not registered for any events</p>';
+    }
+
+    // Group Member View
+} elseif (Yii::app()->user->can("Member", "read")) {
+    if ($model->getRegisteredMemberEvents()->itemCount > 0) {
+        $this->widget('bootstrap.widgets.TbGridView', array(
+            'id'=>'event-grid',
+            'type' => TbHtml::GRID_TYPE_HOVER,
+            'dataProvider'=>$model->getRegisteredMemberEvents(),
+            // 'filter'=>Event::model(),
+
+            'columns'=>array(
+                'name',
+                array(
+                    'header'=>'Participanting Groups',
+                    'value'=> function ($model) {
+                        return GroupEvent::model()->countByAttributes(
+                            array('event_id'=> $model->id,));
+                        },
+                    'type'=>'text'
+                ),
+                'seats',
+                array(
+                    'name' => 'memberCount',
+                    'header'=>'Registered Members',
+                    'value'=> function ($model)  use ($gui){
+                        return YumUsergroup::model()->getParticipantCount($model, $gui);
+                    },
+                ),
+                array(
+                    'class'=>'bootstrap.widgets.TbButtonColumn',
+                    'htmlOptions'=>array('style'=>'width: 50px'),
+                    'template'=>'{view}',
+                    'viewButtonUrl'=>'Yii::app()->createUrl("event/view/", array("id"=>$data->id))',
+                ),
+            ), // Columns
+        ));
+      } else {
+        echo '<p>'.Yii::app()->user->data()->fullName.' is not registered for any events</p>';
+    }
 }
 echo "<br>";
 // Show Current Participants

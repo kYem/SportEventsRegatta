@@ -9,7 +9,8 @@ class YumRoleController extends YumController {
 		return array(
 				array('allow',
 					'actions'=>array('index', 'admin','delete','create','update', 'view'),
-					'expression' => 'Yii::app()->user->isAdmin()'
+					'expression' => 'Yii::app()->user->isAdmin()',
+					'expression' => 'Yii::app()->user->can("event", "create")',
 					),
 				array('deny',  // deny all other users
 						'users'=>array('*'),
@@ -72,10 +73,10 @@ class YumRoleController extends YumController {
 		if(isset($_POST['YumRole'])) {
 			$model->attributes = $_POST['YumRole'];
 
-			if ($model->validate() && $model->save()) 
+			if ($model->validate() && $model->save())
 				$this->redirect(array('view', 'id' => $model->id));
 		}
-	
+
 
 		$this->render('update', array(
 			'model' => $model,

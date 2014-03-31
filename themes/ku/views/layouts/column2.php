@@ -41,7 +41,7 @@
         </div>
 
      <?php
-      if (Yii::app()->user->isAdmin()) {
+      if (Yii::app()->user->isAdmin() || Yii::app()->user->can("event", "create")) {
     $this->widget('bootstrap.widgets.TbNav', array(
             'type' => TbHtml::NAV_TYPE_LIST,
             'items'=>array(
@@ -97,7 +97,7 @@
                         ),
                 array('label' => 'Misc', 'icon'=>'briefcase',
                         'items' => array(
-                            array('label' => 'Text translations', 'url' => array('//user/translation/admin')),
+
                             array('label' => 'Upload avatar for admin', 'url' => array('//avatar/avatar/editAvatar'),
                                 'visible' => Yum::hasModule('avatar')),
                             array('label' => 'Change admin Password', 'url' => array('//user/user/changePassword')),
@@ -112,11 +112,6 @@
             'type' => TbHtml::NAV_TYPE_LIST,
             'items'=>array(
                 array('label'=>'USER SETTINGS'),
-                array(
-                    'label'=>'Dashboard', 'icon'=>'cog',
-                    'url'=>array('//event/dashboard'),
-                    'visible' => !Yii::app()->user->isAdmin(),
-                    ),
                 array('label'=>'Profile', 'icon'=>'user', 'url'=>array('//profile/profile/view')),
                 array('label'=>'Edit Profile', 'icon'=>'pencil', 'url'=>array('//profile/profile/update')),
                 TbHtml::menuDivider(),
@@ -156,6 +151,10 @@
                 array('label' => 'Dashboard',
                     'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),
                     'url' => array('/usergroup/groups/view', 'id'=>Yii::app()->user->getGroup()),
+                    'icon'=>'bullhorn'),
+                array('label' => 'Dashboard',
+                    'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getMemberGroupId(),
+                    'url' => array('/usergroup/groups/view', 'id'=>Yii::app()->user->getMemberGroupId()),
                     'icon'=>'bullhorn'),
                 array('label' => 'Join Event',
                     'visible' =>  Yum::hasModule('usergroup') && Yii::app()->user->getGroup(),

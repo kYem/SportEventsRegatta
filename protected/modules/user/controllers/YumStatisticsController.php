@@ -9,7 +9,8 @@ class YumStatisticsController extends YumController {
 				array('allow',
 					'actions'=>array('index'),
 					'users'=>array(Yii::app()->user->name ),
-					'expression' => 'Yii::app()->user->isAdmin()'
+					'expression' => 'Yii::app()->user->isAdmin()',
+					'expression' => 'Yii::app()->user->can("event", "create")',
 					),
 				array('deny', 'users'=>array('*')));
 	}
