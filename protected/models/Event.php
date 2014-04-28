@@ -72,8 +72,6 @@ class Event extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
 			'boats' => array(self::MANY_MANY, 'Boat', 'ku_rg_event_boat(event_id, boat_id)'),
 			'users' => array(self::MANY_MANY, 'YumUser', 'ku_rg_user_event(event_id, user_id)'),
